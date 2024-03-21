@@ -14,6 +14,7 @@ namespace iShareDev
     {
         private int childFormNumber = 0;
         dcLibrary.dcConnect Connect;
+        dcLibrary.dcGeneral dcGral;
 
         public frmMain()
         {
@@ -111,9 +112,18 @@ namespace iShareDev
             log.ShowDialog();
 
             if (log.isOK)
+            {
                 Connect = log.Connect;
+                dcGral = new dcLibrary.dcGeneral();
+            }
+                
             else
                 Close();
+        }
+
+        private void productoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new cDevelop.Forms.frmProductoList(),this, Connect);
         }
     }
 }

@@ -53,6 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Forms\frmProductoList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmProductoList.Designer.cs">
+      <DependentUpon>frmProductoList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmPruebaList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Source\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\frmProductoList.resx">
+      <DependentUpon>frmProductoList.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

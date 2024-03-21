@@ -35,7 +35,7 @@ go
 
 create procedure spProductoInsert @ProductoID int, @Codigo varchar(20), @Nombre varchar(20)
 as
-	select @ProductoID = isnull(max(productoid) + 1,0 ) from producto
+	select @ProductoID = isnull(max(productoid),0) + 1 from producto
 	insert into producto values (@ProductoID,@Codigo,@Nombre)
 go
 
@@ -48,4 +48,5 @@ create procedure spProductoUpdate @Productoid int,@Codigo varchar(20),@Nombre va
 as
 	update producto set Codigo = @Codigo, Nombre = @Nombre where ProductoID = @Productoid
 go
+
 
