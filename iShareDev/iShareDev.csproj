@@ -88,5 +88,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cDevelop\cDevelop.csproj">
+      <Project>{41c6570f-2fe9-4b50-b910-a10d31059601}</Project>
+      <Name>cDevelop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vbDevelop\vbDevelop.vbproj">
+      <Project>{b43e0039-f2f7-4247-9e22-cb8ba19025fa}</Project>
+      <Name>vbDevelop</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
