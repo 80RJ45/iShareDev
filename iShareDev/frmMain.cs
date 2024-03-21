@@ -13,6 +13,7 @@ namespace iShareDev
     public partial class frmMain : Form
     {
         private int childFormNumber = 0;
+        dcLibrary.dcConnect Connect;
 
         public frmMain()
         {
@@ -106,7 +107,13 @@ namespace iShareDev
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            dcLibrary.dcLogin log = new dcLibrary.dcLogin("iShareDev");
+            log.ShowDialog();
 
+            if (log.isOK)
+                Connect = log.Connect;
+            else
+                Close();
         }
     }
 }
