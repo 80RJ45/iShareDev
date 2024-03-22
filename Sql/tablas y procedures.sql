@@ -30,10 +30,10 @@ go
 
 alter procedure spProductoSelect @Productoid int
 as
-	select *from producto where ProductoID = @Productoid or ProductoID = 0
+	select *from producto where ProductoID = @Productoid or @ProductoID = 0
 go
 
-create procedure spProductoInsert @ProductoID int, @Codigo varchar(20), @Nombre varchar(20)
+alter procedure spProductoInsert @ProductoID int output, @Codigo varchar(20), @Nombre varchar(20)
 as
 	select @ProductoID = isnull(max(productoid),0) + 1 from producto
 	insert into producto values (@ProductoID,@Codigo,@Nombre)
