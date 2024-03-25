@@ -14,5 +14,10 @@ namespace cDevelop.Forms
         {
             InitializeComponent();
         }
+
+        private void frmPruebaList_Load(object sender, EventArgs e)
+        {
+            CuentasPagar.frmProveedorList frm = new CuentasPagar.frmProveedorList();
+        }
     }
 }

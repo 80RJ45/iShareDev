@@ -44,6 +44,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C0002">
+      <HintPath>..\Lib\C0002.dll</HintPath>
+    </Reference>
     <Reference Include="D0001">
       <HintPath>..\D0001.dll</HintPath>
     </Reference>
