@@ -47,11 +47,18 @@
     <Reference Include="C0002">
       <HintPath>..\Lib\C0002.dll</HintPath>
     </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="D0001">
       <HintPath>..\D0001.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -71,6 +78,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.vb" />
+    <Compile Include="Forms\frmFincaDet.Designer.vb">
+      <DependentUpon>frmFincaDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmFincaDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmFincaList.Designer.vb">
+      <DependentUpon>frmFincaList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmFincaList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmProductoList.Designer.vb">
+      <DependentUpon>frmProductoList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmProductoList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmProductoList2.Designer.vb">
+      <DependentUpon>frmProductoList2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmProductoList2.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -88,6 +119,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\frmFincaDet.resx">
+      <DependentUpon>frmFincaDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmFincaList.resx">
+      <DependentUpon>frmFincaList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmProductoList.resx">
+      <DependentUpon>frmProductoList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmProductoList2.resx">
+      <DependentUpon>frmProductoList2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -107,7 +150,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Forms\" />
     <Folder Include="Reports\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

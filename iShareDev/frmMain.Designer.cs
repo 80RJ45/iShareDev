@@ -70,6 +70,8 @@
             this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pruebaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.productoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -82,8 +84,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.pruebaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.productoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.productovbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fincaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -400,7 +402,7 @@
             // 
             this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
             this.contentsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F1)));
-            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.contentsToolStripMenuItem.Text = "&Contents";
             // 
             // indexToolStripMenuItem
@@ -408,7 +410,7 @@
             this.indexToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("indexToolStripMenuItem.Image")));
             this.indexToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-            this.indexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.indexToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.indexToolStripMenuItem.Text = "&Index";
             // 
             // searchToolStripMenuItem
@@ -416,19 +418,36 @@
             this.searchToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("searchToolStripMenuItem.Image")));
             this.searchToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
-            this.searchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.searchToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.searchToolStripMenuItem.Text = "&Search";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(165, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.aboutToolStripMenuItem.Text = "&About ... ...";
+            // 
+            // pruebaToolStripMenuItem
+            // 
+            this.pruebaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.productoToolStripMenuItem,
+            this.productovbToolStripMenuItem,
+            this.fincaToolStripMenuItem});
+            this.pruebaToolStripMenuItem.Name = "pruebaToolStripMenuItem";
+            this.pruebaToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.pruebaToolStripMenuItem.Text = "Prueba";
+            // 
+            // productoToolStripMenuItem
+            // 
+            this.productoToolStripMenuItem.Name = "productoToolStripMenuItem";
+            this.productoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.productoToolStripMenuItem.Text = "Producto";
+            this.productoToolStripMenuItem.Click += new System.EventHandler(this.productoToolStripMenuItem_Click);
             // 
             // toolStrip
             // 
@@ -529,20 +548,19 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // pruebaToolStripMenuItem
+            // productovbToolStripMenuItem
             // 
-            this.pruebaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.productoToolStripMenuItem});
-            this.pruebaToolStripMenuItem.Name = "pruebaToolStripMenuItem";
-            this.pruebaToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.pruebaToolStripMenuItem.Text = "Prueba";
+            this.productovbToolStripMenuItem.Name = "productovbToolStripMenuItem";
+            this.productovbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.productovbToolStripMenuItem.Text = "Productovb";
+            this.productovbToolStripMenuItem.Click += new System.EventHandler(this.productovbToolStripMenuItem_Click);
             // 
-            // productoToolStripMenuItem
+            // fincaToolStripMenuItem
             // 
-            this.productoToolStripMenuItem.Name = "productoToolStripMenuItem";
-            this.productoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.productoToolStripMenuItem.Text = "Producto";
-            this.productoToolStripMenuItem.Click += new System.EventHandler(this.productoToolStripMenuItem_Click);
+            this.fincaToolStripMenuItem.Name = "fincaToolStripMenuItem";
+            this.fincaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fincaToolStripMenuItem.Text = "Finca";
+            this.fincaToolStripMenuItem.Click += new System.EventHandler(this.fincaToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -625,6 +643,8 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem pruebaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem productoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem productovbToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fincaToolStripMenuItem;
     }
 }
 

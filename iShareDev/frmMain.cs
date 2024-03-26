@@ -125,5 +125,16 @@ namespace iShareDev
         {
             dcGral.ShowList(new cDevelop.Forms.frmProductoList(),this, Connect);
         }
+
+        private void productovbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // dcGral.ShowList(new vbDevelop.frmProductoList(), this, Connect);
+            dcGral.ShowList(new vbDevelop.frmProductoList2(), this, Connect);
+        }
+
+        private void fincaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new vbDevelop.frmFincaList(), this, Connect);
+        }
     }
 }
