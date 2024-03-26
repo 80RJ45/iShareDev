@@ -21,6 +21,6 @@ Public Class frmTipoActivoCabList
         reloadRow(RowIndex, "TipoActivoCabID")
     End Sub
     Private Sub frmTipoActivoCabList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Del.Visible = False
     End Sub
 End Class
