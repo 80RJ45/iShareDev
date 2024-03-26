@@ -50,6 +50,7 @@ Partial Class frmTipoActivoDet
         '
         Me.txtCodigo.Location = New System.Drawing.Point(122, 18)
         Me.txtCodigo.Name = "txtCodigo"
+        Me.txtCodigo.ReadOnly = True
         Me.txtCodigo.Size = New System.Drawing.Size(100, 20)
         Me.txtCodigo.TabIndex = 1
         '
@@ -181,6 +182,7 @@ Partial Class frmTipoActivoDet
         Me.Controls.Add(Me.txtCodigo)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmTipoActivoDet"
+        Me.Text = "Tipo Activo"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

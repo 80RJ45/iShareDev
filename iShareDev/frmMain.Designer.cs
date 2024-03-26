@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +71,8 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pruebaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.productovbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fincaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -83,9 +84,8 @@
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.productovbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fincaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip = new System.Windows.Forms.ToolTip();
+            this.tipoActivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -437,7 +437,8 @@
             this.pruebaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.productoToolStripMenuItem,
             this.productovbToolStripMenuItem,
-            this.fincaToolStripMenuItem});
+            this.fincaToolStripMenuItem,
+            this.tipoActivoToolStripMenuItem});
             this.pruebaToolStripMenuItem.Name = "pruebaToolStripMenuItem";
             this.pruebaToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.pruebaToolStripMenuItem.Text = "Prueba";
@@ -448,6 +449,20 @@
             this.productoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.productoToolStripMenuItem.Text = "Producto";
             this.productoToolStripMenuItem.Click += new System.EventHandler(this.productoToolStripMenuItem_Click);
+            // 
+            // productovbToolStripMenuItem
+            // 
+            this.productovbToolStripMenuItem.Name = "productovbToolStripMenuItem";
+            this.productovbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.productovbToolStripMenuItem.Text = "Productovb";
+            this.productovbToolStripMenuItem.Click += new System.EventHandler(this.productovbToolStripMenuItem_Click);
+            // 
+            // fincaToolStripMenuItem
+            // 
+            this.fincaToolStripMenuItem.Name = "fincaToolStripMenuItem";
+            this.fincaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fincaToolStripMenuItem.Text = "Finca";
+            this.fincaToolStripMenuItem.Click += new System.EventHandler(this.fincaToolStripMenuItem_Click);
             // 
             // toolStrip
             // 
@@ -548,19 +563,12 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // productovbToolStripMenuItem
+            // tipoActivoToolStripMenuItem
             // 
-            this.productovbToolStripMenuItem.Name = "productovbToolStripMenuItem";
-            this.productovbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.productovbToolStripMenuItem.Text = "Productovb";
-            this.productovbToolStripMenuItem.Click += new System.EventHandler(this.productovbToolStripMenuItem_Click);
-            // 
-            // fincaToolStripMenuItem
-            // 
-            this.fincaToolStripMenuItem.Name = "fincaToolStripMenuItem";
-            this.fincaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.fincaToolStripMenuItem.Text = "Finca";
-            this.fincaToolStripMenuItem.Click += new System.EventHandler(this.fincaToolStripMenuItem_Click);
+            this.tipoActivoToolStripMenuItem.Name = "tipoActivoToolStripMenuItem";
+            this.tipoActivoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tipoActivoToolStripMenuItem.Text = "Tipo Activo";
+            this.tipoActivoToolStripMenuItem.Click += new System.EventHandler(this.tipoActivoToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -645,6 +653,7 @@
         private System.Windows.Forms.ToolStripMenuItem productoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem productovbToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fincaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tipoActivoToolStripMenuItem;
     }
 }
 

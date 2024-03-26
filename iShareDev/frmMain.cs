@@ -136,5 +136,10 @@ namespace iShareDev
         {
             dcGral.ShowList(new vbDevelop.frmFincaList(), this, Connect);
         }
+
+        private void tipoActivoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new vbDevelop.frmTipoActivoCabList(), this, Connect);
+        }
     }
 }
