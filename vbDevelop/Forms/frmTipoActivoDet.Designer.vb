@@ -40,7 +40,7 @@ Partial Class frmTipoActivoDet
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(21, 30)
+        Me.Label1.Location = New System.Drawing.Point(70, 21)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(43, 13)
         Me.Label1.TabIndex = 0
@@ -48,7 +48,7 @@ Partial Class frmTipoActivoDet
         '
         'txtCodigo
         '
-        Me.txtCodigo.Location = New System.Drawing.Point(95, 27)
+        Me.txtCodigo.Location = New System.Drawing.Point(122, 18)
         Me.txtCodigo.Name = "txtCodigo"
         Me.txtCodigo.Size = New System.Drawing.Size(100, 20)
         Me.txtCodigo.TabIndex = 1
@@ -56,15 +56,15 @@ Partial Class frmTipoActivoDet
         'DataGridView1
         '
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(12, 163)
+        Me.DataGridView1.Location = New System.Drawing.Point(39, 185)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(517, 150)
+        Me.DataGridView1.Size = New System.Drawing.Size(585, 150)
         Me.DataGridView1.TabIndex = 2
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(21, 63)
+        Me.Label2.Location = New System.Drawing.Point(66, 54)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(47, 13)
         Me.Label2.TabIndex = 3
@@ -72,15 +72,15 @@ Partial Class frmTipoActivoDet
         '
         'txtNombre
         '
-        Me.txtNombre.Location = New System.Drawing.Point(95, 60)
+        Me.txtNombre.Location = New System.Drawing.Point(122, 51)
         Me.txtNombre.Name = "txtNombre"
-        Me.txtNombre.Size = New System.Drawing.Size(179, 20)
+        Me.txtNombre.Size = New System.Drawing.Size(502, 20)
         Me.txtNombre.TabIndex = 4
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(21, 129)
+        Me.Label3.Location = New System.Drawing.Point(43, 120)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(70, 13)
         Me.Label3.TabIndex = 5
@@ -89,7 +89,7 @@ Partial Class frmTipoActivoDet
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(21, 96)
+        Me.Label4.Location = New System.Drawing.Point(413, 88)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(43, 13)
         Me.Label4.TabIndex = 6
@@ -98,57 +98,57 @@ Partial Class frmTipoActivoDet
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(335, 63)
+        Me.Label5.Location = New System.Drawing.Point(64, 88)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(31, 13)
+        Me.Label5.Size = New System.Drawing.Size(49, 13)
         Me.Label5.TabIndex = 7
-        Me.Label5.Text = "Vida:"
+        Me.Label5.Text = "Vida: Util"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(335, 30)
+        Me.Label6.Location = New System.Drawing.Point(212, 88)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(51, 13)
+        Me.Label6.Size = New System.Drawing.Size(78, 13)
         Me.Label6.TabIndex = 8
-        Me.Label6.Text = "Residual:"
+        Me.Label6.Text = "Valor Residual:"
         '
         'txtObservacion
         '
-        Me.txtObservacion.Location = New System.Drawing.Point(95, 126)
+        Me.txtObservacion.Location = New System.Drawing.Point(122, 117)
         Me.txtObservacion.Multiline = True
         Me.txtObservacion.Name = "txtObservacion"
-        Me.txtObservacion.Size = New System.Drawing.Size(385, 20)
+        Me.txtObservacion.Size = New System.Drawing.Size(502, 52)
         Me.txtObservacion.TabIndex = 9
         '
         'txtResidual
         '
-        Me.txtResidual.Location = New System.Drawing.Point(402, 27)
+        Me.txtResidual.Location = New System.Drawing.Point(296, 84)
         Me.txtResidual.Name = "txtResidual"
-        Me.txtResidual.Size = New System.Drawing.Size(109, 20)
+        Me.txtResidual.Size = New System.Drawing.Size(54, 20)
         Me.txtResidual.TabIndex = 11
         '
         'txtVida
         '
-        Me.txtVida.Location = New System.Drawing.Point(402, 60)
+        Me.txtVida.Location = New System.Drawing.Point(122, 84)
         Me.txtVida.Name = "txtVida"
-        Me.txtVida.Size = New System.Drawing.Size(109, 20)
+        Me.txtVida.Size = New System.Drawing.Size(61, 20)
         Me.txtVida.TabIndex = 12
         '
         'btnCancelar
         '
-        Me.btnCancelar.Location = New System.Drawing.Point(12, 322)
+        Me.btnCancelar.Location = New System.Drawing.Point(334, 341)
         Me.btnCancelar.Name = "btnCancelar"
-        Me.btnCancelar.Size = New System.Drawing.Size(183, 42)
+        Me.btnCancelar.Size = New System.Drawing.Size(297, 63)
         Me.btnCancelar.TabIndex = 13
         Me.btnCancelar.Text = "Cancelar"
         Me.btnCancelar.UseVisualStyleBackColor = True
         '
         'btnSalvar
         '
-        Me.btnSalvar.Location = New System.Drawing.Point(346, 322)
+        Me.btnSalvar.Location = New System.Drawing.Point(39, 341)
         Me.btnSalvar.Name = "btnSalvar"
-        Me.btnSalvar.Size = New System.Drawing.Size(183, 42)
+        Me.btnSalvar.Size = New System.Drawing.Size(297, 63)
         Me.btnSalvar.TabIndex = 14
         Me.btnSalvar.Text = "Salvar"
         Me.btnSalvar.UseVisualStyleBackColor = True
@@ -156,15 +156,15 @@ Partial Class frmTipoActivoDet
         'cmbEstado
         '
         Me.cmbEstado.FormattingEnabled = True
-        Me.cmbEstado.Location = New System.Drawing.Point(95, 93)
+        Me.cmbEstado.Location = New System.Drawing.Point(465, 84)
         Me.cmbEstado.Name = "cmbEstado"
-        Me.cmbEstado.Size = New System.Drawing.Size(179, 21)
+        Me.cmbEstado.Size = New System.Drawing.Size(159, 21)
         Me.cmbEstado.TabIndex = 15
         '
         'frmTipoActivoDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.ClientSize = New System.Drawing.Size(541, 376)
+        Me.ClientSize = New System.Drawing.Size(659, 411)
         Me.Controls.Add(Me.cmbEstado)
         Me.Controls.Add(Me.btnSalvar)
         Me.Controls.Add(Me.btnCancelar)
