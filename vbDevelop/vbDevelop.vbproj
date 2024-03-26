@@ -102,6 +102,18 @@
     <Compile Include="Forms\frmProductoList2.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\frmTipoActivoCabList.Designer.vb">
+      <DependentUpon>frmTipoActivoCabList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmTipoActivoCabList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmTipoActivoDet.Designer.vb">
+      <DependentUpon>frmTipoActivoDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmTipoActivoDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -130,6 +142,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProductoList2.resx">
       <DependentUpon>frmProductoList2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmTipoActivoCabList.resx">
+      <DependentUpon>frmTipoActivoCabList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmTipoActivoDet.resx">
+      <DependentUpon>frmTipoActivoDet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
