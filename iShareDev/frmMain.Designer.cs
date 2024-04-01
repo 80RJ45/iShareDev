@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +74,7 @@
             this.productoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.productovbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fincaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tipoActivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -84,8 +86,8 @@
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolTip = new System.Windows.Forms.ToolTip();
-            this.tipoActivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.centroCostoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -438,7 +440,8 @@
             this.productoToolStripMenuItem,
             this.productovbToolStripMenuItem,
             this.fincaToolStripMenuItem,
-            this.tipoActivoToolStripMenuItem});
+            this.tipoActivoToolStripMenuItem,
+            this.centroCostoToolStripMenuItem});
             this.pruebaToolStripMenuItem.Name = "pruebaToolStripMenuItem";
             this.pruebaToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.pruebaToolStripMenuItem.Text = "Prueba";
@@ -463,6 +466,13 @@
             this.fincaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fincaToolStripMenuItem.Text = "Finca";
             this.fincaToolStripMenuItem.Click += new System.EventHandler(this.fincaToolStripMenuItem_Click);
+            // 
+            // tipoActivoToolStripMenuItem
+            // 
+            this.tipoActivoToolStripMenuItem.Name = "tipoActivoToolStripMenuItem";
+            this.tipoActivoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tipoActivoToolStripMenuItem.Text = "Tipo Activo";
+            this.tipoActivoToolStripMenuItem.Click += new System.EventHandler(this.tipoActivoToolStripMenuItem_Click);
             // 
             // toolStrip
             // 
@@ -563,12 +573,12 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // tipoActivoToolStripMenuItem
+            // centroCostoToolStripMenuItem
             // 
-            this.tipoActivoToolStripMenuItem.Name = "tipoActivoToolStripMenuItem";
-            this.tipoActivoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.tipoActivoToolStripMenuItem.Text = "Tipo Activo";
-            this.tipoActivoToolStripMenuItem.Click += new System.EventHandler(this.tipoActivoToolStripMenuItem_Click);
+            this.centroCostoToolStripMenuItem.Name = "centroCostoToolStripMenuItem";
+            this.centroCostoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.centroCostoToolStripMenuItem.Text = "Centro Costo";
+            this.centroCostoToolStripMenuItem.Click += new System.EventHandler(this.centroCostoToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -654,6 +664,7 @@
         private System.Windows.Forms.ToolStripMenuItem productovbToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fincaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tipoActivoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem centroCostoToolStripMenuItem;
     }
 }
 

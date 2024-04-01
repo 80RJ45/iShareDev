@@ -81,6 +81,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.vb" />
+    <Compile Include="Forms\frmActivoDetail.Designer.vb">
+      <DependentUpon>frmActivoDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmActivoDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCentroCosto.Designer.vb">
+      <DependentUpon>frmCentroCosto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmCentroCosto.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmFincaDet.Designer.vb">
       <DependentUpon>frmFincaDet.vb</DependentUpon>
     </Compile>
@@ -134,6 +146,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\frmActivoDetail.resx">
+      <DependentUpon>frmActivoDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCentroCosto.resx">
+      <DependentUpon>frmCentroCosto.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmFincaDet.resx">
       <DependentUpon>frmFincaDet.vb</DependentUpon>
     </EmbeddedResource>

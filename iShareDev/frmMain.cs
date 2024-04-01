@@ -141,5 +141,10 @@ namespace iShareDev
         {
             dcGral.ShowList(new vbDevelop.frmTipoActivoCabList(), this, Connect);
         }
+
+        private void centroCostoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new vbDevelop.frmCentroCosto(), this, Connect);
+        }
     }
 }
