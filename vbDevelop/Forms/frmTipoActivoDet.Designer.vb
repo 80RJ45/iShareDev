@@ -165,7 +165,7 @@ Partial Class frmTipoActivoDet
         'frmTipoActivoDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.ClientSize = New System.Drawing.Size(659, 411)
+        Me.ClientSize = New System.Drawing.Size(659, 415)
         Me.Controls.Add(Me.cmbEstado)
         Me.Controls.Add(Me.btnSalvar)
         Me.Controls.Add(Me.btnCancelar)
