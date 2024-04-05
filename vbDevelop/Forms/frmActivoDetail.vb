@@ -7,10 +7,10 @@ Public Class frmActivoDetail
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        newDinamicTable(Connect, 0, "ActivoCab", "@TipoActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.InputOutput, 0)
+        newDinamicTable(Connect, 0, "ActivoCab", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.InputOutput, -1)
         newDinamicTable(Connect, 1, "ActivoDet", "@ActivoCabID", "ActivoCabID", DetailID, ParameterDirection.Input, 0)
         newDinamicTable(Connect, 2, "ActivoCompra", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.Input, 0)
-        newDinamicTable(Connect, 3, "TipoActivoCab", "@TipoActivoCabID", "@TipoActivoCabID", DetailID, ParameterDirection.Input, -1)
+
         LoadDinamicTables()
     End Sub
     Public Overrides Sub SetGrids()
@@ -21,7 +21,12 @@ Public Class frmActivoDetail
         MyBase.SetCombos()
         dcGral.setCombo(cmbTipoActivo, dsGral.Tables("TipoActivoCab"), "Nombre", "TipoActivoCabID", 0)
     End Sub
-
+    Public Overrides Sub LoadTables()
+        MyBase.LoadTables()
+        NewTable("spTipoActivoSelect 0", "TipoActivoCab")
+        NewTable("Select *from dbo.iStatus('ActivoCab','TipoDep')", "ActivoCapTipoDep")
+        NewTable("Select *from dbo.iStatus('ActivoDet','Estado')", "ActivoDetEstado")
+    End Sub
     Public Overrides Sub DetailRow()
         MyBase.DetailRow()
         If dsGral.Tables("ActivoCab").Rows.Count = 0 Then
@@ -33,15 +38,17 @@ Public Class frmActivoDetail
             cmbTipoActivo.SelectedValue = dsGral.Tables("TipoActivoCab").Rows(0).Item(0)
 
             'Articulo
-            txtArticulo.Text = dsGral.Tables("Articulo").Rows(0).Item(2)
-            txtMarca.Text = dsGral.Tables("Articulo").Rows(0).Item("marca")
-            txtFamilia.Text = dsGral.Tables("Articulo").Rows(0).Item("Familia")
+            txtArticulo.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Articulo")
+            txtArticulo.Tag = dsGral.Tables("ActivoCab").Rows(0).Item("ArticuloID")
+            txtMarca.Text = dsGral.Tables("ActivoCab").Rows(0).Item("marca")
+            txtFamilia.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Familia")
 
             'ActivoCompra
             txtProveedor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("proveedor")
             dtFechaCompra.Value = dsGral.Tables("ActivoCompra").Rows(0).Item("fecha")
             txtVida.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("vida")
-            'txtValor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("valor")
+            txtValor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("precio")
+
         End If
     End Sub
     Private Sub frmActivoDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -71,15 +78,24 @@ Public Class frmActivoDetail
             End If
 
             'Activo
-            'dsGral.Tables("ActivoCab").Rows(0)("tipodep") = cmbTipoDep.SelectedValue
-            dsGral.Tables("ActivoCab").Rows(0)("ArticuloID") = dsGral.Tables("Articulo").Rows(0)("ArticuloID")
+            dsGral.Tables("ActivoCab").Rows(0)("tipodep") = cmbTipoDep.SelectedValue
+            dsGral.Tables("ActivoCab").Rows(0)("ArticuloID") = dsGral.Tables("ActivoCab").Rows(0)("ArticuloID")
             dsGral.Tables("ActivoCab").Rows(0)("tipoActivoCabID") = cmbTipoActivo.SelectedValue
-            'dsGral.Tables("ActivoCab").Rows(0)("CompradetID") = dsGral.Tables("Compradet").Rows(0)("compradetID")
-            dsGral.Tables("ActivoCab").Rows(0)("TipoDep") = cmbTipoDep.SelectedValue
 
+            'ActivoCompra
+            dsGral.Tables("ActivoCompra").Rows(0)("Documento") = txtCompra.Text
+            dsGral.Tables("ActivoCompra").Rows(0)("Proveedor") = txtProveedor.Text
+            dsGral.Tables("ActivoCompra").Rows(0)("Precio") = txtPrecio.Text
+            dsGral.Tables("ActivoCompra").Rows(0)("Vida") = txtVida.Text
+            dsGral.Tables("ActivoCompra").Rows(0)("Residual") = txtValor.Text
 
+            UpdateTables(0)
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        Dim frm As New 
     End Sub
 End Class
