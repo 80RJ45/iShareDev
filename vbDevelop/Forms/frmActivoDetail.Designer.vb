@@ -30,24 +30,24 @@ Partial Class frmActivoDetail
         Me.btnSalvar = New System.Windows.Forms.Button()
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.LinkLabel3 = New System.Windows.Forms.LinkLabel()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtProveedor = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.txtVida = New System.Windows.Forms.TextBox()
         Me.dtFechaCompra = New System.Windows.Forms.DateTimePicker()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.txtCompra = New System.Windows.Forms.TextBox()
+        Me.txtDepAcomulada = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.cmbTipoActivo = New System.Windows.Forms.ComboBox()
+        Me.txtMarca = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.txtFamilia = New System.Windows.Forms.TextBox()
+        Me.txtValor = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.TextBox8 = New System.Windows.Forms.TextBox()
+        Me.txtPrecio = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
         CType(Me.dgvDetalle, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -154,12 +154,12 @@ Partial Class frmActivoDetail
         Me.LinkLabel3.TabStop = True
         Me.LinkLabel3.Text = "Compra"
         '
-        'TextBox1
+        'txtProveedor
         '
-        Me.TextBox1.Location = New System.Drawing.Point(170, 161)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(551, 20)
-        Me.TextBox1.TabIndex = 18
+        Me.txtProveedor.Location = New System.Drawing.Point(170, 161)
+        Me.txtProveedor.Name = "txtProveedor"
+        Me.txtProveedor.Size = New System.Drawing.Size(551, 20)
+        Me.txtProveedor.TabIndex = 18
         '
         'Label2
         '
@@ -179,12 +179,12 @@ Partial Class frmActivoDetail
         Me.Label5.TabIndex = 22
         Me.Label5.Text = "Vida"
         '
-        'TextBox3
+        'txtVida
         '
-        Me.TextBox3.Location = New System.Drawing.Point(600, 195)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(121, 20)
-        Me.TextBox3.TabIndex = 23
+        Me.txtVida.Location = New System.Drawing.Point(600, 195)
+        Me.txtVida.Name = "txtVida"
+        Me.txtVida.Size = New System.Drawing.Size(121, 20)
+        Me.txtVida.TabIndex = 23
         '
         'dtFechaCompra
         '
@@ -202,20 +202,20 @@ Partial Class frmActivoDetail
         Me.DataGridView1.Size = New System.Drawing.Size(487, 150)
         Me.DataGridView1.TabIndex = 25
         '
-        'TextBox2
+        'txtCompra
         '
-        Me.TextBox2.Location = New System.Drawing.Point(170, 195)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.ReadOnly = True
-        Me.TextBox2.Size = New System.Drawing.Size(121, 20)
-        Me.TextBox2.TabIndex = 26
+        Me.txtCompra.Location = New System.Drawing.Point(170, 195)
+        Me.txtCompra.Name = "txtCompra"
+        Me.txtCompra.ReadOnly = True
+        Me.txtCompra.Size = New System.Drawing.Size(121, 20)
+        Me.txtCompra.TabIndex = 26
         '
-        'TextBox4
+        'txtDepAcomulada
         '
-        Me.TextBox4.Location = New System.Drawing.Point(392, 229)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(121, 20)
-        Me.TextBox4.TabIndex = 28
+        Me.txtDepAcomulada.Location = New System.Drawing.Point(392, 229)
+        Me.txtDepAcomulada.Name = "txtDepAcomulada"
+        Me.txtDepAcomulada.Size = New System.Drawing.Size(121, 20)
+        Me.txtDepAcomulada.TabIndex = 28
         '
         'Label6
         '
@@ -226,21 +226,21 @@ Partial Class frmActivoDetail
         Me.Label6.TabIndex = 27
         Me.Label6.Text = "Dep.Acumulada"
         '
-        'ComboBox1
+        'cmbTipoActivo
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(538, 93)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(183, 21)
-        Me.ComboBox1.TabIndex = 29
+        Me.cmbTipoActivo.FormattingEnabled = True
+        Me.cmbTipoActivo.Location = New System.Drawing.Point(538, 93)
+        Me.cmbTipoActivo.Name = "cmbTipoActivo"
+        Me.cmbTipoActivo.Size = New System.Drawing.Size(183, 21)
+        Me.cmbTipoActivo.TabIndex = 29
         '
-        'TextBox5
+        'txtMarca
         '
-        Me.TextBox5.Location = New System.Drawing.Point(170, 93)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.ReadOnly = True
-        Me.TextBox5.Size = New System.Drawing.Size(230, 20)
-        Me.TextBox5.TabIndex = 30
+        Me.txtMarca.Location = New System.Drawing.Point(170, 93)
+        Me.txtMarca.Name = "txtMarca"
+        Me.txtMarca.ReadOnly = True
+        Me.txtMarca.Size = New System.Drawing.Size(230, 20)
+        Me.txtMarca.TabIndex = 30
         '
         'Label7
         '
@@ -270,20 +270,20 @@ Partial Class frmActivoDetail
         Me.Label8.TabIndex = 34
         Me.Label8.Text = "Familia"
         '
-        'TextBox6
+        'txtFamilia
         '
-        Me.TextBox6.Location = New System.Drawing.Point(170, 127)
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.ReadOnly = True
-        Me.TextBox6.Size = New System.Drawing.Size(230, 20)
-        Me.TextBox6.TabIndex = 33
+        Me.txtFamilia.Location = New System.Drawing.Point(170, 127)
+        Me.txtFamilia.Name = "txtFamilia"
+        Me.txtFamilia.ReadOnly = True
+        Me.txtFamilia.Size = New System.Drawing.Size(230, 20)
+        Me.txtFamilia.TabIndex = 33
         '
-        'TextBox7
+        'txtValor
         '
-        Me.TextBox7.Location = New System.Drawing.Point(600, 229)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(121, 20)
-        Me.TextBox7.TabIndex = 36
+        Me.txtValor.Location = New System.Drawing.Point(600, 229)
+        Me.txtValor.Name = "txtValor"
+        Me.txtValor.Size = New System.Drawing.Size(121, 20)
+        Me.txtValor.TabIndex = 36
         '
         'Label3
         '
@@ -294,12 +294,12 @@ Partial Class frmActivoDetail
         Me.Label3.TabIndex = 35
         Me.Label3.Text = "Valor Libros"
         '
-        'TextBox8
+        'txtPrecio
         '
-        Me.TextBox8.Location = New System.Drawing.Point(170, 229)
-        Me.TextBox8.Name = "TextBox8"
-        Me.TextBox8.Size = New System.Drawing.Size(121, 20)
-        Me.TextBox8.TabIndex = 38
+        Me.txtPrecio.Location = New System.Drawing.Point(170, 229)
+        Me.txtPrecio.Name = "txtPrecio"
+        Me.txtPrecio.Size = New System.Drawing.Size(121, 20)
+        Me.txtPrecio.TabIndex = 38
         '
         'Label9
         '
@@ -314,25 +314,25 @@ Partial Class frmActivoDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.ClientSize = New System.Drawing.Size(796, 495)
-        Me.Controls.Add(Me.TextBox8)
+        Me.Controls.Add(Me.txtPrecio)
         Me.Controls.Add(Me.Label9)
-        Me.Controls.Add(Me.TextBox7)
+        Me.Controls.Add(Me.txtValor)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.TextBox6)
+        Me.Controls.Add(Me.txtFamilia)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Label7)
-        Me.Controls.Add(Me.TextBox5)
-        Me.Controls.Add(Me.ComboBox1)
-        Me.Controls.Add(Me.TextBox4)
+        Me.Controls.Add(Me.txtMarca)
+        Me.Controls.Add(Me.cmbTipoActivo)
+        Me.Controls.Add(Me.txtDepAcomulada)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.TextBox2)
+        Me.Controls.Add(Me.txtCompra)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.dtFechaCompra)
-        Me.Controls.Add(Me.TextBox3)
+        Me.Controls.Add(Me.txtVida)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.txtProveedor)
         Me.Controls.Add(Me.LinkLabel3)
         Me.Controls.Add(Me.btnSalvar)
         Me.Controls.Add(Me.btnCancelar)
@@ -364,23 +364,23 @@ Partial Class frmActivoDetail
     Friend WithEvents btnSalvar As Windows.Forms.Button
     Friend WithEvents btnCancelar As Windows.Forms.Button
     Friend WithEvents LinkLabel3 As Windows.Forms.LinkLabel
-    Friend WithEvents TextBox1 As Windows.Forms.TextBox
+    Friend WithEvents txtProveedor As Windows.Forms.TextBox
     Friend WithEvents Label2 As Windows.Forms.Label
     Friend WithEvents Label5 As Windows.Forms.Label
-    Friend WithEvents TextBox3 As Windows.Forms.TextBox
+    Friend WithEvents txtVida As Windows.Forms.TextBox
     Friend WithEvents dtFechaCompra As Windows.Forms.DateTimePicker
     Friend WithEvents DataGridView1 As Windows.Forms.DataGridView
-    Friend WithEvents TextBox2 As Windows.Forms.TextBox
-    Friend WithEvents TextBox4 As Windows.Forms.TextBox
+    Friend WithEvents txtCompra As Windows.Forms.TextBox
+    Friend WithEvents txtDepAcomulada As Windows.Forms.TextBox
     Friend WithEvents Label6 As Windows.Forms.Label
-    Friend WithEvents ComboBox1 As Windows.Forms.ComboBox
-    Friend WithEvents TextBox5 As Windows.Forms.TextBox
+    Friend WithEvents cmbTipoActivo As Windows.Forms.ComboBox
+    Friend WithEvents txtMarca As Windows.Forms.TextBox
     Friend WithEvents Label7 As Windows.Forms.Label
     Friend WithEvents CheckBox1 As Windows.Forms.CheckBox
     Friend WithEvents Label8 As Windows.Forms.Label
-    Friend WithEvents TextBox6 As Windows.Forms.TextBox
-    Friend WithEvents TextBox7 As Windows.Forms.TextBox
+    Friend WithEvents txtFamilia As Windows.Forms.TextBox
+    Friend WithEvents txtValor As Windows.Forms.TextBox
     Friend WithEvents Label3 As Windows.Forms.Label
-    Friend WithEvents TextBox8 As Windows.Forms.TextBox
+    Friend WithEvents txtPrecio As Windows.Forms.TextBox
     Friend WithEvents Label9 As Windows.Forms.Label
 End Class

@@ -81,6 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.vb" />
+    <Compile Include="Forms\frmActivoCabList.Designer.vb">
+      <DependentUpon>frmActivoCabList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmActivoCabList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmActivoDetail.Designer.vb">
       <DependentUpon>frmActivoDetail.vb</DependentUpon>
     </Compile>
@@ -146,6 +152,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\frmActivoCabList.resx">
+      <DependentUpon>frmActivoCabList.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmActivoDetail.resx">
       <DependentUpon>frmActivoDetail.vb</DependentUpon>
     </EmbeddedResource>
