@@ -57,6 +57,9 @@
     <Reference Include="D0001">
       <HintPath>..\D0001.dll</HintPath>
     </Reference>
+    <Reference Include="I0001">
+      <HintPath>..\Lib\I0001.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
