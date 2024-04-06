@@ -146,6 +146,7 @@ Partial Class frmActivoDetail
         'LinkLabel3
         '
         Me.LinkLabel3.AutoSize = True
+        Me.LinkLabel3.Enabled = False
         Me.LinkLabel3.LinkColor = System.Drawing.Color.Black
         Me.LinkLabel3.Location = New System.Drawing.Point(118, 199)
         Me.LinkLabel3.Name = "LinkLabel3"

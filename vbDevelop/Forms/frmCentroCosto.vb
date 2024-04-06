@@ -11,6 +11,7 @@ Public Class frmCentroCosto
         adp.DeleteCommand = dcGral.getSQLCommand(Connect, "spCentroCostoDelete")
         '-------------------------------
         adp.InsertCommand.Parameters(1).Direction = ParameterDirection.InputOutput
+        adp.InsertCommand.Parameters(0).Direction = ParameterDirection.InputOutput
         '----------------------------
         Adaptador = adp
         MyBase.Init()
