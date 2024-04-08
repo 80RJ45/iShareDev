@@ -8,7 +8,7 @@ Public Class frmActivoDetail
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         newDinamicTable(Connect, 0, "ActivoCab", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.InputOutput, -1)
-        newDinamicTable(Connect, 1, "ActivoDet", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.Input, 0)
+        newDinamicTable(Connect, 1, "ActivoDet", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.InputOutput, 0)
         newDinamicTable(Connect, 2, "ActivoCompra", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.Input, 0)
 
         LoadDinamicTables()
@@ -17,13 +17,13 @@ Public Class frmActivoDetail
         MyBase.SetGrids()
         dcGral.initGrid(dgvDetalle, dsGral.Tables("ActivoDet"), True, True, "ActivoCabID,ActivoDetID,CentroCostoID,Estado", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from CentroCosto", "CentroCosto", 3, "Nombre", "Nombre", "CentroCostoID", 200)
-        dcGral.addComboGrid(dgvDetalle, Connect, "Select *from dbo.iStatus('ActivoDet','Estado')", "Estado", 5, "Estado", "Nombre", "Codigo", 150)
-        dcGral.insertDateColumn(dgvDetalle, 4, "Fecha", "Fecha", 150, "Y")
+        dcGral.addComboGrid(dgvDetalle, Connect, "Select *from dbo.iStatus('ActivoDet','Estado')", "Estado", 5, "Estado", "Nombre", "Codigo", 100)
+        'dcGral.insertDateColumn(dgvDetalle, 4, "Fecha", "Fecha", 150, "Y")
     End Sub
     Public Overrides Sub SetCombos()
         MyBase.SetCombos()
-        dcGral.setCombo(cmbTipoActivo, dsGral.Tables("TipoActivoCab"), "Nombre", "TipoActivoCabID", 0)
-        dcGral.setCombo(cmbTipoDep, dsGral.Tables("ActivoCapTipoDep"), "Nombre", "Nombre", 1)
+        dcGral.setCombo(cmbTipoActivo, dsGral.Tables("TipoActivoCab"), "Nombre", "TipoActivoCabID", -1)
+        dcGral.setCombo(cmbTipoDep, dsGral.Tables("ActivoCapTipoDep"), "Nombre", "Nombre", -1)
     End Sub
     Public Overrides Sub LoadTables()
         MyBase.LoadTables()
@@ -36,25 +36,27 @@ Public Class frmActivoDetail
         MyBase.DetailRow()
         If dsGral.Tables("ActivoCab").Rows.Count = 0 Then
             dsGral.Tables("ActivoCab").Rows.Add()
-            '''''''''''''''''''''''''''''''''''''''''''''''''''''
             dsGral.Tables("ActivoCompra").Rows.Add()
         Else
             txtCodigo.Text = dsGral.Tables("ActivoCab").Rows(0).Item(1)
             cmbTipoDep.SelectedItem = dsGral.Tables("ActivoCab").Rows(0).Item(4)
-            'cmbTipoActivo.SelectedItem = dsGral.Tables("TipoActivoCab").Rows(0).Item(2)
-            cmbTipoActivo.SelectedValue = dsGral.Tables("TipoActivoCab").Rows(0).Item(0)
+            cmbTipoActivo.SelectedItem = dsGral.Tables("TipoActivoCab").Rows(0).Item(2)
+
 
             'Articulo
             txtArticulo.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Articulo")
             txtArticulo.Tag = dsGral.Tables("ActivoCab").Rows(0).Item("ArticuloID")
-            txtMarca.Text = dsGral.Tables("ActivoCab").Rows(0).Item("marca")
+            txtMarca.Text = dsGral.Tables("ActivoCab").Rows(0).Item("marca").ToString()
             txtFamilia.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Familia")
 
             'ActivoCompra
             txtProveedor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("proveedor")
             dtFechaCompra.Value = dsGral.Tables("ActivoCompra").Rows(0).Item("fecha")
             txtVida.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("vida")
-            txtValor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("precio")
+            txtPrecio.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("precio")
+            txtValor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("Residual")
+
+            'ActivoDet
 
         End If
     End Sub
@@ -75,6 +77,7 @@ Public Class frmActivoDetail
             Err.Clean()
             If txtArticulo.Text.Length = 0 Then Err.AddError("Error, debe seleccionar un artículo", 0)
             If cmbTipoDep.SelectedIndex = -1 Then Err.AddError("Error, debe seleccionar el tipo de depreciación", 0)
+            If cmbTipoActivo.SelectedIndex = -1 Then Err.AddError("Error, Falta seleccionar un tipo de activo", 0)
             If CheckBox1.Checked = True And txtCompra.Text.Length = 0 Then Err.AddError("Error, seleccione una compra", 0)
             If txtVida.Text.Length = 0 Then Err.AddError("Falta el tiempo de vida", 0)
             If txtPrecio.Text.Length = 0 Then Err.AddError("Falta el precio de compra", 0)
@@ -86,15 +89,21 @@ Public Class frmActivoDetail
 
             'Activo
             dsGral.Tables("ActivoCab").Rows(0)("tipodep") = cmbTipoDep.SelectedValue
-            dsGral.Tables("ActivoCab").Rows(0)("ArticuloID") = dsGral.Tables("ActivoCab").Rows(0)("ArticuloID")
+            dsGral.Tables("ActivoCab").Rows(0)("ArticuloID") = txtArticulo.Tag
             dsGral.Tables("ActivoCab").Rows(0)("tipoActivoCabID") = cmbTipoActivo.SelectedValue
+            'dsGral.Tables("ActivoCab").Rows(0)("CompraDetID")
 
             'ActivoCompra
-            dsGral.Tables("ActivoCompra").Rows(0)("Documento") = txtCompra.Text
             dsGral.Tables("ActivoCompra").Rows(0)("Proveedor") = txtProveedor.Text
+            If CheckBox1.Checked Then
+                dsGral.Tables("ActivoCompra").Rows(0)("Documento") = txtCompra.Text
+            Else
+                dsGral.Tables("ActivoCompra").Rows(0)("Documento") = Nothing
+            End If
+            dsGral.Tables("ActivoCompra").Rows(0)("Fecha") = dtFechaCompra.Value
             dsGral.Tables("ActivoCompra").Rows(0)("Precio") = txtPrecio.Text
-            dsGral.Tables("ActivoCompra").Rows(0)("Vida") = txtVida.Text
             dsGral.Tables("ActivoCompra").Rows(0)("Residual") = txtValor.Text
+            dsGral.Tables("ActivoCompra").Rows(0)("Vida") = txtVida.Text
 
             UpdateTables(0)
 
@@ -113,6 +122,7 @@ Public Class frmActivoDetail
             txtArticulo.Text = frm.RowSelected.Item("Nombre").ToString()
             txtMarca.Text = frm.RowSelected.Item("Marca").ToString()
             txtFamilia.Text = frm.RowSelected.Item("Familia").ToString()
+            txtArticulo.Tag = frm.RowSelected.Item("ArticuloID")
         End If
     End Sub
 
@@ -131,5 +141,11 @@ Public Class frmActivoDetail
             LinkLabel3.Enabled = False
         End If
 
+    End Sub
+
+    Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+        Dim frmTipoActivo = New frmTipoActivoCabList()
+        Dim frm = New frmTipoActivoDet(Connect, frmTipoActivo, 1)
+        frm.ShowDialog()
     End Sub
 End Class
