@@ -114,6 +114,7 @@ namespace iShareDev
             if (log.isOK)
             {
                 Connect = log.Connect;
+                Connect.setUser();
                 dcGral = new dcLibrary.dcGeneral();
             }
                 
