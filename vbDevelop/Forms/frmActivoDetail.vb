@@ -15,7 +15,7 @@ Public Class frmActivoDetail
     End Sub
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
-        dcGral.initGrid(dgvDetalle, dsGral.Tables("ActivoDet"), True, True, "ActivoCabID,ActivoDetID,CentroCostoID,Estado", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
+        dcGral.initGrid(dgvDetalle, dsGral.Tables("ActivoDet"), True, True, "ActivoCabID,ActivoDetID,CentroCostoID,Estado", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from CentroCosto", "Centro Costo", 3, "CentroCostoID", "Nombre", "CentroCostoID", 200)
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from dbo.iStatus('ActivoDet','Estado')", "Estado", 5, "Estado", "Nombre", "Codigo", 100)
         'dcGral.insertDateColumn(dgvDetalle, 4, "Fecha", "Fecha", 150, "Y")

@@ -26,6 +26,7 @@ Partial Class frmCentroCosto
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.ClientSize = New System.Drawing.Size(586, 322)
         Me.Name = "frmCentroCosto"
+        Me.Text = "Centro Costo"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
