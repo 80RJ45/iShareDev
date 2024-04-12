@@ -118,7 +118,7 @@ Public Class frmActivoDetail
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Dim frm As New Inventario.frmArticuloDetalle(Connect, "")
+        Dim frm As New Inventario.frmArticuloDetalle(Connect, "4")
         frm.Display = True
         frm.ShowDialog()
         If frm.isOK Then
