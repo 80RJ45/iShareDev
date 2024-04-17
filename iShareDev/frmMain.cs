@@ -152,5 +152,15 @@ namespace iShareDev
         {
             dcGral.ShowList(new vbDevelop.frmActivoCabList(), this, Connect);
         }
+
+        private void pruebaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void depreciaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new vbDevelop.frmDepreciaCabList(), this, Connect);
+        }
     }
 }

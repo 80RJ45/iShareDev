@@ -103,6 +103,12 @@
     <Compile Include="Forms\frmCentroCosto.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\frmDepreciaCabList.Designer.vb">
+      <DependentUpon>frmDepreciaCabList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDepreciaCabList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmFincaDet.Designer.vb">
       <DependentUpon>frmFincaDet.vb</DependentUpon>
     </Compile>
@@ -139,6 +145,12 @@
     <Compile Include="Forms\frmTipoActivoDet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\frmDepreciaCabDetail.Designer.vb">
+      <DependentUpon>frmDepreciaCabDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDepreciaCabDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -165,6 +177,9 @@
     <EmbeddedResource Include="Forms\frmCentroCosto.resx">
       <DependentUpon>frmCentroCosto.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDepreciaCabList.resx">
+      <DependentUpon>frmDepreciaCabList.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmFincaDet.resx">
       <DependentUpon>frmFincaDet.vb</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmTipoActivoDet.resx">
       <DependentUpon>frmTipoActivoDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDepreciaCabDetail.resx">
+      <DependentUpon>frmDepreciaCabDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

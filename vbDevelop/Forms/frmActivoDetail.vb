@@ -55,7 +55,7 @@ Public Class frmActivoDetail
             txtPrecio.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("precio")
             txtValor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("Residual")
 
-            'ActivoDet
+
 
         End If
     End Sub
@@ -81,6 +81,7 @@ Public Class frmActivoDetail
             If txtVida.Text.Length = 0 Then Err.AddError("Falta el tiempo de vida", 0)
             If txtPrecio.Text.Length = 0 Then Err.AddError("Falta el precio de compra", 0)
             'validar dgvDetalle
+            If dsGral.Tables("ActivoDet").Rows.Count = 0 Then Err.AddError("Falta información extra del activo", 0)
 
 
             If Err.Errors Then

@@ -76,6 +76,7 @@
             this.fincaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tipoActivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centroCostoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.activosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -88,7 +89,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.activosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.depreciaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -443,10 +444,12 @@
             this.fincaToolStripMenuItem,
             this.tipoActivoToolStripMenuItem,
             this.centroCostoToolStripMenuItem,
-            this.activosToolStripMenuItem});
+            this.activosToolStripMenuItem,
+            this.depreciaciónToolStripMenuItem});
             this.pruebaToolStripMenuItem.Name = "pruebaToolStripMenuItem";
             this.pruebaToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.pruebaToolStripMenuItem.Text = "Prueba";
+            this.pruebaToolStripMenuItem.Click += new System.EventHandler(this.pruebaToolStripMenuItem_Click);
             // 
             // productoToolStripMenuItem
             // 
@@ -482,6 +485,13 @@
             this.centroCostoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.centroCostoToolStripMenuItem.Text = "Centro Costo";
             this.centroCostoToolStripMenuItem.Click += new System.EventHandler(this.centroCostoToolStripMenuItem_Click);
+            // 
+            // activosToolStripMenuItem
+            // 
+            this.activosToolStripMenuItem.Name = "activosToolStripMenuItem";
+            this.activosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activosToolStripMenuItem.Text = "Activos";
+            this.activosToolStripMenuItem.Click += new System.EventHandler(this.activosToolStripMenuItem_Click);
             // 
             // toolStrip
             // 
@@ -582,12 +592,12 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // activosToolStripMenuItem
+            // depreciaciónToolStripMenuItem
             // 
-            this.activosToolStripMenuItem.Name = "activosToolStripMenuItem";
-            this.activosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.activosToolStripMenuItem.Text = "Activos";
-            this.activosToolStripMenuItem.Click += new System.EventHandler(this.activosToolStripMenuItem_Click);
+            this.depreciaciónToolStripMenuItem.Name = "depreciaciónToolStripMenuItem";
+            this.depreciaciónToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.depreciaciónToolStripMenuItem.Text = "Depreciación";
+            this.depreciaciónToolStripMenuItem.Click += new System.EventHandler(this.depreciaciónToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -675,6 +685,7 @@
         private System.Windows.Forms.ToolStripMenuItem tipoActivoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem centroCostoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem activosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem depreciaciónToolStripMenuItem;
     }
 }
 
