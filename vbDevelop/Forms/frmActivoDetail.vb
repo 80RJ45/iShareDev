@@ -16,8 +16,9 @@ Public Class frmActivoDetail
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
         dcGral.initGrid(dgvDetalle, dsGral.Tables("ActivoDet"), True, True, "ActivoCabID,ActivoDetID,CentroCostoID,Estado", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
-        dcGral.addComboGrid(dgvDetalle, Connect, "Select *from CentroCosto", "Centro Costo", 3, "CentroCostoID", "Nombre", "CentroCostoID", 200)
+        dcGral.addComboGrid(dgvDetalle, Connect, "Select *from CentroCosto", "Centro Costo", 3, "CentroCostoID", "Nombre", "CentroCostoID", 120)
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from dbo.iStatus('ActivoDet','Estado')", "Estado", 5, "Estado", "Nombre", "Codigo", 100)
+        dcGral.FormatColumn(dgvDetalle, "Fecha", "Fecha", 90, "L", "", False)
         'dcGral.insertDateColumn(dgvDetalle, 4, "Fecha", "Fecha", 150, "Y")
     End Sub
     Public Overrides Sub SetCombos()
@@ -93,7 +94,7 @@ Public Class frmActivoDetail
             dsGral.Tables("ActivoCab").Rows(0)("tipodep") = cmbTipoDep.SelectedValue
             dsGral.Tables("ActivoCab").Rows(0)("ArticuloID") = txtArticulo.Tag
             dsGral.Tables("ActivoCab").Rows(0)("tipoActivoCabID") = cmbTipoActivo.SelectedValue
-            'dsGral.Tables("ActivoCab").Rows(0)("CompraDetID")
+
 
 
             'ActivoCompra
