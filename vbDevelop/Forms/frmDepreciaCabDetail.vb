@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Globalization
+Imports System.Windows.Forms
 Public Class frmDepreciaCabDetail
     Public Sub New(cnx As dcLibrary.dcConnect, parents As dcLibrary.dcParentList, DetailID As Integer)
         MyBase.New(cnx, parents, DetailID)
@@ -6,42 +7,33 @@ Public Class frmDepreciaCabDetail
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        newDinamicTable(Connect, 0, "DepreciaCab", "@DepreciaCabID", "@DepreciaCabID", 0, ParameterDirection.InputOutput, -1)
-        newDinamicTable(Connect, 0, "ActivoDep", "@DepreciaCabID", "@DepreciaCabID", 0, ParameterDirection.Input, 0)
+        newDinamicTable(Connect, 0, "DepreciaCab", "@DepreciaCabID", "@DepreciaCabID", DetailID, ParameterDirection.InputOutput, -1)
 
         LoadDinamicTables()
     End Sub
+
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
-        dcGral.initGrid(DataGridView1, dsGral.Tables("ActivoDep"), False, False, "ActivoDetID,ActivoDepID", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
+        dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), True, True, "ActivoCabID,ActivoCompraID,Fecha", False, False, Connect, DataGridViewContentAlignment.MiddleCenter, False)
     End Sub
     Public Overrides Sub SetCombos()
         MyBase.SetCombos()
-        ' dcGral.setCombo(cmbEstado, dsGral.Tables("DepreciaCabEstado"), "Nombre", "Codigo", -1)
+
     End Sub
 
     Public Overrides Sub LoadTables()
         MyBase.LoadTables()
-        NewTable("Select *from dbo.iStatus('ActivoDet','Estado')", "DepreciaCabEstado") 'Tabla
-
+        NewTable("Select *from dbo.iStatus('activoDet','Estado')", "DepreciaCabEstado") 'Tabla        
+        NewTable("execute spActivoDeprecia ", "Activos")
     End Sub
     Public Overrides Sub DetailRow()
         MyBase.DetailRow()
         If dsGral.Tables("DepreciaCab").Rows.Count = 0 Then
             dsGral.Tables("DepreciaCab").Rows.Add()
         Else
-            'Activo
-            txtActivo.Text = dsGral.Tables("DepreciaCab").Rows(0).Item("Articulo")
-            txtTipoActivo.Text = dsGral.Tables("DepreciaCab").Rows(0).Item("TipoActivo")
-            txtTipoDep.Text = dsGral.Tables("DepreciaCab").Rows(0).Item("TipoDep")
-
-            'DepreciaCab
-            'cmbEstado.SelectedValue = dsGral.Tables("DepreciaCab").Rows(0).Item("Estado")
-            lblEstado.Tag = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(0)
-            lblEstado.Text = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(1)
-            dtFechaCompra.Value = dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha")
-
-
+            lblEstado.Tag = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(0).ToString()
+            lblEstado.Text = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(1).ToString()
+            dtFecha.Value = dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha")
         End If
 
     End Sub
@@ -49,25 +41,17 @@ Public Class frmDepreciaCabDetail
 
     End Sub
 
-    Private Sub DataGridView1_CellContentClick(sender As Object, e As Windows.Forms.DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As Windows.Forms.DataGridViewCellEventArgs) Handles dgvActivos.CellContentClick
 
     End Sub
 
     Private Sub btnSalvar_Click(sender As Object, e As EventArgs) Handles btnSalvar.Click
         Try
-            Err.Clean()
-            If txtActivo.Text.Length = 0 Then Err.AddError("Debe seleccionar un Activo", 0)
-            'If cmbEstado.SelectedIndex = -1 Then Err.AddError("Falta seleccionar estado", 0)
-
-            If Err.Errors Then
-                Err.ShowDialog()
-                Exit Sub
-            End If
 
             dsGral.Tables("DepreciaCab").Rows(0).Item("PeriodoDetID") = 0 'El procedimiento almacenado lo va a sobreescribir
-            dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = dtFechaCompra.Value
-            dsGral.Tables("DepreciaCab").Rows(0).Item("Estado") = "G" 'Grabada?
-            dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = Nothing '¿Se deja en null?
+            dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = dtFecha.Value.ToString("yyyy/MM/dd")
+            dsGral.Tables("DepreciaCab").Rows(0).Item("Estado") = "G"
+            dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = 0 'El procedimiento almacenado lo va a sobreescribir
 
             UpdateTables(0)
 
@@ -82,7 +66,7 @@ Public Class frmDepreciaCabDetail
 
     End Sub
 
-    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
         'Dim frm = New frmActivoCabList()
         'frm.Connect = Connect
         'frm.ShowDialog()
@@ -91,5 +75,19 @@ Public Class frmDepreciaCabDetail
 
     Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Close()
+    End Sub
+
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+
+    End Sub
+
+    Private Sub btnProcesar_Click(sender As Object, e As EventArgs) Handles btnProcesar.Click
+        'no hay cero filas en el gridView
+        'Salvar,        
+        lblEstado.Text = dtFecha.Value.ToShortDateString()
+    End Sub
+
+    Private Sub dtFecha_ValueChanged(sender As Object, e As EventArgs) Handles dtFecha.ValueChanged
+
     End Sub
 End Class

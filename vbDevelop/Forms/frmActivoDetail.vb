@@ -47,7 +47,7 @@ Public Class frmActivoDetail
             txtArticulo.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Articulo")
             txtArticulo.Tag = dsGral.Tables("ActivoCab").Rows(0).Item("ArticuloID")
             txtMarca.Text = dsGral.Tables("ActivoCab").Rows(0).Item("marca").ToString()
-            txtFamilia.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Familia")
+            txtFamilia.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Familia").ToString()
 
             'ActivoCompra
             txtProveedor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("proveedor")
@@ -56,7 +56,7 @@ Public Class frmActivoDetail
             txtPrecio.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("precio")
             txtValor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("Residual")
 
-
+            txtDepAcomulada.Text = Int32.Parse(txtPrecio.Text) - Int32.Parse(txtValor.Text)
 
         End If
     End Sub
