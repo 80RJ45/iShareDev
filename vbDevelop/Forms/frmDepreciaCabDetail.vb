@@ -14,7 +14,7 @@ Public Class frmDepreciaCabDetail
 
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
-        dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), True, True, "ActivoCabID,ActivoCompraID,Fecha", False, False, Connect, DataGridViewContentAlignment.MiddleCenter, False)
+        dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), False, False, "ActivoCabID,ActivoCompraID,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
     End Sub
     Public Overrides Sub SetCombos()
         MyBase.SetCombos()
@@ -47,16 +47,32 @@ Public Class frmDepreciaCabDetail
 
     Private Sub btnSalvar_Click(sender As Object, e As EventArgs) Handles btnSalvar.Click
         Try
+            Err.Clean()
+            If dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect) = -1 Then
+                Err.AddError("El periodo de inventario no está abierto", 0)
+            Else
+                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect)).ToString(), Connect))
+                If dsGral.Tables(dsGral.Tables.Count - 1).Rows.Count > 0 Then
+                    Err.AddError("Ya se ha registrado depreciación para los activos en este período", 0)
+                End If
+                'getDataTable con el procedimiento que valida que no hayan depreciaCab de ese período
+            End If
+
+
+            If Err.Errors Then
+                Err.ShowDialog()
+                Exit Sub
+            End If
 
             dsGral.Tables("DepreciaCab").Rows(0).Item("PeriodoDetID") = 0 'El procedimiento almacenado lo va a sobreescribir
             dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = dtFecha.Value.ToString("yyyy/MM/dd")
             dsGral.Tables("DepreciaCab").Rows(0).Item("Estado") = "G"
-            dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = 0 'El procedimiento almacenado lo va a sobreescribir
+            dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = -1 'El procedimiento almacenado lo va a sobreescribir
 
             UpdateTables(0)
 
-            If Adding Then newRecord(0)
-            Close()
+                If Adding Then newRecord(0)
+                Close()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
@@ -82,9 +98,44 @@ Public Class frmDepreciaCabDetail
     End Sub
 
     Private Sub btnProcesar_Click(sender As Object, e As EventArgs) Handles btnProcesar.Click
-        'no hay cero filas en el gridView
-        'Salvar,        
-        lblEstado.Text = dtFecha.Value.ToShortDateString()
+        Try
+            Err.Clean()
+            If dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect) = -1 Then
+                Err.AddError("El periodo de inventario no está abierto", 0)
+            Else
+                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect)).ToString(), Connect))
+                If dsGral.Tables(dsGral.Tables.Count - 1).Rows.Count > 0 Then
+                    Err.AddError("Error,Ya se ha registrado depreciación para los activos en este período", 0)
+                End If
+                'getDataTable con el procedimiento que valida que no hayan depreciaCab de ese período
+            End If
+
+
+            If Err.Errors Then
+                Err.ShowDialog()
+                Exit Sub
+            End If
+
+            dsGral.Tables("DepreciaCab").Rows(0).Item("PeriodoDetID") = 0 'El procedimiento almacenado lo va a sobreescribir
+            dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = -1
+            dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = dtFecha.Value.ToString("yyyy/MM/dd")
+            dsGral.Tables("DepreciaCab").Rows(0).Item("Estado") = "P"
+            UpdateTables(0)
+
+            dcGral.executeProcedure("exec spDepreciaCabProceso " + iParameter(0).Value.ToString(), Connect)
+
+
+
+            'dcGral.getDataTable()
+
+
+            If Adding Then newRecord(0)
+            Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
+        End Try
+
+
     End Sub
 
     Private Sub dtFecha_ValueChanged(sender As Object, e As EventArgs) Handles dtFecha.ValueChanged

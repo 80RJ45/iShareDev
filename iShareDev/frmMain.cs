@@ -162,5 +162,12 @@ namespace iShareDev
         {
             dcGral.ShowList(new vbDevelop.frmDepreciaCabList(), this, Connect);
         }
+
+        private void alumnosEndpointPruebaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //dcGral.ShowList(new cDevelop.Forms.frmAlumnosList(), this, Connect);
+            cDevelop.Forms.frmAlumnosList frm = new cDevelop.Forms.frmAlumnosList();
+            frm.Show();
+        }
     }
 }

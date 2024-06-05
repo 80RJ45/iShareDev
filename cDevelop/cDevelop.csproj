@@ -48,6 +48,9 @@
       <HintPath>..\Lib\I0001.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
@@ -62,6 +65,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Controllers\AlumnosController.cs" />
+    <Compile Include="Forms\frmAlumnosList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmAlumnosList.Designer.cs">
+      <DependentUpon>frmAlumnosList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmProductoList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,18 +84,32 @@
     <Compile Include="Forms\frmPruebaList.Designer.cs">
       <DependentUpon>frmPruebaList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Alumno.cs" />
+    <Compile Include="Models\Alumnos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Source\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\frmAlumnosList.resx">
+      <DependentUpon>frmAlumnosList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProductoList.resx">
       <DependentUpon>frmProductoList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmPruebaList.resx">
       <DependentUpon>frmPruebaList.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vbDevelop\vbDevelop.vbproj">
+      <Project>{B43E0039-F2F7-4247-9E22-CB8BA19025FA}</Project>
+      <Name>vbDevelop</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

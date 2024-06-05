@@ -77,6 +77,7 @@
             this.tipoActivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centroCostoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.activosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.depreciaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -89,7 +90,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.depreciaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.matriculaEagleWingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alumnosEndpointPruebaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -104,7 +106,8 @@
             this.toolsMenu,
             this.windowsMenu,
             this.helpMenu,
-            this.pruebaToolStripMenuItem});
+            this.pruebaToolStripMenuItem,
+            this.matriculaEagleWingsToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
@@ -454,44 +457,51 @@
             // productoToolStripMenuItem
             // 
             this.productoToolStripMenuItem.Name = "productoToolStripMenuItem";
-            this.productoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.productoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.productoToolStripMenuItem.Text = "Producto";
             this.productoToolStripMenuItem.Click += new System.EventHandler(this.productoToolStripMenuItem_Click);
             // 
             // productovbToolStripMenuItem
             // 
             this.productovbToolStripMenuItem.Name = "productovbToolStripMenuItem";
-            this.productovbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.productovbToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.productovbToolStripMenuItem.Text = "Productovb";
             this.productovbToolStripMenuItem.Click += new System.EventHandler(this.productovbToolStripMenuItem_Click);
             // 
             // fincaToolStripMenuItem
             // 
             this.fincaToolStripMenuItem.Name = "fincaToolStripMenuItem";
-            this.fincaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fincaToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.fincaToolStripMenuItem.Text = "Finca";
             this.fincaToolStripMenuItem.Click += new System.EventHandler(this.fincaToolStripMenuItem_Click);
             // 
             // tipoActivoToolStripMenuItem
             // 
             this.tipoActivoToolStripMenuItem.Name = "tipoActivoToolStripMenuItem";
-            this.tipoActivoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tipoActivoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.tipoActivoToolStripMenuItem.Text = "Tipo Activo";
             this.tipoActivoToolStripMenuItem.Click += new System.EventHandler(this.tipoActivoToolStripMenuItem_Click);
             // 
             // centroCostoToolStripMenuItem
             // 
             this.centroCostoToolStripMenuItem.Name = "centroCostoToolStripMenuItem";
-            this.centroCostoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.centroCostoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.centroCostoToolStripMenuItem.Text = "Centro Costo";
             this.centroCostoToolStripMenuItem.Click += new System.EventHandler(this.centroCostoToolStripMenuItem_Click);
             // 
             // activosToolStripMenuItem
             // 
             this.activosToolStripMenuItem.Name = "activosToolStripMenuItem";
-            this.activosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activosToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.activosToolStripMenuItem.Text = "Activos";
             this.activosToolStripMenuItem.Click += new System.EventHandler(this.activosToolStripMenuItem_Click);
+            // 
+            // depreciaciónToolStripMenuItem
+            // 
+            this.depreciaciónToolStripMenuItem.Name = "depreciaciónToolStripMenuItem";
+            this.depreciaciónToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.depreciaciónToolStripMenuItem.Text = "Depreciación";
+            this.depreciaciónToolStripMenuItem.Click += new System.EventHandler(this.depreciaciónToolStripMenuItem_Click);
             // 
             // toolStrip
             // 
@@ -592,12 +602,20 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // depreciaciónToolStripMenuItem
+            // matriculaEagleWingsToolStripMenuItem
             // 
-            this.depreciaciónToolStripMenuItem.Name = "depreciaciónToolStripMenuItem";
-            this.depreciaciónToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.depreciaciónToolStripMenuItem.Text = "Depreciación";
-            this.depreciaciónToolStripMenuItem.Click += new System.EventHandler(this.depreciaciónToolStripMenuItem_Click);
+            this.matriculaEagleWingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.alumnosEndpointPruebaToolStripMenuItem});
+            this.matriculaEagleWingsToolStripMenuItem.Name = "matriculaEagleWingsToolStripMenuItem";
+            this.matriculaEagleWingsToolStripMenuItem.Size = new System.Drawing.Size(133, 20);
+            this.matriculaEagleWingsToolStripMenuItem.Text = "Matricula EagleWings";
+            // 
+            // alumnosEndpointPruebaToolStripMenuItem
+            // 
+            this.alumnosEndpointPruebaToolStripMenuItem.Name = "alumnosEndpointPruebaToolStripMenuItem";
+            this.alumnosEndpointPruebaToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.alumnosEndpointPruebaToolStripMenuItem.Text = "Alumnos Endpoint prueba";
+            this.alumnosEndpointPruebaToolStripMenuItem.Click += new System.EventHandler(this.alumnosEndpointPruebaToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -686,6 +704,8 @@
         private System.Windows.Forms.ToolStripMenuItem centroCostoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem activosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem depreciaciónToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem matriculaEagleWingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alumnosEndpointPruebaToolStripMenuItem;
     }
 }
 
