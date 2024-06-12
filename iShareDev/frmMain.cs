@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using cDevelop.Forms;
 
 namespace iShareDev
 {
@@ -165,8 +166,8 @@ namespace iShareDev
 
         private void alumnosEndpointPruebaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //dcGral.ShowList(new cDevelop.Forms.frmAlumnosList(), this, Connect);
-            cDevelop.Forms.frmAlumnosList frm = new cDevelop.Forms.frmAlumnosList();
+            //dcGral.Sho(new cDevelop.Forms.frmCargarAlumnos(), this, Connect);             
+            frmCargarAlumnos frm = new frmCargarAlumnos(Connect);
             frm.Show();
         }
     }

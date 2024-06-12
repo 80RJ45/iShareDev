@@ -8,22 +8,28 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Windows.Forms;
 using System.Net.Http.Headers;
-
+using System.Data;
+using dcLibrary;
 namespace cDevelop.Controllers
 {
-    public class AlumnosController
+    public class AlumnosController: dcDetail
     {
         private HttpClient client;
-
-        public AlumnosController()
+        private DataTable table;
+        dcConnect Connect;
+        public AlumnosController(dcConnect cnx)
         {
+            Connect = cnx;
             client = new HttpClient();
         }
        
         public async Task<List<Alumno>> GetAllAlumnos()
         {
             try
-            {                
+            {
+                table = new DataTable();
+                table = dcGral.getDataTable("exec spPrueba", Connect);
+                
                 var authToken = Encoding.ASCII.GetBytes("ewws20240517:$sq4`xrucR]@>&xX{Z");
                 client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));

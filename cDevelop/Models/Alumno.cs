@@ -36,6 +36,7 @@ namespace cDevelop.Models
         public string plandePagos { get; set; }
         public DateTime fechaModificacion { get; set; }
         public string transporteColonia { get; set; }
-
+        public string schoolCode { get; set; }
+        public string planTransporte { get; set; }
     }
 }
