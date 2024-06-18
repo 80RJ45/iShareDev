@@ -16,6 +16,7 @@ namespace cDevelop.Controllers
     {
         private HttpClient client;
         private DataTable table;
+        private String ip, user, pass;
         dcConnect Connect;
         public AlumnosController(dcConnect cnx)
         {
@@ -28,14 +29,17 @@ namespace cDevelop.Controllers
             try
             {
                 table = new DataTable();
-                table = dcGral.getDataTable("exec spPrueba", Connect);
+                table = dcGral.getDataTable("exec spParametrosEndpointSelect", Connect);
+                ip = table.Rows[0]["Nombre"].ToString();
+                user = table.Rows[1]["Nombre"].ToString();
+                pass = table.Rows[2]["Nombre"].ToString();
                 
-                var authToken = Encoding.ASCII.GetBytes("ewws20240517:$sq4`xrucR]@>&xX{Z");
+                var authToken = Encoding.ASCII.GetBytes(user +":"+ pass);
                 client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));
 
                 HttpResponseMessage response = await
-                    client.GetAsync("https://ewws.hasbon.com/financial");
+                    client.GetAsync(ip);
 
                 response.EnsureSuccessStatusCode();
 

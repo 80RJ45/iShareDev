@@ -53,27 +53,38 @@ namespace cDevelop.Forms
         }
         
         private void frmCargarAlumnos_Load(object sender, EventArgs e)
-        {
-            getAlumnos();           
+        {            
+                     
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = null;            
-            dataGridView1.Refresh();
-            dataGridView1.DataSource = dsGral.Tables["tabAlumnos"];
+
         }
 
         private async void getAlumnos()
         {
+            int max,importados;
             alumnos = await
                 controller.GetAllAlumnos();
 
             if (alumnos != null)
             {
+                importados = 0;
+                lblIniciar.Text = "Importando: "; lblIniciar.Refresh();
+                lblNombre.Visible = true;
+                progressBar1.Minimum = 1;
+                max = alumnos.ToArray().Length;
+                progressBar1.Maximum = max;
+                progressBar1.Step = 1;
                 Err.Clean();
                 foreach (var alumno in alumnos)
                 {
+                    lblIniciar.Text = "Importando: " + importados.ToString();
+                    lblNombre.Text = alumno.firstName;
+                    lblPorcentaje.Text = ((100 * progressBar1.Value) / max).ToString() + "%";
+                    lblPorcentaje.Refresh(); lblNombre.Refresh();lblIniciar.Refresh();
+                    progressBar1.PerformStep();
                     if (alumno.status == "Enrolled")
                     {
                         tabClienteImport = dcGral.getDataTable("exec spClienteImportSelect '" + alumno.ssn + "' ,'" + alumno.fechaModificacion.Year + "'", Connect);
@@ -96,10 +107,9 @@ namespace cDevelop.Forms
                             row["HorarioTransporte"] = alumno.planTransporte;
                             row["Direccion"] = alumno.address1 + " / " + alumno.address2;
                             row["TransporteColonia"] = alumno.transporteColonia;
-
-
+                                                        
                             //verificar que la colonia existe
-                            if(int.Parse(row["Transporte"].ToString()) == 1)
+                            if (int.Parse(row["Transporte"].ToString()) == 1)
                             {
                                 tabZona = dcGral.getDataTable("exec spVZonaSelect '" + alumno.transporteColonia + "'", Connect);
                                 if (tabZona.Rows.Count == 0)
@@ -119,9 +129,14 @@ namespace cDevelop.Forms
                             row["emailPadre"] = alumno.emailPadre;
 
 
-                            if (!validarAlumno(row))
+                            if (validarAlumno(row) ==1)
                             {
                                 Err.AddError("Error, falta información del alumno: " + row["Nombre"], 0);
+                                continue;
+                            }
+                            if (validarAlumno(row) == 2)
+                            {
+                                Err.AddError("Error, falta información de padres de: " + row["Nombre"], 0);
                                 continue;
                             }
                             if (!validarTransporte(row))
@@ -140,25 +155,38 @@ namespace cDevelop.Forms
                                 row["HorarioTransporte"], "','", row["NombreMadre"], "','", row["identidadMadre"], "','", row["celularMadre"], "','", row["emailMadre"], "','",
                                 row["NombrePadre"], "','", row["identidadPadre"], "','", row["celularPadre"], "','", row["emailPadre"], "'");
                             dcGral.executeProcedure("exec spRegistroAlumno " + parametros, Connect);
+                            importados++;
                         }
                     }
                 }
-                dataGridView1.DataSource = dsGral.Tables["tabAlumno"];
-                //mensaje de errores
+                             
                 Err.ShowDialog();
+                Close();
             }
             else
                 MessageBox.Show(this, "No se pudo obtener la petición", "Error", MessageBoxButtons.OK);
         }
 
-        private bool validarAlumno(DataRow row)
+        private void btnProcesar_Click(object sender, EventArgs e)
+        {            
+            lblIniciar.Text = "Iniciando.....";
+            btnCancelar.Enabled = false;
+            getAlumnos();
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private int validarAlumno(DataRow row)
         {
             if (row["Identidad"].Equals("") || row["Nombre"].Equals("") ||row["Grado"].Equals("") || row["cantMeses"].Equals("") )
-                return false;
+                return 1;
             //responsables
             if ((row["nombreMadre"].Equals("") || row["identidadMadre"].Equals("") || row["celularMadre"].Equals("")) && (row["nombrePadre"].Equals("") || row["identidadPadre"].Equals("") || row["celularPadre"].Equals("")))
-                return false; //al menos los 4 datos de uno de los padres            
-            return true;
+                return 2; //al menos los 3 datos de uno de los padres            
+            return 0;
         }
 
         private bool validarTransporte(DataRow row)
