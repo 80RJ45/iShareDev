@@ -18,6 +18,26 @@ namespace cDevelop.Controllers
         private DataTable table;
         private String ip, user, pass;
         dcConnect Connect;
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // AlumnosController
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.ClientSize = new System.Drawing.Size(457, 282);
+            this.Name = "AlumnosController";
+            this.Load += new System.EventHandler(this.AlumnosController_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void AlumnosController_Load(object sender, EventArgs e)
+        {
+
+        }
+
         public AlumnosController(dcConnect cnx)
         {
             Connect = cnx;

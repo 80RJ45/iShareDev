@@ -15,7 +15,7 @@ namespace cDevelop.Forms
         private string parametros;
         private AlumnosController controller;
         private List<Alumno> alumnos;
-        private DataTable tabAlumnos,tabClienteImport,tabZona;
+        private DataTable tabAlumnos,tabClienteImport,tabZona,tabFaltante;        
         dcLibrary.dcConnect Connect;
         public frmCargarAlumnos(dcLibrary.dcConnect cnx)
         {
@@ -50,6 +50,11 @@ namespace cDevelop.Forms
 
             tabClienteImport = new DataTable();
             tabZona = new DataTable();
+
+            tabFaltante = new DataTable();
+            tabFaltante.Columns.Add("Alumno");
+            tabFaltante.Columns.Add("Identidad");
+            tabFaltante.Columns.Add("Observacion");            
         }
         
         private void frmCargarAlumnos_Load(object sender, EventArgs e)
@@ -88,7 +93,6 @@ namespace cDevelop.Forms
                     if (alumno.status == "Enrolled")
                     {
                         tabClienteImport = dcGral.getDataTable("exec spClienteImportSelect '" + alumno.ssn + "' ,'" + alumno.fechaModificacion.Year + "'", Connect);
-                        
 
                         if (tabClienteImport.Rows.Count == 0)
                         {
@@ -114,7 +118,11 @@ namespace cDevelop.Forms
                                 tabZona = dcGral.getDataTable("exec spVZonaSelect '" + alumno.transporteColonia + "'", Connect);
                                 if (tabZona.Rows.Count == 0)
                                 {
-                                    Err.AddError("Error, la colonia de: " + row["Nombre"] + " No existe", 0);
+                                    DataRow info = tabFaltante.NewRow();
+                                    info["Alumno"] = row["Nombre"];
+                                    info["Identidad"] = row["Identidad"];
+                                    info["Observacion"] = "La colonia ingresada no existe";
+                                    tabFaltante.Rows.Add(info);
                                     continue;
                                 }
                             }
@@ -129,26 +137,47 @@ namespace cDevelop.Forms
                             row["emailPadre"] = alumno.emailPadre;
 
 
-                            if (validarAlumno(row) ==1)
+                            int result = validarAlumno(row);
+
+                            if (result ==1)
                             {
-                                Err.AddError("Error, falta información del alumno: " + row["Nombre"], 0);
+                                DataRow info = tabFaltante.NewRow();
+                                info["Alumno"] = row["Nombre"];
+                                info["Identidad"] = row["Identidad"];
+                                info["Observacion"] = "Información sobre el grado y la cantidad de meses";
                                 continue;
                             }
-                            if (validarAlumno(row) == 2)
+                            if (result == 2)
                             {
-                                Err.AddError("Error, falta información de padres de: " + row["Nombre"], 0);
+                                DataRow info = tabFaltante.NewRow();
+                                info["Alumno"] = row["Nombre"];
+                                info["Identidad"] = row["Identidad"];
+                                info["Observacion"] = "Ningun responsable registrado (con nombre e identidad)";
+                                tabFaltante.Rows.Add(info);
+                                continue;
+                            }
+                            if(result == 3)
+                            {
+                                DataRow info = tabFaltante.NewRow();
+                                info["Alumno"] = row["Nombre"];
+                                info["Identidad"] = row["Identidad"];
+                                info["Observacion"] = "Ningún numero de celular de responsable";
+                                tabFaltante.Rows.Add(info);
                                 continue;
                             }
                             if (!validarTransporte(row))
                             {
-                                Err.AddError("Error en los datos de transporte de: " + row["Nombre"], 0);
+                                DataRow info = tabFaltante.NewRow();
+                                info["Alumno"] = row["Nombre"];
+                                info["Identidad"] = row["Identidad"];
+                                info["Observacion"] = "Error en los datos ingresados para transporte";
+                                tabFaltante.Rows.Add(info);
                                 continue;
                             }
 
                             dsGral.Tables["TabAlumnos"].Rows.Add(row);
 
                             //ya que el cliente no existe mandar a llamar el procedimiento para registrarlo
-
 
                             parametros = string.Concat("'", alumno.ssn, "','", row["Nombre"], "',", row["Transporte"], ",'", row["TransporteColonia"], "','",
                                 row["Grado"], "',", row["Ano"], ",", row["cantMeses"], ",", 0, ",", 0, ",", 1, ",", row["SitioID"], ",'", row["fechaModificacion"], "','",
@@ -159,8 +188,10 @@ namespace cDevelop.Forms
                         }
                     }
                 }
-                             
-                Err.ShowDialog();
+
+                //llamar al frm y enviarle el dataTable
+                frmInformacionFaltante frm = new frmInformacionFaltante(tabFaltante);
+                frm.ShowDialog();
                 Close();
             }
             else
@@ -184,8 +215,10 @@ namespace cDevelop.Forms
             if (row["Identidad"].Equals("") || row["Nombre"].Equals("") ||row["Grado"].Equals("") || row["cantMeses"].Equals("") )
                 return 1;
             //responsables
-            if ((row["nombreMadre"].Equals("") || row["identidadMadre"].Equals("") || row["celularMadre"].Equals("")) && (row["nombrePadre"].Equals("") || row["identidadPadre"].Equals("") || row["celularPadre"].Equals("")))
-                return 2; //al menos los 3 datos de uno de los padres            
+            if ((row["nombreMadre"].Equals("") || row["identidadMadre"].Equals("")) && (row["nombrePadre"].Equals("") || row["identidadPadre"].Equals("")))
+                return 2; //al menos los 3 datos de uno de los padres    
+            if (row["celularMadre"].Equals("") && row["celularPadre"].Equals(""))
+                return 3;
             return 0;
         }
 

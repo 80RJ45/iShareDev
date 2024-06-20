@@ -74,6 +74,12 @@
     <Compile Include="Forms\frmCargarAlumnos.Designer.cs">
       <DependentUpon>frmCargarAlumnos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmInformacionFaltante.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmInformacionFaltante.Designer.cs">
+      <DependentUpon>frmInformacionFaltante.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmProductoList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\frmCargarAlumnos.resx">
       <DependentUpon>frmCargarAlumnos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmInformacionFaltante.resx">
+      <DependentUpon>frmInformacionFaltante.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProductoList.resx">
       <DependentUpon>frmProductoList.cs</DependentUpon>
