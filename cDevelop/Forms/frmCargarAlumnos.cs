@@ -15,8 +15,10 @@ namespace cDevelop.Forms
         private string parametros;
         private AlumnosController controller;
         private List<Alumno> alumnos;
-        private DataTable tabAlumnos,tabClienteImport,tabZona,tabFaltante;        
+        private DataTable tabAlumnos,tabClienteImport,tabZona,tabFaltante;   
+        public int importados { get; set; }
         dcLibrary.dcConnect Connect;
+        
         public frmCargarAlumnos(dcLibrary.dcConnect cnx)
         {
             InitializeComponent();
@@ -69,7 +71,7 @@ namespace cDevelop.Forms
 
         private async void getAlumnos()
         {
-            int max,importados;
+            int max;
             alumnos = await
                 controller.GetAllAlumnos();
 
@@ -82,7 +84,8 @@ namespace cDevelop.Forms
                 max = alumnos.ToArray().Length;
                 progressBar1.Maximum = max;
                 progressBar1.Step = 1;
-                Err.Clean();
+
+
                 foreach (var alumno in alumnos)
                 {
                     lblIniciar.Text = "Importando: " + importados.ToString();
@@ -90,6 +93,7 @@ namespace cDevelop.Forms
                     lblPorcentaje.Text = ((100 * progressBar1.Value) / max).ToString() + "%";
                     lblPorcentaje.Refresh(); lblNombre.Refresh();lblIniciar.Refresh();
                     progressBar1.PerformStep();
+
                     if (alumno.status == "Enrolled")
                     {
                         tabClienteImport = dcGral.getDataTable("exec spClienteImportSelect '" + alumno.ssn + "' ,'" + alumno.fechaModificacion.Year + "'", Connect);
@@ -99,19 +103,30 @@ namespace cDevelop.Forms
                             DataRow row = dsGral.Tables["TabAlumnos"].NewRow();
                             row["Identidad"] = alumno.ssn;
                             row["Nombre"] = alumno.firstName + " " + alumno.lastName;
-                            if (alumno.transporteColonia.Length > 1)//and alumno.horarioTransporte != ""
+                            if (alumno.transporteColonia.Length > 5 && alumno.planTransporte.Length >1)
                                 row["Transporte"] = 1;
                             else
                                 row["Transporte"] = 0;
-                            row["Grado"] = alumno.gradeLevel[0] == '0' ? alumno.gradeLevel.Substring(1) : alumno.gradeLevel;
+                            //row["Grado"] = alumno.gradeLevel[0] == '0' ? alumno.gradeLevel.Substring(1) : alumno.gradeLevel;
+                            row["Grado"] = alumno.gradeLevel;
                             row["Ano"] = alumno.fechaModificacion.Year;
                             row["cantMeses"] = alumno.plandePagos.Split('M')[0].Length > 0 ? alumno.plandePagos.Split('M')[0] : "10";
-                            row["SitioID"] = alumno.schoolCode == "EWH" ? 1 : 2;
                             row["FechaModificacion"] = alumno.fechaModificacion.Year + "-" + alumno.fechaModificacion.Month + "-" + alumno.fechaModificacion.Day;
                             row["HorarioTransporte"] = alumno.planTransporte;
                             row["Direccion"] = alumno.address1 + " / " + alumno.address2;
                             row["TransporteColonia"] = alumno.transporteColonia;
-                                                        
+
+                            if (alumno.schoolCode.ToString().ToUpper() == "EWH" || alumno.schoolCode.ToString().ToUpper() == "EWR")
+                                row["SitioID"] = alumno.schoolCode == "EWH" ? 1 : 2;
+                            else
+                            {
+                                DataRow info = tabFaltante.NewRow();
+                                info["Alumno"] = row["Nombre"];
+                                info["Identidad"] = row["Identidad"];
+                                info["Observacion"] = "Sitio " + alumno.schoolCode+ " no existe";
+                                tabFaltante.Rows.Add(info);
+                                continue;
+                            }
                             //verificar que la colonia existe
                             if (int.Parse(row["Transporte"].ToString()) == 1)
                             {
@@ -137,44 +152,10 @@ namespace cDevelop.Forms
                             row["emailPadre"] = alumno.emailPadre;
 
 
-                            int result = validarAlumno(row);
-
-                            if (result ==1)
-                            {
-                                DataRow info = tabFaltante.NewRow();
-                                info["Alumno"] = row["Nombre"];
-                                info["Identidad"] = row["Identidad"];
-                                info["Observacion"] = "Información sobre el grado y la cantidad de meses";
+                            if (!validarAlumno(row))
                                 continue;
-                            }
-                            if (result == 2)
-                            {
-                                DataRow info = tabFaltante.NewRow();
-                                info["Alumno"] = row["Nombre"];
-                                info["Identidad"] = row["Identidad"];
-                                info["Observacion"] = "Ningun responsable registrado (con nombre e identidad)";
-                                tabFaltante.Rows.Add(info);
-                                continue;
-                            }
-                            if(result == 3)
-                            {
-                                DataRow info = tabFaltante.NewRow();
-                                info["Alumno"] = row["Nombre"];
-                                info["Identidad"] = row["Identidad"];
-                                info["Observacion"] = "Ningún numero de celular de responsable";
-                                tabFaltante.Rows.Add(info);
-                                continue;
-                            }
                             if (!validarTransporte(row))
-                            {
-                                DataRow info = tabFaltante.NewRow();
-                                info["Alumno"] = row["Nombre"];
-                                info["Identidad"] = row["Identidad"];
-                                info["Observacion"] = "Error en los datos ingresados para transporte";
-                                tabFaltante.Rows.Add(info);
                                 continue;
-                            }
-
                             dsGral.Tables["TabAlumnos"].Rows.Add(row);
 
                             //ya que el cliente no existe mandar a llamar el procedimiento para registrarlo
@@ -210,25 +191,92 @@ namespace cDevelop.Forms
             Close();
         }
 
-        private int validarAlumno(DataRow row)
+
+        private bool validarAlumno(DataRow row)
         {
-            if (row["Identidad"].Equals("") || row["Nombre"].Equals("") ||row["Grado"].Equals("") || row["cantMeses"].Equals("") )
-                return 1;
+            bool valida = true;
+
+
+            if (!validarGrado(row["Grado"].ToString()))
+            {
+                DataRow info = tabFaltante.NewRow();
+                info["Alumno"] = row["Nombre"];
+                info["Identidad"] = row["Identidad"];
+                info["Observacion"] = "No existe el grado " + row["Grado"].ToString();
+                tabFaltante.Rows.Add(info);
+                valida = false;
+            }
+                
+
+            //validar padre
+            int responsables = 2;
+            String idPadre = row["identidadPadre"].ToString();
+            if (row["nombrePadre"].ToString().Length < 10 || !long.TryParse(idPadre, out long res) || res.ToString().Length < 11)
+                responsables--;//no hay datos suficientes para el papá
+
+            //validar madre
+            idPadre = row["identidadMadre"].ToString();
+            if (row["nombreMadre"].ToString().Length < 10 || !long.TryParse(idPadre, out long res2) || res2.ToString().Length < 11)
+                responsables--;
+
+
             //responsables
-            if ((row["nombreMadre"].Equals("") || row["identidadMadre"].Equals("")) && (row["nombrePadre"].Equals("") || row["identidadPadre"].Equals("")))
-                return 2; //al menos los 3 datos de uno de los padres    
-            if (row["celularMadre"].Equals("") && row["celularPadre"].Equals(""))
-                return 3;
-            return 0;
+            if (responsables==0)
+            {
+                DataRow info = tabFaltante.NewRow();
+                info["Alumno"] = row["Nombre"];
+                info["Identidad"] = row["Identidad"];
+                info["Observacion"] = "Nombre e Identidad de al menos 1 responsable"; //al menos los 2 datos de uno de los padres  
+                tabFaltante.Rows.Add(info);
+                valida = false;
+            }
+            
+            if (!long.TryParse(row["Identidad"].ToString(), out long a) || a.ToString().Length < 11 || row["Identidad"].ToString().Length <13)
+            {                
+                DataRow info = tabFaltante.NewRow();                
+                info["Alumno"] = row["Nombre"];
+                info["Identidad"] = row["Identidad"];
+                info["Observacion"] = "Error en el formato del número de identidad del alumno";
+                tabFaltante.Rows.Add(info);                
+                valida = false;
+            }
+            if (row["Nombre"].ToString().Length < 10)
+            {
+                DataRow info = tabFaltante.NewRow();
+                info["Alumno"] = row["Nombre"];
+                info["Identidad"] = row["Identidad"];
+                info["Observacion"] = "Nombre del alumno";
+                tabFaltante.Rows.Add(info);
+                valida = false;
+            }
+            return valida;
         }
 
         private bool validarTransporte(DataRow row)
         {
+            bool valida = true;
             if (row["Transporte"].ToString() == "1")
             {
-                if (row["HorarioTransporte"].ToString() != "AM" && row["HorarioTransporte"].ToString() != "PM" && row["HorarioTransporte"].ToString() != "AM/PM")
-                    return false;                      
+                if (row["HorarioTransporte"].ToString() != "AM" && row["HorarioTransporte"].ToString() != "PM" && row["HorarioTransporte"].ToString().ToLower() != "completo")
+                {
+                    DataRow info = tabFaltante.NewRow();
+                    info["Alumno"] = row["Nombre"];
+                    info["Identidad"] = row["Identidad"];
+                    info["Observacion"] = "Error en el formato de horario de transporte especificado " + row["horarioTransporte"];
+                    tabFaltante.Rows.Add(info);
+                    valida = false;
+                }
             }
+
+            return valida;
+        }
+        private bool validarGrado(String codigo)
+        {
+            String codAlt,cadena;
+            codAlt = codigo[0] == '0' ? codigo.Substring(1) : codigo;
+            cadena = "select *from GradoDet where Codigo = '" + codigo + "' or codigo like '%" + codAlt + "%'";
+            if (dcGral.getDataTable(cadena, Connect).Rows.Count ==0)
+                return false;
             return true;
         }
     }

@@ -169,6 +169,7 @@ namespace iShareDev
             //dcGral.Sho(new cDevelop.Forms.frmCargarAlumnos(), this, Connect);             
             frmCargarAlumnos frm = new frmCargarAlumnos(Connect);
             frm.Show();
+            
         }
     }
 }
