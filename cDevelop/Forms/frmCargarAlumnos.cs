@@ -192,6 +192,7 @@ namespace cDevelop.Forms
         }
 
 
+        //Validar datos importantes del alumno
         private bool validarAlumno(DataRow row)
         {
             bool valida = true;
@@ -273,7 +274,7 @@ namespace cDevelop.Forms
         private bool validarGrado(String codigo)
         {
             String codAlt,cadena;
-            codAlt = codigo[0] == '0' ? codigo.Substring(1) : codigo;
+            codAlt = codigo[0] == '0' ? codigo.Substring(1) : codigo; //si viene codigo como 09, lo va a encontrar, si viene K1,K2,...no
             cadena = "select *from GradoDet where Codigo = '" + codigo + "' or codigo like '%" + codAlt + "%'";
             if (dcGral.getDataTable(cadena, Connect).Rows.Count ==0)
                 return false;
