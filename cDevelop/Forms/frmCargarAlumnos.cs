@@ -34,6 +34,7 @@ namespace cDevelop.Forms
             dsGral.Tables["TabAlumnos"].Columns.Add("Grado");
             dsGral.Tables["TabAlumnos"].Columns.Add("Ano");
             dsGral.Tables["TabAlumnos"].Columns.Add("cantMeses");
+            dsGral.Tables["TabAlumnos"].Columns.Add("porcentajeBeca");
             dsGral.Tables["TabAlumnos"].Columns.Add("SitioID");
             dsGral.Tables["TabAlumnos"].Columns.Add("FechaModificacion");
             dsGral.Tables["TabAlumnos"].Columns.Add("HorarioTransporte");
@@ -93,12 +94,12 @@ namespace cDevelop.Forms
                     lblPorcentaje.Text = ((100 * progressBar1.Value) / max).ToString() + "%";
                     lblPorcentaje.Refresh(); lblNombre.Refresh();lblIniciar.Refresh();
                     progressBar1.PerformStep();
-
+                    
                     if (alumno.status == "Enrolled")
                     {
                         tabClienteImport = dcGral.getDataTable("exec spClienteImportSelect '" + alumno.ssn + "' ,'" + alumno.fechaModificacion.Year + "'", Connect);
 
-                        if (tabClienteImport.Rows.Count == 0)
+                        if (tabClienteImport.Rows.Count == 0 || (tabClienteImport.Rows[0]["Transporte"].ToString().ToLower() == "false" && alumno.planTransporte.ToString().Length>1 && alumno.transporteColonia.ToString().Length > 2) )
                         {
                             DataRow row = dsGral.Tables["TabAlumnos"].NewRow();
                             row["Identidad"] = alumno.ssn;
@@ -111,6 +112,8 @@ namespace cDevelop.Forms
                             row["Grado"] = alumno.gradeLevel;
                             row["Ano"] = alumno.fechaModificacion.Year;
                             row["cantMeses"] = alumno.plandePagos.Split('M')[0].Length > 0 ? alumno.plandePagos.Split('M')[0] : "10";
+                            //float descuento = alumno.descuento.ToString() == "" || alumno.descuento.ToString() == " " ? 0 : float.Parse(alumno.descuento.ToString());
+                            //row["porcentajeBeca"] = descuento/100
                             row["FechaModificacion"] = alumno.fechaModificacion.Year + "-" + alumno.fechaModificacion.Month + "-" + alumno.fechaModificacion.Day;
                             row["HorarioTransporte"] = alumno.planTransporte;
                             row["Direccion"] = alumno.address1 + " / " + alumno.address2;
@@ -128,9 +131,9 @@ namespace cDevelop.Forms
                                 continue;
                             }
                             //verificar que la colonia existe
-                            if (int.Parse(row["Transporte"].ToString()) == 1)
+                            if (int.Parse(row["Transporte"].ToString()) == 1 || row["Transporte"] == "1")
                             {
-                                tabZona = dcGral.getDataTable("exec spVZonaSelect '" + alumno.transporteColonia + "'", Connect);
+                                tabZona = dcGral.getDataTable("exec spvZonaPrecioSelect '" + alumno.transporteColonia + "'", Connect);
                                 if (tabZona.Rows.Count == 0)
                                 {
                                     DataRow info = tabFaltante.NewRow();
@@ -158,12 +161,20 @@ namespace cDevelop.Forms
                                 continue;
                             dsGral.Tables["TabAlumnos"].Rows.Add(row);
 
-                            //ya que el cliente no existe mandar a llamar el procedimiento para registrarlo
-
+                            //ya que el cliente no existe mandar a llamar el procedimiento para registrarlo     
+                            if (alumno.ssn == "0824201100451")
+                                MessageBox.Show("Error");
                             parametros = string.Concat("'", alumno.ssn, "','", row["Nombre"], "',", row["Transporte"], ",'", row["TransporteColonia"], "','",
-                                row["Grado"], "',", row["Ano"], ",", row["cantMeses"], ",", 0, ",", 0, ",", 1, ",", row["SitioID"], ",'", row["fechaModificacion"], "','",
-                                row["HorarioTransporte"], "','", row["NombreMadre"], "','", row["identidadMadre"], "','", row["celularMadre"], "','", row["emailMadre"], "','",
-                                row["NombrePadre"], "','", row["identidadPadre"], "','", row["celularPadre"], "','", row["emailPadre"], "'");
+                               row["Grado"], "',", row["Ano"], ",", row["cantMeses"], ",", 0, ",", 0, ",", 4, ",",  //Dia de corte constante =4
+                               row["SitioID"], ",'", row["fechaModificacion"], "','",
+                               row["HorarioTransporte"], "','", row["NombreMadre"], "','", row["identidadMadre"], "','", row["celularMadre"], "','", row["emailMadre"], "','",
+                               row["NombrePadre"], "','", row["identidadPadre"], "','", row["celularPadre"], "','", row["emailPadre"], "'");
+
+                            //parametros = string.Concat("'", alumno.ssn, "','", row["Nombre"], "',", row["Transporte"], ",'", row["TransporteColonia"], "','",
+                            //    row["Grado"], "',", row["Ano"], ",", row["cantMeses"], ",", row["porcentajeBeca"], ",", 0, ",", 4,",",  //Dia de corte constante =4
+                            //    row["SitioID"], ",'", row["fechaModificacion"], "','",
+                            //    row["HorarioTransporte"], "','", row["NombreMadre"], "','", row["identidadMadre"], "','", row["celularMadre"], "','", row["emailMadre"], "','",
+                            //    row["NombrePadre"], "','", row["identidadPadre"], "','", row["celularPadre"], "','", row["emailPadre"], "'");
                             dcGral.executeProcedure("exec spRegistroAlumno " + parametros, Connect);
                             importados++;
                         }
