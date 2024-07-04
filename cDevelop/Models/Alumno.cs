@@ -38,5 +38,6 @@ namespace cDevelop.Models
         public string transporteColonia { get; set; }
         public string schoolCode { get; set; }
         public string planTransporte { get; set; }
+        public string descuento { get; set; }
     }
 }
