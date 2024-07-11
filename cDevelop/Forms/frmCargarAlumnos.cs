@@ -17,6 +17,7 @@ namespace cDevelop.Forms
         private List<Alumno> alumnos;
         private DataTable tabAlumnos,tabClienteImport,tabZona,tabFaltante;   
         public int importados { get; set; }
+        int extrangero;
         dcLibrary.dcConnect Connect;
         
         public frmCargarAlumnos(dcLibrary.dcConnect cnx)
@@ -30,6 +31,8 @@ namespace cDevelop.Forms
 
             dsGral.Tables["TabAlumnos"].Columns.Add("Identidad");
             dsGral.Tables["TabAlumnos"].Columns.Add("Nombre");
+            dsGral.Tables["TabAlumnos"].Columns.Add("Sexo");
+            dsGral.Tables["TabAlumnos"].Columns.Add("Ciudadania");
             dsGral.Tables["TabAlumnos"].Columns.Add("Transporte");
             dsGral.Tables["TabAlumnos"].Columns.Add("Grado");
             dsGral.Tables["TabAlumnos"].Columns.Add("Ano");
@@ -40,6 +43,7 @@ namespace cDevelop.Forms
             dsGral.Tables["TabAlumnos"].Columns.Add("HorarioTransporte");
             dsGral.Tables["TabAlumnos"].Columns.Add("Direccion");
             dsGral.Tables["TabAlumnos"].Columns.Add("TransporteColonia");
+            
 
             //responsables
             dsGral.Tables["TabAlumnos"].Columns.Add("nombreMadre");
@@ -71,7 +75,7 @@ namespace cDevelop.Forms
         }
 
         private async void getAlumnos()
-        {
+        {            
             int max;
             alumnos = await
                 controller.GetAllAlumnos();
@@ -94,8 +98,7 @@ namespace cDevelop.Forms
                     lblPorcentaje.Text = ((100 * progressBar1.Value) / max).ToString() + "%";
                     lblPorcentaje.Refresh(); lblNombre.Refresh();lblIniciar.Refresh();
                     progressBar1.PerformStep();
-
-
+                    
                     if (alumno.status == "Enrolled")
                     {
                         tabClienteImport = dcGral.getDataTable("exec spClienteImportSelect '" + alumno.ssn + "' ,'" + alumno.fechaModificacion.Year + "'", Connect);
@@ -105,6 +108,8 @@ namespace cDevelop.Forms
                             DataRow row = dsGral.Tables["TabAlumnos"].NewRow();
                             row["Identidad"] = alumno.ssn;
                             row["Nombre"] = alumno.firstName + " " + alumno.lastName;
+                            row["Sexo"] = alumno.gender == "Male" ? "M" : "F";
+                            row["Ciudadania"] = alumno.citizenship;
                             if (alumno.transporteColonia.Length > 5 && alumno.planTransporte.Length >1)
                                 row["Transporte"] = 1;
                             else
@@ -119,6 +124,7 @@ namespace cDevelop.Forms
                             row["HorarioTransporte"] = alumno.planTransporte;
                             row["Direccion"] = alumno.address1 + " / " + alumno.address2;
                             row["TransporteColonia"] = alumno.transporteColonia;
+                            
 
                             if (alumno.schoolCode.ToString().ToUpper() == "EWH" || alumno.schoolCode.ToString().ToUpper() == "EWR")
                                 row["SitioID"] = alumno.schoolCode == "EWH" ? 1 : 2;
@@ -162,14 +168,8 @@ namespace cDevelop.Forms
                                 continue;
                             dsGral.Tables["TabAlumnos"].Rows.Add(row);
 
-                            //ya que el cliente no existe mandar a llamar el procedimiento para registrarlo     
-                            //parametros = string.Concat("'", alumno.ssn, "','", row["Nombre"], "',", row["Transporte"], ",'", row["TransporteColonia"], "','",
-                            //   row["Grado"], "',", row["Ano"], ",", row["cantMeses"], ",", 0, ",", 0, ",", 4, ",",  //Dia de corte constante =4
-                            //   row["SitioID"], ",'", row["fechaModificacion"], "','",
-                            //   row["HorarioTransporte"], "','", row["NombreMadre"], "','", row["identidadMadre"], "','", row["celularMadre"], "','", row["emailMadre"], "','",
-                            //   row["NombrePadre"], "','", row["identidadPadre"], "','", row["celularPadre"], "','", row["emailPadre"], "'");
-
-                            parametros = string.Concat("'", alumno.ssn, "','", row["Nombre"], "',", row["Transporte"], ",'", row["TransporteColonia"], "','",
+                            parametros = string.Concat("'", alumno.ssn, "','", row["Nombre"], "','",row["Sexo"],"','", row["Ciudadania"] ,"',",row["Transporte"], ",'",
+                                row["TransporteColonia"], "','",
                                 row["Grado"], "',", row["Ano"], ",", row["cantMeses"], ",", row["porcentajeBeca"], ",", 0, ",", 4, ",",  //Dia de corte constante =4
                                 row["SitioID"], ",'", row["fechaModificacion"], "','",
                                 row["HorarioTransporte"], "','", row["NombreMadre"], "','", row["identidadMadre"], "','", row["celularMadre"], "','", row["emailMadre"], "','",
@@ -242,7 +242,7 @@ namespace cDevelop.Forms
                 valida = false;
             }
             
-            if (!long.TryParse(row["Identidad"].ToString(), out long a) || a.ToString().Length < 11 || row["Identidad"].ToString().Length <13)
+            if (!long.TryParse(row["Identidad"].ToString(), out long a) || (row["Ciudadania"].ToString().Length==0 && row["Identidad"].ToString().Length<13))
             {                
                 DataRow info = tabFaltante.NewRow();                
                 info["Alumno"] = row["Nombre"];
