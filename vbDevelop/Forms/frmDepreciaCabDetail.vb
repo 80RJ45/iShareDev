@@ -34,6 +34,12 @@ Public Class frmDepreciaCabDetail
             lblEstado.Tag = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(0).ToString()
             lblEstado.Text = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(1).ToString()
             dtFecha.Value = dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha")
+
+
+            If dsGral.Tables("DepreciaCab").Rows(0).Item(3).ToString.ToLower().Equals("p") Then
+                btnProcesar.Enabled = False
+                btnSalvar.Enabled = False
+            End If
         End If
 
     End Sub
@@ -51,11 +57,12 @@ Public Class frmDepreciaCabDetail
             If dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect) = -1 Then
                 Err.AddError("El periodo de inventario no está abierto", 0)
             Else
+                'getDataTable con el procedimiento que valida que no hayan depreciaCab de ese período
                 dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect)).ToString(), Connect))
                 If dsGral.Tables(dsGral.Tables.Count - 1).Rows.Count > 0 Then
                     Err.AddError("Ya se ha registrado depreciación para los activos en este período", 0)
                 End If
-                'getDataTable con el procedimiento que valida que no hayan depreciaCab de ese período
+
             End If
 
 
@@ -123,7 +130,7 @@ Public Class frmDepreciaCabDetail
             UpdateTables(0)
 
             dcGral.executeProcedure("exec spDepreciaCabProceso " + iParameter(0).Value.ToString(), Connect)
-
+            'iParameter(0) devuelve el ID de la fila
 
 
             'dcGral.getDataTable()
