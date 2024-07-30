@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -170,6 +171,22 @@ namespace iShareDev
             frmCargarAlumnos frm = new frmCargarAlumnos(Connect);
             frm.Show();
             
+        }
+
+        private void paymentQueryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // URL de la aplicación web ASP.NET
+            string urlWeb = "http://localhost:49723";
+
+            try
+            {
+                // Abre el navegador predeterminado con la URL
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {urlWeb}") { CreateNoWindow = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"No se pudo abrir la URL: {ex.Message}");
+            }
         }
     }
 }

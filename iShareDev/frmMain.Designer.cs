@@ -78,6 +78,8 @@
             this.centroCostoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.activosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.depreciaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.matriculaEagleWingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alumnosEndpointPruebaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -90,8 +92,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.matriculaEagleWingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.alumnosEndpointPruebaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.webToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paymentQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -107,7 +109,8 @@
             this.windowsMenu,
             this.helpMenu,
             this.pruebaToolStripMenuItem,
-            this.matriculaEagleWingsToolStripMenuItem});
+            this.matriculaEagleWingsToolStripMenuItem,
+            this.webToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
@@ -503,6 +506,21 @@
             this.depreciaciónToolStripMenuItem.Text = "Depreciación";
             this.depreciaciónToolStripMenuItem.Click += new System.EventHandler(this.depreciaciónToolStripMenuItem_Click);
             // 
+            // matriculaEagleWingsToolStripMenuItem
+            // 
+            this.matriculaEagleWingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.alumnosEndpointPruebaToolStripMenuItem});
+            this.matriculaEagleWingsToolStripMenuItem.Name = "matriculaEagleWingsToolStripMenuItem";
+            this.matriculaEagleWingsToolStripMenuItem.Size = new System.Drawing.Size(133, 20);
+            this.matriculaEagleWingsToolStripMenuItem.Text = "Matricula EagleWings";
+            // 
+            // alumnosEndpointPruebaToolStripMenuItem
+            // 
+            this.alumnosEndpointPruebaToolStripMenuItem.Name = "alumnosEndpointPruebaToolStripMenuItem";
+            this.alumnosEndpointPruebaToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.alumnosEndpointPruebaToolStripMenuItem.Text = "Alumnos Endpoint prueba";
+            this.alumnosEndpointPruebaToolStripMenuItem.Click += new System.EventHandler(this.alumnosEndpointPruebaToolStripMenuItem_Click);
+            // 
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -602,20 +620,20 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // matriculaEagleWingsToolStripMenuItem
+            // webToolStripMenuItem
             // 
-            this.matriculaEagleWingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.alumnosEndpointPruebaToolStripMenuItem});
-            this.matriculaEagleWingsToolStripMenuItem.Name = "matriculaEagleWingsToolStripMenuItem";
-            this.matriculaEagleWingsToolStripMenuItem.Size = new System.Drawing.Size(133, 20);
-            this.matriculaEagleWingsToolStripMenuItem.Text = "Matricula EagleWings";
+            this.webToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.paymentQueryToolStripMenuItem});
+            this.webToolStripMenuItem.Name = "webToolStripMenuItem";
+            this.webToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.webToolStripMenuItem.Text = "Web";
             // 
-            // alumnosEndpointPruebaToolStripMenuItem
+            // paymentQueryToolStripMenuItem
             // 
-            this.alumnosEndpointPruebaToolStripMenuItem.Name = "alumnosEndpointPruebaToolStripMenuItem";
-            this.alumnosEndpointPruebaToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.alumnosEndpointPruebaToolStripMenuItem.Text = "Alumnos Endpoint prueba";
-            this.alumnosEndpointPruebaToolStripMenuItem.Click += new System.EventHandler(this.alumnosEndpointPruebaToolStripMenuItem_Click);
+            this.paymentQueryToolStripMenuItem.Name = "paymentQueryToolStripMenuItem";
+            this.paymentQueryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.paymentQueryToolStripMenuItem.Text = "Payment Query";
+            this.paymentQueryToolStripMenuItem.Click += new System.EventHandler(this.paymentQueryToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -706,6 +724,8 @@
         private System.Windows.Forms.ToolStripMenuItem depreciaciónToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem matriculaEagleWingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem alumnosEndpointPruebaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem webToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem paymentQueryToolStripMenuItem;
     }
 }
 

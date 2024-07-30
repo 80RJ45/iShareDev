@@ -93,8 +93,8 @@ namespace cDevelop.Forms
 
                 foreach (var alumno in alumnos)
                 {
-                    if (alumno.ssn == "0801201903128")                    
-                        MessageBox.Show("ok","OK");
+                    //if (alumno.ssn == "0801201310194")                    
+                    //    MessageBox.Show("ok","OK");
                     
                     lblIniciar.Text = "Importando: " + importados.ToString();
                     lblNombre.Text = alumno.firstName;
