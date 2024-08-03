@@ -6,11 +6,14 @@ using System.Net.Http;
 using System.Web.Http;
 using pagoenLinea.Models;
 using pagoenLinea.Data;
+using System.Data;
+
 
 namespace pagoenLinea.Controllers
 {
-    public class paymentQueryController : ApiController
+    public class AvisoQueryController : ApiController
     {
+        
         // GET api/<controller>
         //public IEnumerable<string> Get()
         //{
@@ -24,9 +27,18 @@ namespace pagoenLinea.Controllers
         //}
 
         // POST api/<controller>
-        public int Post([FromBody] webQuery query)
+        public List<Aviso> Post([FromBody] webQuery query)
         {
-            return webQueryData.Registrar(query);
+            Aviso aviso = webQueryData.validarGlobal(query); //el método validará y devolverá un aviso con el mensaje de error en caso de que haya
+
+            List<Aviso> avisos = new List<Aviso>();
+
+            //si hubieron errores retornar la lista con un solo aviso vacio que tenga el mensaje
+            if (aviso.Mensaje != "" && aviso.RespuestaID != 0)
+                avisos.Add(aviso);
+            else
+                avisos = webQueryData.Registrar(query);
+            return avisos;
         }
 
         // PUT api/<controller>/5

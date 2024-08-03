@@ -110,12 +110,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\paymentQueryController.cs" />
+    <Compile Include="Controllers\AvisoQueryController.cs" />
     <Compile Include="Data\Conexion.cs" />
     <Compile Include="Data\webQueryData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Aviso.cs" />
     <Compile Include="Models\webQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
