@@ -89,6 +89,20 @@ namespace pagoenLinea.Data
             else
                 return true;
         }
+        public static bool PagosPendientes(webQuery query)
+        {
+            var param = new Dictionary<string, object>
+            {
+                { "Identidad", query.Identidad},
+                { "Tipo",query.Tipo }
+            };
+            DataTable tabAvisos = Conexion.getDataTable("spAvisoQuerySelect", param, db, server);
+
+            if (tabAvisos.Rows.Count == 0)
+                return false;
+            else
+                return true;
+        }
         public static List<Aviso> Registrar(webQuery query)
         {
             
@@ -103,6 +117,10 @@ namespace pagoenLinea.Data
             cmd.Parameters.AddWithValue("@Cliente", query.Cliente);
             cmd.Parameters.AddWithValue("@Identidad", query.Identidad);
             cmd.Parameters.AddWithValue("@Tipo", query.Tipo);
+            cmd.Parameters.AddWithValue("@Valor", query.Valor);
+            cmd.Parameters.AddWithValue("@Factor", query.Factor);
+            cmd.Parameters.AddWithValue("@Moneda", query.Moneda);
+            
 
             int aff = 0;
             try
@@ -151,20 +169,7 @@ namespace pagoenLinea.Data
             return avisos;
         }
 
-        public static bool PagosPendientes(webQuery query)
-        {
-            var param = new Dictionary<string, object>
-            {
-                { "Identidad", query.Identidad},
-                { "Tipo",query.Tipo }
-            };
-            DataTable tabAvisos = Conexion.getDataTable("spAvisoQuerySelect", param, db, server);
-
-            if (tabAvisos.Rows.Count == 0)
-                return false;
-            else
-                return true;
-        }
+        
 
         public static Aviso validarGlobal(webQuery query)
         {
@@ -196,7 +201,7 @@ namespace pagoenLinea.Data
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[5][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[5][1].ToString();
             }
-            if (!PagosPendientes(query))
+            if (!PagosPendientes(query) && aviso.Mensaje == "")
             {
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[6][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[6][1].ToString();

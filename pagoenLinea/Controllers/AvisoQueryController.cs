@@ -29,7 +29,8 @@ namespace pagoenLinea.Controllers
         // POST api/<controller>
         public List<Aviso> Post([FromBody] webQuery query)
         {
-            Aviso aviso = webQueryData.validarGlobal(query); //el método validará y devolverá un aviso con el mensaje de error en caso de que haya
+            Aviso aviso = webQueryData.validarGlobal(query); 
+            //el método validará y devolverá un aviso con el mensaje de error en caso de que haya
 
             List<Aviso> avisos = new List<Aviso>();
 
