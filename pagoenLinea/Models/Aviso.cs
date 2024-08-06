@@ -20,6 +20,7 @@ namespace pagoenLinea.Models
         public float Valor { get; set; }
         public int RespuestaID { get; set; }
         public string Mensaje { get; set; }
+        public string Token { get; set; }
 
         public Aviso()
         {
@@ -36,6 +37,7 @@ namespace pagoenLinea.Models
             Valor = 0;
             Mensaje = "";
             RespuestaID = 0;
+            Token = "";
     }
     }
 }
