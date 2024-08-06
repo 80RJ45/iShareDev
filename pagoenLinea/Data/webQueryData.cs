@@ -117,9 +117,6 @@ namespace pagoenLinea.Data
             cmd.Parameters.AddWithValue("@Cliente", query.Cliente);
             cmd.Parameters.AddWithValue("@Identidad", query.Identidad);
             cmd.Parameters.AddWithValue("@Tipo", query.Tipo);
-            cmd.Parameters.AddWithValue("@Valor", query.Valor);
-            cmd.Parameters.AddWithValue("@Factor", query.Factor);
-            cmd.Parameters.AddWithValue("@Moneda", query.Moneda);
             
 
             int aff = 0;

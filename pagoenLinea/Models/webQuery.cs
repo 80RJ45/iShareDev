@@ -18,8 +18,8 @@ namespace pagoenLinea.Models
         public string Cliente { get; set; }
         public string Identidad { get; set; }
         public string Tipo { get; set; }
-        public float Valor { get; set; }
-        public float Factor { get; set; }
-        public string Moneda { get; set; }
+        //public float Valor { get; set; }
+        //public float Factor { get; set; }
+        //public string Moneda { get; set; }
     }
 }
