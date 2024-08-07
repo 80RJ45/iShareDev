@@ -12,10 +12,12 @@ namespace pagoenLinea.Data
     {
         static SqlConnection conn;
         static string server, db;
+        static string token;
 
-        
-        public static List<Aviso> Registrar(webQuery query)
+
+        public static bool Registrar(webQuery query, int RespuestaID)
         {
+
             conn = new SqlConnection(Conexion.Cadena);
             SqlCommand cmd = new SqlCommand("spWebQueryInsert", conn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -28,27 +30,40 @@ namespace pagoenLinea.Data
             cmd.Parameters.AddWithValue("@Cliente", query.Cliente);
             cmd.Parameters.AddWithValue("@Identidad", query.Identidad);
             cmd.Parameters.AddWithValue("@Tipo", query.Tipo);
-            //cmd.Parameters.AddWithValue("@Valor", query.Valor);
-            //cmd.Parameters.AddWithValue("@Factor", query.Factor);
-            //cmd.Parameters.AddWithValue("@Moneda", query.Moneda);
-            
+            cmd.Parameters.AddWithValue("@RespuestaID", RespuestaID);
 
             int aff = 0;
             try
             {
                 conn.Open();
                 aff = cmd.ExecuteNonQuery();
-                //if (aff > 0)
-                    //aviso.Mensaje = "OK";
+                //despues de almacenar el registro recuperar el token generado
+                var parameters = new Dictionary<string, object>
+                {
+                    {"Socio", query.Socio},
+                    {"Sucursal", query.Sucursal},
+                    {"Agencia", query.Agencia},
+                    {"Usuario", query.Usuario},
+                    {"Referencia", query.Referencia},
+                    {"Cliente", query.Cliente},
+                    {"Identidad", query.Identidad},
+                    {"Tipo", query.Tipo},
+                };
+                DataTable tabToken = Conexion.getDataTable("spGetToken", parameters);
+                token = tabToken.Rows[0][0].ToString();
             }
             catch (Exception ex)
             {
                 //aviso.Mensaje = ex.Message;
                 string a = ex.Message;
+                return false;
             }
 
+            return true;
+        }
 
-
+        public static List<Aviso> GetAvisos(webQuery query)
+        {
             //inicializar la informacion del cliente
             DataTable tabCliente = new DataTable();
             var parametros = new Dictionary<string, object>
@@ -71,6 +86,7 @@ namespace pagoenLinea.Data
             tabAviso = Conexion.getDataTable("spAvisoQuerySelect", Parametros, db, server);
             List<Aviso> avisos = new List<Aviso>();
 
+            DataTable tabMoneda = Conexion.getDataTable("spContratoMonedaSelect", new Dictionary<string, object> { { "ContratoCabID", tabAviso.Rows[0]["ContratoCabID"] } }, db, server);
             DataTable tabRespuesta = Conexion.getDataTable("spRespuestaSelect", new Dictionary<string, object> { }, "webPayment", "3.18.93.40");
             foreach (DataRow fila in tabAviso.Rows)
             {
@@ -80,12 +96,13 @@ namespace pagoenLinea.Data
                 aviso.TipoContrato = fila["nomTipoContrato"].ToString();
                 aviso.Periodo = fila["Periodo"].ToString();
                 aviso.Cliente = fila["nomCliente"].ToString();
-                aviso.Fecha = fila["FechaVence"].ToString();
+                aviso.FechaVence = fila["FechaVence"].ToString();
                 aviso.SubTotal = float.Parse(fila["Valor"].ToString());
                 aviso.Descuento = float.Parse(fila["Descuento"].ToString());
                 aviso.Impuesto = float.Parse(fila["Impuesto"].ToString());
                 aviso.Mora = float.Parse(fila["Mora"].ToString());
                 aviso.Valor = float.Parse(fila["Saldo"].ToString());
+                aviso.Moneda = tabMoneda.Rows[0]["codMoneda"].ToString();
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[0][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[0][1].ToString();
                 aviso.Token = token;
@@ -94,7 +111,7 @@ namespace pagoenLinea.Data
             return avisos;
         }
 
-        
+
 
         public static Aviso validarGlobal(webQuery query)
         {
@@ -116,7 +133,7 @@ namespace pagoenLinea.Data
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[4][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[4][1].ToString();
             }
-            if (!Validaciones.validarTipo(query.Cliente,query.Tipo) && aviso.Mensaje == "")
+            if (!Validaciones.validarTipo(query.Cliente, query.Tipo) && aviso.Mensaje == "")
             {
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[3][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[3][1].ToString();
@@ -126,7 +143,7 @@ namespace pagoenLinea.Data
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[5][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[5][1].ToString();
             }
-            if (!Validaciones.PagosPendientes(query.Identidad,query.Tipo) && aviso.Mensaje == "")
+            if (!Validaciones.PagosPendientes(query.Identidad, query.Tipo) && aviso.Mensaje == "")
             {
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[6][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[6][1].ToString();

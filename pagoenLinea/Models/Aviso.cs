@@ -12,12 +12,13 @@ namespace pagoenLinea.Models
         public string TipoContrato { get; set; }
         public string Periodo { get; set; }
         public string Cliente { get; set; }
-        public string Fecha { get; set; }
+        public string FechaVence { get; set; }
         public float SubTotal { get; set; }
         public float Descuento { get; set; }
         public float Impuesto { get; set; }
         public float Mora { get; set; }
         public float Valor { get; set; }
+        public string Moneda { get; set; }
         public int RespuestaID { get; set; }
         public string Mensaje { get; set; }
         public string Token { get; set; }
@@ -29,7 +30,7 @@ namespace pagoenLinea.Models
             TipoContrato = "";
             Periodo = "";
             Cliente = "";
-            Fecha = "";
+            FechaVence = "";
             SubTotal = 0;
             Descuento = 0;
             Impuesto = 0;
@@ -38,6 +39,6 @@ namespace pagoenLinea.Models
             Mensaje = "";
             RespuestaID = 0;
             Token = "";
-    }
+        }
     }
 }

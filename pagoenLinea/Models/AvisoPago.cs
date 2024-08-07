@@ -9,11 +9,13 @@ namespace pagoenLinea.Models
     {
         public string Socio { get; set; }
         public string Password { get; set; }
+        public string Sucursal { get; set; }
+        public string Agencia { get; set; }
+        public string Usuario { get; set; }
+        public string Referencia { get; set; }
         public string Cliente { get; set; }
         public string Identidad { get; set; }
         public string Tipo { get; set; }
-        public string Token { get; set; }
-        public string CodigoAviso { get; set; }
         public float Valor { get; set; }
         public float Factor { get; set; }
         public string Moneda { get; set; }

@@ -9,9 +9,9 @@ namespace pagoenLinea.Data
 {
     public class Validaciones
     {
-        static SqlConnection conn;        
+        static SqlConnection conn;
         static string server, db;
-        static DataTable tabAvisos;
+        static DataTable tabAvisos, tabMoneda;
 
         public static int validarSocio(string usr, string pass)
         {
@@ -113,33 +113,56 @@ namespace pagoenLinea.Data
             return true;
         }
 
-        public static bool Moneda( string moneda)
+        public static bool Moneda(string moneda)
         {
-            if (moneda != "L" && moneda != "D")
-                return false;            
+            tabMoneda = Conexion.getDataTable
+               (
+                   "spMonedaQuerySelect",
+                   new Dictionary<string, object>
+                   {
+                        {"Codigo", moneda }
+                   },
+                   db,
+                   server
+               );
+
+            if (tabMoneda.Rows.Count == 0)
+                return false;
             return true;
         }
         public static bool FactorMoneda(float factor, string moneda)
         {
-            if((factor != 1 && moneda == "L") || factor < 0)
+            if ((factor != 1 && moneda == "L.") || factor < 0)
                 return false;
             return true;
         }
-        public static bool AvisoSeleccionado(string codAviso, float valor)
-        {            
+        public static int AvisoSeleccionado(string codAviso, float valor)
+        {// 1 aviso incorrecto seleccionado
+            //2 valor del pago no coincide con el saldo del aviso
+            int resp = 0;//ok
             float saldo;
 
-            foreach(DataRow fila in tabAvisos.Rows)
+            foreach (DataRow fila in tabAvisos.Rows)
             {
                 saldo = int.Parse(fila["Saldo"].ToString());
-                if(saldo > 0 && codAviso == fila["Codigo"].ToString())
-                {//es el primer aviso que no se ha pagado y coincide con el código de aviso
-                    //que se ha recibido como aviso a pagar (todo bien)
-                    if(saldo == valor) //el saldo de ese aviso debe ser igual al valor al pagar
-                        return true;                    
+                if (!(saldo > 0 && codAviso == fila["Codigo"].ToString()))
+                {//es el primer aviso que no se ha pagado y  NO coincide con el código de aviso                    
+                 //que se ha recibido como aviso a pagar
+
+                    resp = 1;
+                    return resp;
                 }
+                else
+                {
+                    if (saldo != valor) //el saldo de ese aviso debe ser igual al valor a pagar
+                    {
+                        resp = 2;
+                        return resp;
+                    }
+                }
+
             }
-            return false;
+            return resp;
         }
     }
 }

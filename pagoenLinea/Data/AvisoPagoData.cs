@@ -18,12 +18,17 @@ namespace pagoenLinea.Data
 
             adp.UpdateCommand = new SqlCommand("spWebQueryUpdate", connection);
             adp.UpdateCommand.CommandType = CommandType.StoredProcedure;
-            adp.UpdateCommand.Parameters.AddWithValue("@Token", pago.Token);
-            adp.UpdateCommand.Parameters.AddWithValue("@Valor", pago.Valor);
-            adp.UpdateCommand.Parameters.AddWithValue("@Factor", pago.Factor);
-            adp.UpdateCommand.Parameters.AddWithValue("@Moneda", pago.Moneda);
+            adp.UpdateCommand.Parameters.AddWithValue("@Socio", pago.Socio);
+            adp.UpdateCommand.Parameters.AddWithValue("@Sucursal", pago.Sucursal);
+            adp.UpdateCommand.Parameters.AddWithValue("@Agencia", pago.Agencia);
+            adp.UpdateCommand.Parameters.AddWithValue("@Usuario", pago.Usuario);
+            adp.UpdateCommand.Parameters.AddWithValue("@Referencia", pago.Referencia);
+            adp.UpdateCommand.Parameters.AddWithValue("@Cliente", pago.Cliente);
+            adp.UpdateCommand.Parameters.AddWithValue("@Identidad", pago.Identidad);
+            adp.UpdateCommand.Parameters.AddWithValue("@Tipo", pago.Tipo);
+            //adp.UpdateCommand.Parameters.AddWithValue("@RespuestaID", RespuestaID);
 
-            int aff=0;
+            int aff = 0;
             try
             {
                 connection.Open();
@@ -75,15 +80,14 @@ namespace pagoenLinea.Data
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[6][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[6][1].ToString();
             }
-            if(!Validaciones.AvisoExiste(pago.CodigoAviso) && aviso.Mensaje == "")
-            {
-                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[7][0].ToString());
-                aviso.Mensaje = tabRespuesta.Rows[7][1].ToString();
-            }
 
+            if (!Validaciones.FactorMoneda(pago.Factor, pago.Moneda))
+            {
+
+            }
             //agregar validaciones de Factor - moneda
             //agregar validaciones de valor - costoAviso
-            return aviso;       
+            return aviso;
 
         }
     }
