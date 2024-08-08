@@ -110,7 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AvisoPagoController.cs" />
+    <Compile Include="Controllers\PagoAvisoController.cs" />
     <Compile Include="Controllers\AvisoQueryController.cs" />
     <Compile Include="Data\AvisoPagoData.cs" />
     <Compile Include="Data\Conexion.cs" />

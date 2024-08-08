@@ -7,6 +7,7 @@ namespace pagoenLinea.Models
 {
     public class AvisoPago
     {
+        public string Codigo { get; set; }
         public string Socio { get; set; }
         public string Password { get; set; }
         public string Sucursal { get; set; }

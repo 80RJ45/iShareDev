@@ -103,9 +103,9 @@ namespace pagoenLinea.Data
             else
                 return true;
         }
-        public static bool AvisoExiste(string codAviso)
+        public static bool AvisoExiste(string codAviso,string identidad)
         {
-            var param = new Dictionary<string, object> { { "codAviso", codAviso } };
+            var param = new Dictionary<string, object> { { "codAviso", codAviso },{"Identidad",identidad } };
             DataTable tabAviso = Conexion.getDataTable("spAvisoSelectCod", param, db, server);
             if (tabAviso.Rows.Count == 0)
                 return false;
@@ -130,22 +130,26 @@ namespace pagoenLinea.Data
                 return false;
             return true;
         }
+        
         public static bool FactorMoneda(float factor, string moneda)
         {
             if ((factor != 1 && moneda == "L.") || factor < 0)
                 return false;
             return true;
         }
-        public static int AvisoSeleccionado(string codAviso, float valor)
+        public static int AvisoSeleccionado(string codAviso, float valor,float factor = 1)
         {// 1 aviso incorrecto seleccionado
             //2 valor del pago no coincide con el saldo del aviso
             int resp = 0;//ok
             float saldo;
+            
 
-            foreach (DataRow fila in tabAvisos.Rows)
-            {
+            DataRow fila = tabAvisos.Rows[0];
+
                 saldo = int.Parse(fila["Saldo"].ToString());
-                if (!(saldo > 0 && codAviso == fila["Codigo"].ToString()))
+                
+                
+                if (!(codAviso == fila["Codigo"].ToString()))
                 {//es el primer aviso que no se ha pagado y  NO coincide con el código de aviso                    
                  //que se ha recibido como aviso a pagar
 
@@ -154,15 +158,59 @@ namespace pagoenLinea.Data
                 }
                 else
                 {
-                    if (saldo != valor) //el saldo de ese aviso debe ser igual al valor a pagar
+                    if (saldo != valor * factor) //el saldo de ese aviso debe ser igual al valor a pagar
                     {
                         resp = 2;
                         return resp;
                     }
                 }
 
-            }
+            
             return resp;
+        }
+
+
+        public static Aviso getAviso(AvisoPago pago)
+        {
+            //inicializar la informacion del cliente
+            DataTable tabCliente = new DataTable();
+            var parametros = new Dictionary<string, object>
+            {
+                { "codCliente", pago.Cliente }
+            };
+            tabCliente = Conexion.getDataTable("spClienteCabSelect", parametros);
+
+
+            server = tabCliente.Rows[0][3].ToString();
+            db = tabCliente.Rows[0][4].ToString();
+
+            DataTable tabAviso = new DataTable();
+            var Parametros = new Dictionary<string, object>
+            {
+                { "Identidad", pago.Identidad},
+                { "Tipo",pago.Tipo }
+            };
+
+            tabAviso = Conexion.getDataTable("spAvisoQuerySelect", Parametros, db, server);
+            DataRow fila = tabAviso.Rows[0];
+
+            Aviso aviso = new Aviso();
+            aviso.Codigo = fila["Codigo"].ToString();
+            aviso.Contrato = fila["ContratoCabID"].ToString();
+            aviso.TipoContrato = fila["nomTipoContrato"].ToString();
+            aviso.Periodo = fila["Periodo"].ToString();
+            aviso.Cliente = fila["nomCliente"].ToString();
+            aviso.FechaVence = fila["FechaVence"].ToString();
+            aviso.SubTotal = float.Parse(fila["Valor"].ToString());
+            aviso.Descuento = float.Parse(fila["Descuento"].ToString());
+            aviso.Impuesto = float.Parse(fila["Impuesto"].ToString());
+            aviso.Mora = float.Parse(fila["Mora"].ToString());
+            aviso.Valor = float.Parse(fila["Saldo"].ToString());
+            aviso.Moneda = tabMoneda.Rows[0]["Codigo"].ToString();
+            aviso.RespuestaID = 0;
+            aviso.Mensaje = "OK";
+
+            return aviso;
         }
     }
 }

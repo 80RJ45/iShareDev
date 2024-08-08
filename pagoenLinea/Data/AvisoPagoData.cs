@@ -10,29 +10,28 @@ namespace pagoenLinea.Data
 {
     public class AvisoPagoData
     {
-        public static int pagoAviso(AvisoPago pago)
+        public static int Registrar(AvisoPago pago, int RespuestaID)
         {
             SqlConnection connection = Conexion.GetConnection("WebPayment", "iPayment", "wp2024++", "3.18.93.40");
+            
+            SqlCommand cmd = new SqlCommand("spWebQueryInsert", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
 
-            SqlDataAdapter adp = new SqlDataAdapter();
-
-            adp.UpdateCommand = new SqlCommand("spWebQueryUpdate", connection);
-            adp.UpdateCommand.CommandType = CommandType.StoredProcedure;
-            adp.UpdateCommand.Parameters.AddWithValue("@Socio", pago.Socio);
-            adp.UpdateCommand.Parameters.AddWithValue("@Sucursal", pago.Sucursal);
-            adp.UpdateCommand.Parameters.AddWithValue("@Agencia", pago.Agencia);
-            adp.UpdateCommand.Parameters.AddWithValue("@Usuario", pago.Usuario);
-            adp.UpdateCommand.Parameters.AddWithValue("@Referencia", pago.Referencia);
-            adp.UpdateCommand.Parameters.AddWithValue("@Cliente", pago.Cliente);
-            adp.UpdateCommand.Parameters.AddWithValue("@Identidad", pago.Identidad);
-            adp.UpdateCommand.Parameters.AddWithValue("@Tipo", pago.Tipo);
-            //adp.UpdateCommand.Parameters.AddWithValue("@RespuestaID", RespuestaID);
+            cmd.Parameters.AddWithValue("@Socio", pago.Socio);
+            cmd.Parameters.AddWithValue("@Sucursal", pago.Sucursal);
+            cmd.Parameters.AddWithValue("@Agencia", pago.Agencia);
+            cmd.Parameters.AddWithValue("@Usuario", pago.Usuario);
+            cmd.Parameters.AddWithValue("@Referencia", pago.Referencia);
+            cmd.Parameters.AddWithValue("@Cliente", pago.Cliente);
+            cmd.Parameters.AddWithValue("@Identidad", pago.Identidad);
+            cmd.Parameters.AddWithValue("@Tipo", pago.Tipo);
+            cmd.Parameters.AddWithValue("@RespuestaID", RespuestaID);
 
             int aff = 0;
             try
             {
                 connection.Open();
-                aff = adp.UpdateCommand.ExecuteNonQuery();
+                aff = cmd.ExecuteNonQuery();
                 connection.Close();
             }
             catch (Exception ex)
@@ -43,8 +42,7 @@ namespace pagoenLinea.Data
             }
 
             return aff;
-        }
-
+        }        
         public static Aviso validarGlobal(AvisoPago pago)
         {
             DataTable tabRespuesta;
@@ -75,18 +73,43 @@ namespace pagoenLinea.Data
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[5][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[5][1].ToString();
             }
+            if (aviso.Mensaje == "" && !Validaciones.AvisoExiste(pago.Codigo,pago.Identidad))
+            {
+                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[7][0].ToString());
+                aviso.Mensaje = tabRespuesta.Rows[7][1].ToString();
+            }
             if (!Validaciones.PagosPendientes(pago.Identidad, pago.Tipo) && aviso.Mensaje == "")
             {
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[6][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[6][1].ToString();
             }
-
-            if (!Validaciones.FactorMoneda(pago.Factor, pago.Moneda))
+            if (aviso.Mensaje == "" && !Validaciones.Moneda(pago.Moneda))
             {
-
+                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[8][0].ToString());
+                aviso.Mensaje = tabRespuesta.Rows[8][1].ToString();
             }
-            //agregar validaciones de Factor - moneda
-            //agregar validaciones de valor - costoAviso
+            if (!Validaciones.FactorMoneda(pago.Factor, pago.Moneda) && aviso.Mensaje == "")
+            {
+                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[9][0].ToString());
+                aviso.Mensaje = tabRespuesta.Rows[9][1].ToString();
+            }
+            if (!Validaciones.FactorMoneda(pago.Factor, pago.Moneda) && aviso.Mensaje == "")
+            {
+                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[9][0].ToString());
+                aviso.Mensaje = tabRespuesta.Rows[9][1].ToString();
+            }
+
+            int okAviso = Validaciones.AvisoSeleccionado(pago.Codigo, pago.Valor,pago.Factor);
+            if(okAviso == 1 && aviso.Mensaje == "")
+            {
+                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[10][0].ToString());
+                aviso.Mensaje = tabRespuesta.Rows[10][1].ToString();
+            }
+            if (okAviso == 2 && aviso.Mensaje == "")
+            {
+                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[11][0].ToString());
+                aviso.Mensaje = tabRespuesta.Rows[11][1].ToString();
+            }
             return aviso;
 
         }

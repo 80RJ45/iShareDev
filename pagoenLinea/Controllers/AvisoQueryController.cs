@@ -42,8 +42,9 @@ namespace pagoenLinea.Controllers
             }
             else
             {
+                webQueryData.Registrar(query, aviso.RespuestaID);//primero para que se genere
+                //el token
                 avisos = webQueryData.GetAvisos(query);
-                webQueryData.Registrar(query, aviso.RespuestaID);
             }
 
 

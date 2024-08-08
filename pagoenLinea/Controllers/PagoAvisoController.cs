@@ -10,7 +10,7 @@ using pagoenLinea.Models;
 
 namespace pagoenLinea.Controllers
 {
-    public class AvisoPagoController : ApiController
+    public class PagoAvisoController : ApiController
     {
         //// GET api/<controller>
         //public IEnumerable<string> Get()
@@ -25,14 +25,22 @@ namespace pagoenLinea.Controllers
         //}
 
         // POST api/<controller>
-        public int Post([FromBody] AvisoPago pago)
+        public Aviso Post([FromBody] AvisoPago pago)
         {
             Aviso aviso = AvisoPagoData.validarGlobal(pago);
 
-            if (aviso.Mensaje != "")
-                return 0;
+            if (aviso.Mensaje != "" && aviso.RespuestaID != 0)
+            {
+                AvisoPagoData.Registrar(pago, aviso.RespuestaID);
+                return aviso;
+            }
             else
-                return AvisoPagoData.pagoAviso(pago);
+            {
+                AvisoPagoData.Registrar(pago, 0);
+                return Validaciones.getAviso(pago);
+            }
+
+            
         }
 
         // PUT api/<controller>/5
