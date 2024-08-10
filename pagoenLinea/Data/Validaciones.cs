@@ -170,8 +170,10 @@ namespace pagoenLinea.Data
         }
 
 
-        public static Aviso getAviso(AvisoPago pago, string token)
+        public static List<object> getAviso(AvisoPago pago, string token)
         {
+            List<object> list = new List<object>();
+
             //inicializar la informacion del cliente
             DataTable tabCliente = new DataTable();
             var parametros = new Dictionary<string, object>
@@ -210,7 +212,10 @@ namespace pagoenLinea.Data
             aviso.RespuestaID = 0;
             aviso.Mensaje = "OK";
             aviso.Token = token;
-            return aviso;
+
+            list.Add(aviso);
+            list.Add(fila["Avisos"]);
+            return list;
         }
     }
 }
