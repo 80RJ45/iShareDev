@@ -84,9 +84,9 @@ namespace pagoenLinea.Data
             }
             return webTransaccionID;
         }
-        public static int marcarAviso(string codAviso,int webTransaccionID,string cliente)
+        public static List<int> marcarAviso(string codAviso, int cantAvisos,int webTransaccionID,string cliente)
         {
-            int avisoCabID=-1;
+            List<int> list = new List<int>();            
             DataTable tabCliente = new DataTable();
             var parametros = new Dictionary<string, object>
             {
@@ -105,13 +105,19 @@ namespace pagoenLinea.Data
             cmd.Parameters[0].Direction = ParameterDirection.InputOutput;
             cmd.Parameters.AddWithValue("@codAviso", codAviso);
             cmd.Parameters.AddWithValue("@webTransaccionID", webTransaccionID);
+            cmd.Parameters.AddWithValue("@cantAvisos", cantAvisos);
+            cmd.Parameters[3].Direction = ParameterDirection.InputOutput;
+            //reutilizado para enviar
+            //la cant de avisos a modificar y para traer el id del otro aviso modificado en caso de que se hayan modificado 2
 
             int aff = 0;
             try
             {
                 connCliente.Open();
                 aff =cmd.ExecuteNonQuery();
-                avisoCabID = (int)cmd.Parameters[0].Value;
+                list.Add( (int)cmd.Parameters[0].Value);
+                if ((int)cmd.Parameters[3].Value > 2)
+                    list.Add((int)cmd.Parameters[3].Value);
                 connCliente.Close();
             }
             catch (Exception ex)
@@ -120,9 +126,9 @@ namespace pagoenLinea.Data
                 throw;
             }
 
-            //configurar proc para que devuelva el avisoCabID
-            //terminar de configurar el command y ya hacer pruebas
-            return avisoCabID;
+            //esta lista va a tener los 2 avisoCabID que se modificaron
+            //que se marcaron con el webTransaccion
+            return list;
         }
         public static Aviso validarGlobal(AvisoPago pago)
         {
