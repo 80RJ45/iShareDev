@@ -45,7 +45,16 @@ namespace pagoenLinea.Data
             }
 
             DataTable tabResult = new DataTable();
-            adapter.Fill(tabResult);
+            try
+            {
+                adapter.Fill(tabResult);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
 
             return tabResult;
         }

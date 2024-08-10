@@ -27,6 +27,7 @@ namespace pagoenLinea.Controllers
         // POST api/<controller>
         public Aviso Post([FromBody] AvisoPago pago)
         {
+            int webQueryID,webTransaccionID=-1,avisoCabID=-1;
             Aviso aviso = AvisoPagoData.validarGlobal(pago);
 
             if (aviso.Mensaje != "" && aviso.RespuestaID != 0)
@@ -36,8 +37,20 @@ namespace pagoenLinea.Controllers
             }
             else
             {
-                AvisoPagoData.Registrar(pago, 0);
-                return Validaciones.getAviso(pago);
+                List<object> data = new List<object>();
+                
+                data = AvisoPagoData.Registrar(pago, 0);
+                webQueryID =(int) data[0];
+
+                if (webQueryID > 0)
+                    webTransaccionID = AvisoPagoData.registrarWebTransaccion(pago.Cliente, webQueryID);
+                if (webTransaccionID > 0)
+                    aviso = Validaciones.getAviso(pago, data[1].ToString());
+                    avisoCabID = AvisoPagoData.marcarAviso(pago.Codigo, webTransaccionID, pago.Cliente);
+                if(avisoCabID >0)
+                    return aviso;
+                else
+                    return new Aviso();
             }
 
             

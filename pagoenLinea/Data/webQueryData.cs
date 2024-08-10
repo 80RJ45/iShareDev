@@ -50,7 +50,7 @@ namespace pagoenLinea.Data
                     {"Tipo", query.Tipo},
                 };
                 DataTable tabToken = Conexion.getDataTable("spGetToken", parameters);
-                token = tabToken.Rows[0][0].ToString();
+                token = tabToken.Rows[0]["Token"].ToString();
             }
             catch (Exception ex)
             {

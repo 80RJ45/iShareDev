@@ -10,13 +10,18 @@ namespace pagoenLinea.Data
 {
     public class AvisoPagoData
     {
-        public static int Registrar(AvisoPago pago, int RespuestaID)
+        public static SqlConnection connection, connCliente;
+        public static string db, server;
+        public static List<object> Registrar(AvisoPago pago, int RespuestaID)
         {
-            SqlConnection connection = Conexion.GetConnection("WebPayment", "iPayment", "wp2024++", "3.18.93.40");
+            List<object> list = new List<object>();
+            connection = Conexion.GetConnection("WebPayment", "iPayment", "wp2024++", "3.18.93.40");
             
             SqlCommand cmd = new SqlCommand("spWebQueryInsert", connection);
             cmd.CommandType = CommandType.StoredProcedure;
 
+            cmd.Parameters.AddWithValue("@webQueryID", 0);
+            cmd.Parameters[0].Direction = ParameterDirection.InputOutput;
             cmd.Parameters.AddWithValue("@Socio", pago.Socio);
             cmd.Parameters.AddWithValue("@Sucursal", pago.Sucursal);
             cmd.Parameters.AddWithValue("@Agencia", pago.Agencia);
@@ -26,23 +31,99 @@ namespace pagoenLinea.Data
             cmd.Parameters.AddWithValue("@Identidad", pago.Identidad);
             cmd.Parameters.AddWithValue("@Tipo", pago.Tipo);
             cmd.Parameters.AddWithValue("@RespuestaID", RespuestaID);
-
-            int aff = 0;
+            cmd.Parameters.AddWithValue("@Valor", pago.Valor);
+            cmd.Parameters.AddWithValue("@Factor", pago.Factor);
+            cmd.Parameters.AddWithValue("@Moneda", pago.Moneda);
+            cmd.Parameters.AddWithValue("@Token", "00000000000000000000");
+            cmd.Parameters["@Token"].Direction = ParameterDirection.InputOutput;
+            
+            int webQueryID=-1;
             try
             {
                 connection.Open();
-                aff = cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+                webQueryID = (int)cmd.Parameters[0].Value;
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                string a = ex.Message;                
+                throw;
+            }
+
+            list.Add(webQueryID);
+            list.Add(cmd.Parameters["@Token"].Value);
+            return list;
+            //la lista es [ webQueryID,  Token]
+        }   
+
+
+        public static int registrarWebTransaccion(string cliente, int webQueryID)
+        {
+
+            SqlCommand cmd = new SqlCommand("spWebTransaccionInsert", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@webTransaccionID", 0);
+            cmd.Parameters[0].Direction = ParameterDirection.InputOutput;
+            cmd.Parameters.AddWithValue("@WebQueryID", webQueryID);
+            cmd.Parameters.AddWithValue("@Cliente", cliente);
+
+            int webTransaccionID = -1;
+            try
+            {
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                webTransaccionID = (int) cmd.Parameters[0].Value;
                 connection.Close();
             }
             catch (Exception ex)
             {
                 string a = ex.Message;
-                return 0;
+                return webTransaccionID;
+                throw;
+            }
+            return webTransaccionID;
+        }
+        public static int marcarAviso(string codAviso,int webTransaccionID,string cliente)
+        {
+            int avisoCabID=-1;
+            DataTable tabCliente = new DataTable();
+            var parametros = new Dictionary<string, object>
+            {
+                { "codCliente", cliente }
+            };
+            tabCliente = Conexion.getDataTable("spClienteCabSelect", parametros);
+
+
+            server = tabCliente.Rows[0][3].ToString();
+            db = tabCliente.Rows[0][4].ToString();
+
+            connCliente = Conexion.GetConnection(db, "iPayment", "wp2024++", server);
+            SqlCommand cmd = new SqlCommand("spAvisoCabUpdateTransaccion", connCliente);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@AvisoCabID", 0);
+            cmd.Parameters[0].Direction = ParameterDirection.InputOutput;
+            cmd.Parameters.AddWithValue("@codAviso", codAviso);
+            cmd.Parameters.AddWithValue("@webTransaccionID", webTransaccionID);
+
+            int aff = 0;
+            try
+            {
+                connCliente.Open();
+                aff =cmd.ExecuteNonQuery();
+                avisoCabID = (int)cmd.Parameters[0].Value;
+                connCliente.Close();
+            }
+            catch (Exception ex)
+            {
+                string a = ex.Message;
                 throw;
             }
 
-            return aff;
-        }        
+            //configurar proc para que devuelva el avisoCabID
+            //terminar de configurar el command y ya hacer pruebas
+            return avisoCabID;
+        }
         public static Aviso validarGlobal(AvisoPago pago)
         {
             DataTable tabRespuesta;
@@ -73,15 +154,16 @@ namespace pagoenLinea.Data
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[5][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[5][1].ToString();
             }
-            if (aviso.Mensaje == "" && !Validaciones.AvisoExiste(pago.Codigo,pago.Identidad))
-            {
-                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[7][0].ToString());
-                aviso.Mensaje = tabRespuesta.Rows[7][1].ToString();
-            }
             if (!Validaciones.PagosPendientes(pago.Identidad, pago.Tipo) && aviso.Mensaje == "")
             {
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[6][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[6][1].ToString();
+                return aviso;
+            }
+            if (aviso.Mensaje == "" && !Validaciones.AvisoExiste(pago.Codigo,pago.Identidad))
+            {
+                aviso.RespuestaID = int.Parse(tabRespuesta.Rows[7][0].ToString());
+                aviso.Mensaje = tabRespuesta.Rows[7][1].ToString();
             }
             if (aviso.Mensaje == "" && !Validaciones.Moneda(pago.Moneda))
             {

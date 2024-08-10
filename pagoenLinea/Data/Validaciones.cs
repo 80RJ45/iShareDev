@@ -134,7 +134,7 @@ namespace pagoenLinea.Data
         public static bool FactorMoneda(float factor, string moneda)
         {
             if ((factor != 1 && moneda == "L.") || factor < 0)
-                return false;
+                return false;            
             return true;
         }
         public static int AvisoSeleccionado(string codAviso, float valor,float factor = 1)
@@ -170,7 +170,7 @@ namespace pagoenLinea.Data
         }
 
 
-        public static Aviso getAviso(AvisoPago pago)
+        public static Aviso getAviso(AvisoPago pago, string token)
         {
             //inicializar la informacion del cliente
             DataTable tabCliente = new DataTable();
@@ -209,7 +209,7 @@ namespace pagoenLinea.Data
             aviso.Moneda = tabMoneda.Rows[0]["Codigo"].ToString();
             aviso.RespuestaID = 0;
             aviso.Mensaje = "OK";
-
+            aviso.Token = token;
             return aviso;
         }
     }
