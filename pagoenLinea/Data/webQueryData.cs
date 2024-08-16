@@ -97,11 +97,11 @@ namespace pagoenLinea.Data
                 aviso.Periodo = fila["Periodo"].ToString();
                 aviso.Cliente = fila["nomCliente"].ToString();
                 aviso.FechaVence = fila["FechaVence"].ToString();
-                aviso.SubTotal = float.Parse(fila["Valor"].ToString());
-                aviso.Descuento = float.Parse(fila["Descuento"].ToString());
-                aviso.Impuesto = float.Parse(fila["Impuesto"].ToString());
-                aviso.Mora = float.Parse(fila["Mora"].ToString());
-                aviso.Valor = float.Parse(fila["Saldo"].ToString());
+                aviso.SubTotal = float.Parse(fila["Valor"].ToString() ==""? "0": fila["Valor"].ToString());
+                aviso.Descuento = float.Parse(fila["Descuento"].ToString() == "" ? "0" : fila["Descuento"].ToString());
+                aviso.Impuesto = float.Parse(fila["Impuesto"].ToString() == "" ? "0" : fila["Impuesto"].ToString());
+                aviso.Mora = float.Parse(fila["Mora"].ToString() == "" ? "0" : fila["Mora"].ToString());
+                aviso.Valor = float.Parse(fila["Saldo"].ToString() == "" ? "0" : fila["Saldo"].ToString());
                 aviso.Moneda = tabMoneda.Rows[0]["codMoneda"].ToString();
                 aviso.RespuestaID = int.Parse(tabRespuesta.Rows[0][0].ToString());
                 aviso.Mensaje = tabRespuesta.Rows[0][1].ToString();
