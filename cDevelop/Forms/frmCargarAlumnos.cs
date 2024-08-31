@@ -173,7 +173,7 @@ namespace cDevelop.Forms
 
                             parametros = string.Concat("'", alumno.ssn, "','", row["Nombre"], "','",row["Sexo"],"','", row["Ciudadania"] ,"',",row["Transporte"], ",'",
                                 row["TransporteColonia"], "','",
-                                row["Grado"], "',", row["Ano"], ",", row["cantMeses"], ",", row["porcentajeBeca"], ",", 0, ",", 4, ",",  //Dia de corte constante =4
+                                row["Grado"], "',", row["Ano"], ",", row["cantMeses"],10, ",", row["porcentajeBeca"], ",", 0, ",", 4, ",",  //Dia de corte constante =4
                                 row["SitioID"], ",'", row["fechaModificacion"], "','",
                                 row["HorarioTransporte"], "','", row["NombreMadre"], "','", row["identidadMadre"], "','", row["celularMadre"], "','", row["emailMadre"], "','",
                                 row["NombrePadre"], "','", row["identidadPadre"], "','", row["celularPadre"], "','", row["emailPadre"], "'");
