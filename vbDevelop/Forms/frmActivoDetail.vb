@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 
 Public Class frmActivoDetail
+    Public id As Int16
     Public Sub New(cnx As dcLibrary.dcConnect, parents As dcLibrary.dcParentList, DetailID As Integer)
         MyBase.New(cnx, parents, DetailID)
         ' Esta llamada es exigida por el diseñador.
@@ -11,7 +12,9 @@ Public Class frmActivoDetail
         newDinamicTable(Connect, 1, "ActivoDet", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.Input, 0)
         newDinamicTable(Connect, 2, "ActivoCompra", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.Input, 0)
 
+        id = DetailID
         LoadDinamicTables()
+
     End Sub
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
@@ -20,6 +23,7 @@ Public Class frmActivoDetail
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from dbo.iStatus('ActivoDet','Estado')", "Estado", 5, "Estado", "Nombre", "Codigo", 100)
         dcGral.FormatColumn(dgvDetalle, "Fecha", "Fecha", 90, "L", "", False)
         'dcGral.insertDateColumn(dgvDetalle, 4, "Fecha", "Fecha", 150, "Y")
+
     End Sub
     Public Overrides Sub SetCombos()
         MyBase.SetCombos()
@@ -37,7 +41,10 @@ Public Class frmActivoDetail
         MyBase.DetailRow()
         If dsGral.Tables("ActivoCab").Rows.Count = 0 Then
             dsGral.Tables("ActivoCab").Rows.Add()
+            dsGral.Tables("ActivoDet").Rows.Add()
             dsGral.Tables("ActivoCompra").Rows.Add()
+            txtValor.ReadOnly = False
+            txtDepAcomulada.ReadOnly = False
         Else
             txtCodigo.Text = dsGral.Tables("ActivoCab").Rows(0).Item(1)
             cmbTipoActivo.SelectedValue = dsGral.Tables("ActivoCab").Rows(0).Item("TipoActivoCabID")
@@ -54,9 +61,20 @@ Public Class frmActivoDetail
             dtFechaCompra.Value = dsGral.Tables("ActivoCompra").Rows(0).Item("fecha")
             txtVida.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("vida")
             txtPrecio.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("precio")
-            txtValor.Text = dsGral.Tables("ActivoCompra").Rows(0).Item("Residual")
 
-            txtDepAcomulada.Text = Int32.Parse(txtPrecio.Text) - Int32.Parse(txtValor.Text)
+
+            'txtDepAcomulada.Text = Int32.Parse(txtPrecio.Text) - Int32.Parse(txtValor.Text)
+            Dim tabDepAcomulada = New DataTable()
+            tabDepAcomulada = dcGral.getDataTable(String.Concat("exec spGetDepAcomulada ", id), Connect)
+
+            If tabDepAcomulada.Rows.Count = 0 Then
+                txtDepAcomulada.Text = 0
+            Else
+                txtDepAcomulada.Text = Math.Round(Double.Parse(tabDepAcomulada(0)(0).ToString()), 3)
+
+            End If
+
+            txtValor.Text = Double.Parse(txtPrecio.Text) - Double.Parse(txtDepAcomulada.Text)
 
         End If
     End Sub

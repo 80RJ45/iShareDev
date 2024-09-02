@@ -215,6 +215,7 @@ Partial Class frmActivoDetail
         '
         Me.txtDepAcomulada.Location = New System.Drawing.Point(392, 229)
         Me.txtDepAcomulada.Name = "txtDepAcomulada"
+        Me.txtDepAcomulada.ReadOnly = True
         Me.txtDepAcomulada.Size = New System.Drawing.Size(121, 20)
         Me.txtDepAcomulada.TabIndex = 28
         '
@@ -283,6 +284,7 @@ Partial Class frmActivoDetail
         '
         Me.txtValor.Location = New System.Drawing.Point(600, 229)
         Me.txtValor.Name = "txtValor"
+        Me.txtValor.ReadOnly = True
         Me.txtValor.Size = New System.Drawing.Size(121, 20)
         Me.txtValor.TabIndex = 36
         '
