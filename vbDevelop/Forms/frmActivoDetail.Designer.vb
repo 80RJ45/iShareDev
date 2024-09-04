@@ -35,7 +35,7 @@ Partial Class frmActivoDetail
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txtVida = New System.Windows.Forms.TextBox()
         Me.dtFechaCompra = New System.Windows.Forms.DateTimePicker()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.dgvDepreciacion = New System.Windows.Forms.DataGridView()
         Me.txtCompra = New System.Windows.Forms.TextBox()
         Me.txtDepAcomulada = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -50,7 +50,7 @@ Partial Class frmActivoDetail
         Me.txtPrecio = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
         CType(Me.dgvDetalle, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvDepreciacion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -122,7 +122,7 @@ Partial Class frmActivoDetail
         Me.dgvDetalle.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvDetalle.Location = New System.Drawing.Point(12, 266)
         Me.dgvDetalle.Name = "dgvDetalle"
-        Me.dgvDetalle.Size = New System.Drawing.Size(279, 150)
+        Me.dgvDetalle.Size = New System.Drawing.Size(419, 150)
         Me.dgvDetalle.TabIndex = 10
         '
         'btnSalvar
@@ -195,13 +195,13 @@ Partial Class frmActivoDetail
         Me.dtFechaCompra.Size = New System.Drawing.Size(112, 20)
         Me.dtFechaCompra.TabIndex = 24
         '
-        'DataGridView1
+        'dgvDepreciacion
         '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(297, 266)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(487, 150)
-        Me.DataGridView1.TabIndex = 25
+        Me.dgvDepreciacion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvDepreciacion.Location = New System.Drawing.Point(438, 266)
+        Me.dgvDepreciacion.Name = "dgvDepreciacion"
+        Me.dgvDepreciacion.Size = New System.Drawing.Size(346, 150)
+        Me.dgvDepreciacion.TabIndex = 25
         '
         'txtCompra
         '
@@ -330,7 +330,7 @@ Partial Class frmActivoDetail
         Me.Controls.Add(Me.txtDepAcomulada)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.txtCompra)
-        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.dgvDepreciacion)
         Me.Controls.Add(Me.dtFechaCompra)
         Me.Controls.Add(Me.txtVida)
         Me.Controls.Add(Me.Label5)
@@ -350,7 +350,7 @@ Partial Class frmActivoDetail
         Me.Name = "frmActivoDetail"
         Me.Text = "Activos Fijos"
         CType(Me.dgvDetalle, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvDepreciacion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -372,7 +372,7 @@ Partial Class frmActivoDetail
     Friend WithEvents Label5 As Windows.Forms.Label
     Friend WithEvents txtVida As Windows.Forms.TextBox
     Friend WithEvents dtFechaCompra As Windows.Forms.DateTimePicker
-    Friend WithEvents DataGridView1 As Windows.Forms.DataGridView
+    Friend WithEvents dgvDepreciacion As Windows.Forms.DataGridView
     Friend WithEvents txtCompra As Windows.Forms.TextBox
     Friend WithEvents txtDepAcomulada As Windows.Forms.TextBox
     Friend WithEvents Label6 As Windows.Forms.Label

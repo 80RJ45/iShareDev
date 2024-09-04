@@ -7,6 +7,7 @@ Public Class frmDepreciaCabList
         Dim adp = New SqlDataAdapter
 
         adp.SelectCommand = dcGral.getSQLCommand(Connect, "spDepreciaCabSelect", SQLGridParm)
+
         Adaptador = adp
 
         Detalle = True
@@ -23,6 +24,35 @@ Public Class frmDepreciaCabList
         reloadRow(RowIndex, "DepreciaCabID")
     End Sub
     Private Sub frmDepreciaCabList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Del.Visible = False
+
+        initConextual()
+        addOption("Generar", New EventHandler(AddressOf Generar))
+        addOption("Procesar", New EventHandler(AddressOf Procesar))
+    End Sub
+
+    Public Sub Generar()
+        MsgBox("metodo Generar")
+    End Sub
+    Public Sub Procesar()
+        Try
+            Dim fila = Table.Rows(RowIndex)
+            Dim fecha = DateValue(fila.Item("Fecha").ToString())
+
+            If dcGral.getPeriodoDet(fecha.ToString("yyyy/MM/dd"), "I", "A", Connect) = -1 Then
+                MsgBox("El periodo de inventario no está abierto", MsgBoxStyle.Critical, "Error")
+                Return
+            Else
+                If fila.Item("Estado").ToString() = "P" Or fila.Item("Estado") = "Procesado" Then
+                    MsgBox("La depreciación ya ha sido procesada", MsgBoxStyle.Critical, "Error")
+                    Return
+                End If
+            End If
+
+            dcGral.executeProcedure("exec spDepreciaCabProceso " + fila.Item("DepreciaCabID").ToString(), Connect)
+            reloadRow(RowIndex, "DepreciaCabID")
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
+        End Try
     End Sub
 End Class

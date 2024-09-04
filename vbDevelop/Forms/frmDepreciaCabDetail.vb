@@ -1,6 +1,8 @@
 ﻿Imports System.Globalization
 Imports System.Windows.Forms
 Public Class frmDepreciaCabDetail
+    Dim id
+    Dim per
     Public Sub New(cnx As dcLibrary.dcConnect, parents As dcLibrary.dcParentList, DetailID As Integer)
         MyBase.New(cnx, parents, DetailID)
         ' Esta llamada es exigida por el diseñador.
@@ -8,13 +10,25 @@ Public Class frmDepreciaCabDetail
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         newDinamicTable(Connect, 0, "DepreciaCab", "@DepreciaCabID", "@DepreciaCabID", DetailID, ParameterDirection.InputOutput, -1)
+        id = DetailID
 
         LoadDinamicTables()
     End Sub
 
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
-        dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), False, False, "ActivoCabID,ActivoCompraID,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
+        If id = -1 Then
+            dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), False, False, "ActivoCabID,ActivoCompraID,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
+        Else
+            dcGral.initGrid(dgvActivos, dsGral.Tables("ActivoDep"), False, False, "ActivoDepID,codDepreciacion,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
+        End If
+
+        dcGral.FormatColumn(dgvActivos, "codActivo", "Codigo", 50, DataGridViewContentAlignment.MiddleLeft, "")
+        dcGral.FormatColumn(dgvActivos, "Activo", "Activo", 160, DataGridViewContentAlignment.MiddleLeft, "")
+        dcGral.FormatColumn(dgvActivos, "centro", "Ubicacion", 80, DataGridViewContentAlignment.MiddleLeft, "")
+        dcGral.FormatColumn(dgvActivos, "estado", "Estado", 60, DataGridViewContentAlignment.MiddleLeft, "")
+        dcGral.FormatColumn(dgvActivos, "ValorDep", "Valor", 60, DataGridViewContentAlignment.MiddleRight, "")
+
     End Sub
     Public Overrides Sub SetCombos()
         MyBase.SetCombos()
@@ -24,20 +38,31 @@ Public Class frmDepreciaCabDetail
     Public Overrides Sub LoadTables()
         MyBase.LoadTables()
         NewTable("Select *from dbo.iStatus('activoDet','Estado')", "DepreciaCabEstado") 'Tabla        
-        NewTable("execute spActivoDeprecia ", "Activos")
+        If id = -1 Then
+            NewTable("execute spActivoDeprecia ", "Activos")
+        Else
+            NewTable("exec spActivoDepSelect " + id.ToString(), "ActivoDep")
+        End If
+        per = dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect).ToString()
+        NewTable("select nomPeriodo from vPeriodoDet where periodoDetID = " + per, "nomPeriodo", Connect)
+        NewTable("spGetValorDepreciacion " + id.ToString(), "ValorDep")
+
     End Sub
     Public Overrides Sub DetailRow()
         MyBase.DetailRow()
         If dsGral.Tables("DepreciaCab").Rows.Count = 0 Then
             dsGral.Tables("DepreciaCab").Rows.Add()
+            txtPeriodo.Text = dsGral.Tables("nomPeriodo").Rows(0).Item("nomPeriodo").ToString()
         Else
             lblEstado.Tag = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(0).ToString()
             lblEstado.Text = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(1).ToString()
             dtFecha.Value = dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha")
-
+            txtCodigo.Text = dsGral.Tables("DepreciaCab").Rows(0).Item("DepreciaCabID")
+            txtAsiento.Text = dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID").ToString()
+            'txtPeriodo.Text = dsGral.Tables("nomPeriodo").Rows(0).Item("nomPeriodo").ToString()
+            txtValor.Text = dsGral.Tables("ValorDep").Rows(0).Item(0).ToString()
 
             If dsGral.Tables("DepreciaCab").Rows(0).Item(3).ToString.ToLower().Equals("p") Then
-                btnProcesar.Enabled = False
                 btnSalvar.Enabled = False
             End If
         End If
@@ -78,8 +103,8 @@ Public Class frmDepreciaCabDetail
 
             UpdateTables(0)
 
-                If Adding Then newRecord(0)
-                Close()
+            If Adding Then newRecord(0)
+            Close()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
         End Try
@@ -104,7 +129,7 @@ Public Class frmDepreciaCabDetail
 
     End Sub
 
-    Private Sub btnProcesar_Click(sender As Object, e As EventArgs) Handles btnProcesar.Click
+    Private Sub btnProcesar_Click(sender As Object, e As EventArgs)
         Try
             Err.Clean()
             If dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect) = -1 Then
@@ -133,8 +158,6 @@ Public Class frmDepreciaCabDetail
             'iParameter(0) devuelve el ID de la fila
 
 
-            'dcGral.getDataTable()
-
 
             If Adding Then newRecord(0)
             Close()
@@ -146,6 +169,13 @@ Public Class frmDepreciaCabDetail
     End Sub
 
     Private Sub dtFecha_ValueChanged(sender As Object, e As EventArgs) Handles dtFecha.ValueChanged
-
+        per = dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "", Connect).ToString()
+        Dim tab = New DataTable
+        tab = dcGral.getDataTable("select nomPeriodo from vPeriodoDet where periodoDetID = " + per.ToString(), Connect)
+        If per > "0" Then
+            txtPeriodo.Text = tab.Rows(0).Item(0).ToString()
+        Else
+            txtPeriodo.Text = ""
+        End If
     End Sub
 End Class

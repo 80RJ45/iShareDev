@@ -11,13 +11,16 @@ Public Class frmActivoDetail
         newDinamicTable(Connect, 0, "ActivoCab", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.InputOutput, -1)
         newDinamicTable(Connect, 1, "ActivoDet", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.Input, 0)
         newDinamicTable(Connect, 2, "ActivoCompra", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.Input, 0)
-
+        newDinamicTable(Connect, 3, "ActivoDep", "@ActivoCabID", "@ActivoCabID", DetailID, ParameterDirection.Input, 0)
         id = DetailID
         LoadDinamicTables()
 
     End Sub
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
+        dcGral.initGrid(dgvDepreciacion, dsGral.Tables(3), False, False, "ActivoDepID,Activo,codDepreciacion", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
+        dcGral.FormatColumn(dgvDepreciacion, "Valor", "Valor", 150, DataGridViewContentAlignment.MiddleRight, "0.00", True)
+        dcGral.FormatColumn(dgvDepreciacion, "Fecha", "Fecha", 150, DataGridViewContentAlignment.MiddleCenter, "")
         dcGral.initGrid(dgvDetalle, dsGral.Tables("ActivoDet"), True, True, "ActivoCabID,ActivoDetID,CentroCostoID,Estado", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from CentroCosto", "Centro Costo", 3, "CentroCostoID", "Nombre", "CentroCostoID", 120)
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from dbo.iStatus('ActivoDet','Estado')", "Estado", 5, "Estado", "Nombre", "Codigo", 100)
