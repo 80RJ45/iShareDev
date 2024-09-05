@@ -18,7 +18,7 @@ Public Class frmDepreciaCabDetail
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
         If id = -1 Then
-            dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), False, False, "ActivoCabID,ActivoCompraID,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
+            dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), False, False, "ActivoCabID,ActivoCompraID,Fecha,ActivoDetID", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
         Else
             dcGral.initGrid(dgvActivos, dsGral.Tables("ActivoDep"), False, False, "ActivoDepID,codDepreciacion,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
         End If
@@ -39,13 +39,13 @@ Public Class frmDepreciaCabDetail
         MyBase.LoadTables()
         NewTable("Select *from dbo.iStatus('activoDet','Estado')", "DepreciaCabEstado") 'Tabla        
         If id = -1 Then
-            NewTable("execute spActivoDeprecia ", "Activos")
+            NewTable("execute spActivoDeprecia '" + dtFecha.Value.ToString("yyyy/MM/dd") + "'", "Activos")
         Else
             NewTable("exec spActivoDepSelect " + id.ToString(), "ActivoDep")
         End If
         per = dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect).ToString()
         NewTable("select nomPeriodo from vPeriodoDet where periodoDetID = " + per, "nomPeriodo", Connect)
-        NewTable("spGetValorDepreciacion " + id.ToString(), "ValorDep")
+        NewTable("spGetValorDepreciacion " + id.ToString() + ",'" + dtFecha.Value.ToString("yyyy/MM/dd") + "'", "ValorDep")
 
     End Sub
     Public Overrides Sub DetailRow()
@@ -53,6 +53,7 @@ Public Class frmDepreciaCabDetail
         If dsGral.Tables("DepreciaCab").Rows.Count = 0 Then
             dsGral.Tables("DepreciaCab").Rows.Add()
             txtPeriodo.Text = dsGral.Tables("nomPeriodo").Rows(0).Item("nomPeriodo").ToString()
+            txtValor.Text = dsGral.Tables("ValorDep").Rows(0).Item(0).ToString()
         Else
             lblEstado.Tag = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(0).ToString()
             lblEstado.Text = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(1).ToString()
@@ -176,6 +177,15 @@ Public Class frmDepreciaCabDetail
             txtPeriodo.Text = tab.Rows(0).Item(0).ToString()
         Else
             txtPeriodo.Text = ""
+        End If
+
+        'Llenar el dgv de activos con los activos que habían a la fecha dada
+        'solo cuando este en modalidad de adición
+        If id = -1 Then
+            dsGral.Tables.Remove("Activos")
+            dsGral.Tables.Add(dcGral.getDataTable("exec spActivoDeprecia '" + dtFecha.Value.ToString("yyyy/MM/dd") + "'", Connect))
+            dsGral.Tables(dsGral.Tables.Count - 1).TableName = "Activos"
+            SetGrids()
         End If
     End Sub
 End Class
