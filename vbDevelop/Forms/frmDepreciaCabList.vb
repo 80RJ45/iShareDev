@@ -49,6 +49,10 @@ Public Class frmDepreciaCabList
             End If
 
             dcGral.executeProcedure("exec spDepreciaCabProceso " + fila.Item("DepreciaCabID").ToString(), Connect)
+            Dim tabDeprecia As DataTable = dcGral.getDataTable("exec spAsientoDeprecia " & getID("DepreciaCabID"), Connect)
+
+            Dim frm As New Contabilidad.frmAsientoDetail(Connect, tabDeprecia, "Depreciacion")
+            frm.ShowDialog()
             reloadRow(RowIndex, "DepreciaCabID")
 
         Catch ex As Exception
