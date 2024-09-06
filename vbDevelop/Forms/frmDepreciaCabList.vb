@@ -28,8 +28,19 @@ Public Class frmDepreciaCabList
         initConextual()
         addOption("Generar", New EventHandler(AddressOf Generar))
         addOption("Procesar", New EventHandler(AddressOf Procesar))
+        addOption("Asiento", New EventHandler(AddressOf verAsiento))
     End Sub
+    Public Sub verAsiento()
+        If Not IsDBNull(Table.DefaultView.Item(dg.CurrentRow.Index).Item("asientocabid")) Then
+            Dim estado As String = Table.DefaultView.Item(dg.CurrentRow.Index).Item("estado")
+            Dim fec As Date = Table.DefaultView.Item(dg.CurrentRow.Index).Item("Fecha") '***********
+            Dim cerrado As Boolean = dcGral.getPeriodoDet(fec, "T", "A", Connect) = 0
+            Dim modificar As Boolean = False
 
+            Dim frm As New Contabilidad.frmAsientoDetail(Connect, Me, getID("asientocabid"), modificar, 0)
+            frm.ShowDialog()
+        End If
+    End Sub
     Public Sub Generar()
         Dim fila = Table.Rows(RowIndex)
         Dim fecha = DateValue(fila.Item("Fecha").ToString())
@@ -48,9 +59,10 @@ Public Class frmDepreciaCabList
 
 
         Try
-            Dim cadena As String = "exec spActivoDepGenera " + getID("DepreciaCabID").ToString() + ",'" + fecha.ToString("yyyy/MM/dd") + "'"
+            Dim cadena As String = "exec spActivoDepGenera " + getID("DepreciaCabID").ToString() + ",'" + Format(fecha, Connect.DateFormat) + "'"
             dcGral.executeProcedure(cadena, Connect)
 
+            reloadRow(RowIndex, "DepreciaCabID")
             MsgBox("Depreciaciones Generadas", MsgBoxStyle.Information, "Información")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
@@ -63,8 +75,8 @@ Public Class frmDepreciaCabList
             Dim fecha = DateValue(fila.Item("Fecha").ToString())
             Dim tabActivoDep As DataTable = dcGral.getDataTable("exec spActivoDepSelect " + getID("DepreciaCabID").ToString(), Connect)
 
-            If dcGral.getPeriodoDet(fecha.ToString("yyyy/MM/dd"), "I", "A", Connect) = -1 Then
-                MsgBox("El periodo de inventario no está abierto", MsgBoxStyle.Critical, "Error")
+            If dcGral.getPeriodoDet(Format(fecha, Connect.DateFormat), "I", "A", Connect) = -1 Then
+                MsgBox("El periodo contable no está abierto", MsgBoxStyle.Critical, "Error")
                 Return
             Else
                 If fila.Item("Estado").ToString() = "P" Or fila.Item("Estado") = "Procesado" Then

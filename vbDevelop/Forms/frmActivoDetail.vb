@@ -19,7 +19,7 @@ Public Class frmActivoDetail
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
         dcGral.initGrid(dgvDepreciacion, dsGral.Tables(3), False, False, "ActivoDepID,Activo,codDepreciacion", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
-        dcGral.FormatColumn(dgvDepreciacion, "Valor", "Valor", 150, DataGridViewContentAlignment.MiddleRight, "0.00", True)
+        'If dgvDepreciacion.Rows.Count > 0 Then dcGral.FormatColumn(dgvDepreciacion, "Valor", "Valor", 150, DataGridViewContentAlignment.MiddleRight, "0.00", True)
         dcGral.FormatColumn(dgvDepreciacion, "Fecha", "Fecha", 150, DataGridViewContentAlignment.MiddleCenter, "")
         dcGral.initGrid(dgvDetalle, dsGral.Tables("ActivoDet"), True, True, "ActivoCabID,ActivoDetID,CentroCostoID,Estado", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from CentroCosto", "Centro Costo", 3, "CentroCostoID", "Nombre", "CentroCostoID", 120)

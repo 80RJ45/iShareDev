@@ -37,15 +37,17 @@ Public Class frmDepreciaCabDetail
 
     Public Overrides Sub LoadTables()
         MyBase.LoadTables()
-        NewTable("Select *from dbo.iStatus('activoDet','Estado')", "DepreciaCabEstado") 'Tabla        
         If id = -1 Then
-            NewTable("execute spActivoDeprecia '" + dtFecha.Value.ToString("yyyy/MM/dd") + "'", "Activos")
+            NewTable("execute spActivoDeprecia '" + Format(dtFecha.Value, Connect.DateFormat) + "'", "Activos")
         Else
+            'Modificando
+            Dim codEstado As String = dsGral.Tables("DepreciaCab").Rows(0).Item("codEstado")
+            NewTable("Select *from dbo.iStatus('DepreciaCab','Estado') where codigo= '" + codEstado + "'", "DepreciaCabEstado") 'Tabla  
             NewTable("exec spActivoDepSelect " + id.ToString(), "ActivoDep")
         End If
-        per = dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect).ToString()
+        per = dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect).ToString()
         NewTable("select nomPeriodo from vPeriodoDet where periodoDetID = " + per, "nomPeriodo", Connect)
-        NewTable("spGetValorDepreciacion " + id.ToString() + ",'" + dtFecha.Value.ToString("yyyy/MM/dd") + "'", "ValorDep")
+        NewTable("spGetValorDepreciacion " + id.ToString() + ",'" + Format(dtFecha.Value, Connect.DateFormat) + "'", "ValorDep")
 
     End Sub
     Public Overrides Sub DetailRow()
@@ -59,11 +61,11 @@ Public Class frmDepreciaCabDetail
             lblEstado.Text = dsGral.Tables("DepreciaCabEstado").Rows(0).Item(1).ToString()
             dtFecha.Value = dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha")
             txtCodigo.Text = dsGral.Tables("DepreciaCab").Rows(0).Item("DepreciaCabID")
-            txtAsiento.Text = dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID").ToString()
-            'txtPeriodo.Text = dsGral.Tables("nomPeriodo").Rows(0).Item("nomPeriodo").ToString()
+            Dim codAsi As String = dsGral.Tables("DepreciaCab").Rows(0).Item("Codigo Asiento").ToString()
+            txtAsiento.Text = codAsi.Split("(")(0)
             txtValor.Text = dsGral.Tables("ValorDep").Rows(0).Item(0).ToString()
 
-            If dsGral.Tables("DepreciaCab").Rows(0).Item(3).ToString.ToLower().Equals("p") Then
+            If dsGral.Tables("DepreciaCab").Rows(0).Item("codEstado").ToString.ToLower().Equals("p") Then
                 btnSalvar.Enabled = False
             End If
         End If
@@ -80,11 +82,11 @@ Public Class frmDepreciaCabDetail
     Private Sub btnSalvar_Click(sender As Object, e As EventArgs) Handles btnSalvar.Click
         Try
             Err.Clean()
-            If dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect) = -1 Then
-                Err.AddError("El periodo de inventario no está abierto", 0)
+            If dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect) = -1 Then
+                Err.AddError("El periodo Contable no está abierto", 0)
             Else
                 'getDataTable con el procedimiento que valida que no hayan depreciaCab de ese período
-                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect)).ToString(), Connect))
+                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect)).ToString(), Connect))
                 If dsGral.Tables(dsGral.Tables.Count - 1).Rows.Count > 0 Then
                     Err.AddError("Ya se ha registrado depreciación para los activos en este período", 0)
                 End If
@@ -98,7 +100,7 @@ Public Class frmDepreciaCabDetail
             End If
 
             dsGral.Tables("DepreciaCab").Rows(0).Item("PeriodoDetID") = 0 'El procedimiento almacenado lo va a sobreescribir
-            dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = dtFecha.Value.ToString("yyyy/MM/dd")
+            dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = Format(dtFecha.Value, Connect.DateFormat)
             dsGral.Tables("DepreciaCab").Rows(0).Item("Estado") = "G"
             dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = -1 'El procedimiento almacenado lo va a sobreescribir
 
@@ -133,10 +135,10 @@ Public Class frmDepreciaCabDetail
     Private Sub btnProcesar_Click(sender As Object, e As EventArgs)
         Try
             Err.Clean()
-            If dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect) = -1 Then
-                Err.AddError("El periodo de inventario no está abierto", 0)
+            If dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect) = -1 Then
+                Err.AddError("El periodo Contable no está abierto", 0)
             Else
-                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "A", Connect)).ToString(), Connect))
+                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect)).ToString(), Connect))
                 If dsGral.Tables(dsGral.Tables.Count - 1).Rows.Count > 0 Then
                     Err.AddError("Error,Ya se ha registrado depreciación para los activos en este período", 0)
                 End If
@@ -151,7 +153,7 @@ Public Class frmDepreciaCabDetail
 
             dsGral.Tables("DepreciaCab").Rows(0).Item("PeriodoDetID") = 0 'El procedimiento almacenado lo va a sobreescribir
             dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = -1
-            dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = dtFecha.Value.ToString("yyyy/MM/dd")
+            dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = Format(dtFecha.Value, Connect.DateFormat)
             dsGral.Tables("DepreciaCab").Rows(0).Item("Estado") = "P"
             UpdateTables(0)
 
@@ -170,7 +172,7 @@ Public Class frmDepreciaCabDetail
     End Sub
 
     Private Sub dtFecha_ValueChanged(sender As Object, e As EventArgs) Handles dtFecha.ValueChanged
-        per = dcGral.getPeriodoDet(dtFecha.Value.ToString("yyyy/MM/dd"), "I", "", Connect).ToString()
+        per = dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "", Connect).ToString()
         Dim tab = New DataTable
         tab = dcGral.getDataTable("select nomPeriodo from vPeriodoDet where periodoDetID = " + per.ToString(), Connect)
         If per > "0" Then
@@ -183,7 +185,7 @@ Public Class frmDepreciaCabDetail
         'solo cuando este en modalidad de adición
         If id = -1 Then
             dsGral.Tables.Remove("Activos")
-            dsGral.Tables.Add(dcGral.getDataTable("exec spActivoDeprecia '" + dtFecha.Value.ToString("yyyy/MM/dd") + "'", Connect))
+            dsGral.Tables.Add(dcGral.getDataTable("exec spActivoDeprecia '" + Format(dtFecha.Value, Connect.DateFormat) + "'", Connect))
             dsGral.Tables(dsGral.Tables.Count - 1).TableName = "Activos"
             SetGrids()
         End If
