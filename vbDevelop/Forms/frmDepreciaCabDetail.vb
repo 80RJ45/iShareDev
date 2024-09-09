@@ -84,14 +84,15 @@ Public Class frmDepreciaCabDetail
     Private Sub btnSalvar_Click(sender As Object, e As EventArgs) Handles btnSalvar.Click
         Try
             Dim tipoDep As String = If(IsNothing(cmbTipo.SelectedValue), "M", cmbTipo.SelectedValue.ToString())
+            Dim fech = Format(dtFecha.Value, Connect.DateFormat)
             Err.Clean()
             If dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect) = -1 Then
                 Err.AddError("El periodo Contable no está abierto", 0)
             Else
                 'getDataTable con el procedimiento que valida que no hayan depreciaCab de ese período
-                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect)).ToString() + ",'" + tipoDep + "'", Connect))
-                If dsGral.Tables(dsGral.Tables.Count - 1).Rows.Count > 0 Then
-                    Err.AddError("Ya se ha registrado depreciación" + tipoDep + " para los activos en este período", 0)
+                Dim tabDepreciaPeriodo As DataTable = (dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect)).ToString() + ",'" + tipoDep + "','" + fech + "'", Connect))
+                If tabDepreciaPeriodo.Rows.Count > 0 Then
+                    Err.AddError(tabDepreciaPeriodo.Rows(0).Item(0).ToString(), 0)
                 End If
 
             End If
