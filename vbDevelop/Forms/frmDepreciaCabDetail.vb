@@ -18,9 +18,9 @@ Public Class frmDepreciaCabDetail
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
         If id = -1 Then
-            dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), False, False, "ActivoCabID,ActivoCompraID,Fecha,ActivoDetID", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
+            dcGral.initGrid(dgvActivos, dsGral.Tables("Activos"), False, False, "ActivoCabID,ActivoCompraID,Fecha,ActivoDetID", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
         Else
-            dcGral.initGrid(dgvActivos, dsGral.Tables("ActivoDep"), False, False, "ActivoDepID,codDepreciacion,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
+            dcGral.initGrid(dgvActivos, dsGral.Tables("ActivoDep"), False, False, "ActivoDepID,codDepreciacion,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
         End If
 
         dcGral.FormatColumn(dgvActivos, "codActivo", "Codigo", 50, DataGridViewContentAlignment.MiddleLeft, "")
@@ -32,13 +32,15 @@ Public Class frmDepreciaCabDetail
     End Sub
     Public Overrides Sub SetCombos()
         MyBase.SetCombos()
-
+        dcGral.setCombo(cmbTipo, dsGral.Tables("TipoDep"), "Nombre", "Codigo", -1)
+        cmbTipo.SelectedIndex = 0
     End Sub
 
     Public Overrides Sub LoadTables()
         MyBase.LoadTables()
+        Dim tipoDep As String = If(IsNothing(cmbTipo.SelectedValue), "M", cmbTipo.SelectedValue.ToString())
         If id = -1 Then
-            NewTable("execute spActivoDeprecia '" + Format(dtFecha.Value, Connect.DateFormat) + "'", "Activos")
+            NewTable("execute spActivoDeprecia '" + Format(dtFecha.Value, Connect.DateFormat) + "','" + tipoDep + "'", "Activos")
         Else
             'Modificando
             Dim codEstado As String = dsGral.Tables("DepreciaCab").Rows(0).Item("codEstado")
@@ -47,8 +49,8 @@ Public Class frmDepreciaCabDetail
         End If
         per = dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect).ToString()
         NewTable("select nomPeriodo from vPeriodoDet where periodoDetID = " + per, "nomPeriodo", Connect)
-        NewTable("spGetValorDepreciacion " + id.ToString() + ",'" + Format(dtFecha.Value, Connect.DateFormat) + "'", "ValorDep")
-
+        NewTable("spGetValorDepreciacion " + id.ToString() + ",'" + Format(dtFecha.Value, Connect.DateFormat) + "','" + tipoDep + "'", "ValorDep")
+        NewTable("select *from vStatus where tabla = 'ActivoCab' and campoID = 'TipoDep'", "TipoDep")
     End Sub
     Public Overrides Sub DetailRow()
         MyBase.DetailRow()
@@ -81,18 +83,18 @@ Public Class frmDepreciaCabDetail
 
     Private Sub btnSalvar_Click(sender As Object, e As EventArgs) Handles btnSalvar.Click
         Try
+            Dim tipoDep As String = If(IsNothing(cmbTipo.SelectedValue), "M", cmbTipo.SelectedValue.ToString())
             Err.Clean()
             If dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect) = -1 Then
                 Err.AddError("El periodo Contable no está abierto", 0)
             Else
                 'getDataTable con el procedimiento que valida que no hayan depreciaCab de ese período
-                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect)).ToString(), Connect))
+                dsGral.Tables.Add(dcGral.getDataTable("exec spDepreciaCabPeriodo " + (dcGral.getPeriodoDet(Format(dtFecha.Value, Connect.DateFormat), "T", "A", Connect)).ToString() + ",'" + tipoDep + "'", Connect))
                 If dsGral.Tables(dsGral.Tables.Count - 1).Rows.Count > 0 Then
-                    Err.AddError("Ya se ha registrado depreciación para los activos en este período", 0)
+                    Err.AddError("Ya se ha registrado depreciación" + tipoDep + " para los activos en este período", 0)
                 End If
 
             End If
-
 
             If Err.Errors Then
                 Err.ShowDialog()
@@ -103,7 +105,7 @@ Public Class frmDepreciaCabDetail
             dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = Format(dtFecha.Value, Connect.DateFormat)
             dsGral.Tables("DepreciaCab").Rows(0).Item("Estado") = "G"
             dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = -1 'El procedimiento almacenado lo va a sobreescribir
-
+            dsGral.Tables("DepreciaCab").Rows(0).Item("TipoDep") = cmbTipo.SelectedValue
             UpdateTables(0)
 
             If Adding Then newRecord(0)
@@ -155,6 +157,7 @@ Public Class frmDepreciaCabDetail
             dsGral.Tables("DepreciaCab").Rows(0).Item("AsientoCabID") = -1
             dsGral.Tables("DepreciaCab").Rows(0).Item("Fecha") = Format(dtFecha.Value, Connect.DateFormat)
             dsGral.Tables("DepreciaCab").Rows(0).Item("Estado") = "P"
+            dsGral.Tables("DepreciaCab").Rows(0).Item("TipoDep") = cmbTipo.SelectedValue
             UpdateTables(0)
 
             dcGral.executeProcedure("exec spDepreciaCabProceso " + iParameter(0).Value.ToString(), Connect)
@@ -181,13 +184,28 @@ Public Class frmDepreciaCabDetail
             txtPeriodo.Text = ""
         End If
 
+        refrescarActivosDepreciar()
+
+    End Sub
+    Private Sub refrescarActivosDepreciar()
         'Llenar el dgv de activos con los activos que habían a la fecha dada
         'solo cuando este en modalidad de adición
+        Dim tipoDep As String = If(IsNothing(cmbTipo.SelectedValue), "M", cmbTipo.SelectedValue.ToString())
         If id = -1 Then
             dsGral.Tables.Remove("Activos")
-            dsGral.Tables.Add(dcGral.getDataTable("exec spActivoDeprecia '" + Format(dtFecha.Value, Connect.DateFormat) + "'", Connect))
+            dsGral.Tables.Add(dcGral.getDataTable("exec spActivoDeprecia '" + Format(dtFecha.Value, Connect.DateFormat) + "','" + tipoDep + "'", Connect))
             dsGral.Tables(dsGral.Tables.Count - 1).TableName = "Activos"
             SetGrids()
         End If
+
+        'actualizar el txtValor        
+        dsGral.Tables.Remove("ValorDep")
+        dsGral.Tables.Add(dcGral.getDataTable("spGetValorDepreciacion " + id.ToString() + ",'" + Format(dtFecha.Value, Connect.DateFormat) + "','" + tipoDep + "'", Connect))
+        dsGral.Tables(dsGral.Tables.Count - 1).TableName = "ValorDep"
+        txtValor.Text = dsGral.Tables("ValorDep").Rows(0).Item(0).ToString()
+    End Sub
+
+    Private Sub cmbTipo_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbTipo.SelectedValueChanged
+        refrescarActivosDepreciar()
     End Sub
 End Class

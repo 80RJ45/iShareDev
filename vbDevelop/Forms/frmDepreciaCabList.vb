@@ -24,7 +24,6 @@ Public Class frmDepreciaCabList
         reloadRow(RowIndex, "DepreciaCabID")
     End Sub
     Private Sub frmDepreciaCabList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         initConextual()
         addOption("Generar", New EventHandler(AddressOf Generar))
         addOption("Procesar", New EventHandler(AddressOf Procesar))
@@ -42,7 +41,9 @@ Public Class frmDepreciaCabList
         End If
     End Sub
     Public Sub Generar()
-        Dim fila = Table.Rows(RowIndex)
+        'Table.DefaultView.Item(dg.CurrentRow.Index).Item("asientocabid")
+
+        Dim fila = Table.DefaultView.Item(dg.CurrentRow.Index)
         Dim fecha = DateValue(fila.Item("Fecha").ToString())
         Dim tabActivoDep As DataTable = dcGral.getDataTable("exec spActivoDepSelect " + getID("DepreciaCabID").ToString(), Connect)
 
@@ -71,7 +72,7 @@ Public Class frmDepreciaCabList
     End Sub
     Public Sub Procesar()
         Try
-            Dim fila = Table.Rows(RowIndex)
+            Dim fila = Table.DefaultView.Item(dg.CurrentRow.Index)
             Dim fecha = DateValue(fila.Item("Fecha").ToString())
             Dim tabActivoDep As DataTable = dcGral.getDataTable("exec spActivoDepSelect " + getID("DepreciaCabID").ToString(), Connect)
 

@@ -15,17 +15,20 @@ Public Class frmActivoDetail
         id = DetailID
         LoadDinamicTables()
 
+        cmbTipoActivo.ValueMember = "TipoActivoCabID"
     End Sub
     Public Overrides Sub SetGrids()
         MyBase.SetGrids()
-        dcGral.initGrid(dgvDepreciacion, dsGral.Tables(3), False, False, "ActivoDepID,Activo,codDepreciacion", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
-        'If dgvDepreciacion.Rows.Count > 0 Then dcGral.FormatColumn(dgvDepreciacion, "Valor", "Valor", 150, DataGridViewContentAlignment.MiddleRight, "0.00", True)
-        dcGral.FormatColumn(dgvDepreciacion, "Fecha", "Fecha", 150, DataGridViewContentAlignment.MiddleCenter, "")
-        dcGral.initGrid(dgvDetalle, dsGral.Tables("ActivoDet"), True, True, "ActivoCabID,ActivoDetID,CentroCostoID,Estado", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
-        dcGral.addComboGrid(dgvDetalle, Connect, "Select *from CentroCosto", "Centro Costo", 3, "CentroCostoID", "Nombre", "CentroCostoID", 120)
+        dcGral.initGrid(dgvDepreciacion, dsGral.Tables(3), False, False, "ActivoDepID,codActivo,Activo,TipoDepreciacion,codDepreciacion,estado,", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, True)
+        If dgvDepreciacion.Rows.Count > 0 Then dcGral.FormatColumn(dgvDepreciacion, "ValorDep", "Valor", 90, DataGridViewContentAlignment.MiddleRight, "0.00", True)
+        dcGral.FormatColumn(dgvDepreciacion, "Fecha", "Fecha", 100, DataGridViewContentAlignment.MiddleCenter, "")
+        dcGral.FormatColumn(dgvDepreciacion, "centro", "Ubicación", 100, DataGridViewContentAlignment.MiddleCenter, "")
+
+        dcGral.initGrid(dgvDetalle, dsGral.Tables("ActivoDet"), True, True, "ActivoCabID,ActivoDetID,CentroCostoID,Estado,Fecha", True, True, Connect, DataGridViewContentAlignment.MiddleCenter, False)
+        dcGral.addComboGrid(dgvDetalle, Connect, "Select *from CentroCosto", "Centro Costo", 3, "CentroCostoID", "Nombre", "CentroCostoID", 155)
         dcGral.addComboGrid(dgvDetalle, Connect, "Select *from dbo.iStatus('ActivoDet','Estado')", "Estado", 5, "Estado", "Nombre", "Codigo", 100)
         dcGral.FormatColumn(dgvDetalle, "Fecha", "Fecha", 90, "L", "", False)
-        'dcGral.insertDateColumn(dgvDetalle, 4, "Fecha", "Fecha", 150, "Y")
+        dcGral.insertDateColumn(dgvDetalle, 4, "Fecha", "Fecha", 115, "Y")
 
     End Sub
     Public Overrides Sub SetCombos()
@@ -52,6 +55,7 @@ Public Class frmActivoDetail
             txtCodigo.Text = dsGral.Tables("ActivoCab").Rows(0).Item(1)
             cmbTipoActivo.SelectedValue = dsGral.Tables("ActivoCab").Rows(0).Item("TipoActivoCabID")
             cmbTipoDep.SelectedValue = dsGral.Tables("ActivoCab").Rows(0).Item("TipoDep")
+            txtDepAcomulada.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Acomulada")
 
             'Articulo
             txtArticulo.Text = dsGral.Tables("ActivoCab").Rows(0).Item("Articulo")
@@ -102,8 +106,9 @@ Public Class frmActivoDetail
             If CheckBox1.Checked = True And txtCompra.Text.Length = 0 Then Err.AddError("Error, seleccione una compra", 0)
             If txtVida.Text.Length = 0 Then Err.AddError("Falta el tiempo de vida", 0)
             If txtPrecio.Text.Length = 0 Then Err.AddError("Falta el precio de compra", 0)
+            If txtDepAcomulada.Text.Length = 0 Then Err.AddError("Especifique Depreciación Acomulada", 0)
             'validar dgvDetalle
-            If dsGral.Tables("ActivoDet").Rows.Count = 0 Then Err.AddError("Falta información extra del activo", 0)
+            If dsGral.Tables("ActivoDet").Rows.Count = 0 Then Err.AddError("Falta información de la ubicación del activo", 0)
 
 
             If Err.Errors Then
@@ -115,7 +120,7 @@ Public Class frmActivoDetail
             dsGral.Tables("ActivoCab").Rows(0)("tipodep") = cmbTipoDep.SelectedValue
             dsGral.Tables("ActivoCab").Rows(0)("ArticuloID") = txtArticulo.Tag
             dsGral.Tables("ActivoCab").Rows(0)("tipoActivoCabID") = cmbTipoActivo.SelectedValue
-
+            dsGral.Tables("ActivoCab").Rows(0)("Acomulada") = txtDepAcomulada.Text
 
 
             'ActivoCompra
@@ -129,7 +134,6 @@ Public Class frmActivoDetail
             dsGral.Tables("ActivoCompra").Rows(0)("Precio") = txtPrecio.Text
             dsGral.Tables("ActivoCompra").Rows(0)("Residual") = txtValor.Text
             dsGral.Tables("ActivoCompra").Rows(0)("Vida") = txtVida.Text
-
 
             UpdateTables(0)
 
@@ -173,5 +177,16 @@ Public Class frmActivoDetail
         Dim frmTipoActivo = New frmTipoActivoCabList()
         Dim frm = New frmTipoActivoDet(Connect, frmTipoActivo, -1)
         frm.ShowDialog()
+    End Sub
+
+    Private Sub cmbTipoActivo_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbTipoActivo.SelectedValueChanged
+        If IsNothing(cmbTipoActivo.SelectedValue) = False Then
+            Dim str As String = "exec spTipoActivoCabSelect " + (cmbTipoActivo.SelectedValue).ToString()
+            Dim tabTipoActivo As DataTable = dcGral.getDataTable(str, Connect)
+            txtVida.Text = tabTipoActivo.Rows(0).Item("Vida").ToString()
+        End If
+    End Sub
+
+    Private Sub cmbTipoActivo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbTipoActivo.SelectedIndexChanged
     End Sub
 End Class

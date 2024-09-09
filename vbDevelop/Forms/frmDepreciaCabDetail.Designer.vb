@@ -33,13 +33,15 @@ Partial Class frmDepreciaCabDetail
         Me.txtPeriodo = New System.Windows.Forms.TextBox()
         Me.txtAsiento = New System.Windows.Forms.TextBox()
         Me.txtValor = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cmbTipo = New System.Windows.Forms.ComboBox()
         CType(Me.dgvActivos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(73, 69)
+        Me.Label3.Location = New System.Drawing.Point(54, 69)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(40, 13)
         Me.Label3.TabIndex = 2
@@ -56,7 +58,7 @@ Partial Class frmDepreciaCabDetail
         'dtFecha
         '
         Me.dtFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtFecha.Location = New System.Drawing.Point(131, 64)
+        Me.dtFecha.Location = New System.Drawing.Point(110, 64)
         Me.dtFecha.Name = "dtFecha"
         Me.dtFecha.Size = New System.Drawing.Size(127, 20)
         Me.dtFecha.TabIndex = 25
@@ -92,7 +94,7 @@ Partial Class frmDepreciaCabDetail
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(73, 32)
+        Me.Label1.Location = New System.Drawing.Point(54, 32)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(40, 13)
         Me.Label1.TabIndex = 32
@@ -101,7 +103,7 @@ Partial Class frmDepreciaCabDetail
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(73, 106)
+        Me.Label2.Location = New System.Drawing.Point(54, 106)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(43, 13)
         Me.Label2.TabIndex = 33
@@ -110,7 +112,7 @@ Partial Class frmDepreciaCabDetail
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(73, 143)
+        Me.Label4.Location = New System.Drawing.Point(54, 143)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(42, 13)
         Me.Label4.TabIndex = 34
@@ -119,7 +121,7 @@ Partial Class frmDepreciaCabDetail
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(353, 143)
+        Me.Label5.Location = New System.Drawing.Point(332, 143)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(31, 13)
         Me.Label5.TabIndex = 35
@@ -127,7 +129,7 @@ Partial Class frmDepreciaCabDetail
         '
         'txtCodigo
         '
-        Me.txtCodigo.Location = New System.Drawing.Point(131, 29)
+        Me.txtCodigo.Location = New System.Drawing.Point(110, 29)
         Me.txtCodigo.Name = "txtCodigo"
         Me.txtCodigo.ReadOnly = True
         Me.txtCodigo.Size = New System.Drawing.Size(127, 20)
@@ -135,7 +137,7 @@ Partial Class frmDepreciaCabDetail
         '
         'txtPeriodo
         '
-        Me.txtPeriodo.Location = New System.Drawing.Point(131, 99)
+        Me.txtPeriodo.Location = New System.Drawing.Point(110, 99)
         Me.txtPeriodo.Name = "txtPeriodo"
         Me.txtPeriodo.ReadOnly = True
         Me.txtPeriodo.Size = New System.Drawing.Size(394, 20)
@@ -143,7 +145,7 @@ Partial Class frmDepreciaCabDetail
         '
         'txtAsiento
         '
-        Me.txtAsiento.Location = New System.Drawing.Point(131, 140)
+        Me.txtAsiento.Location = New System.Drawing.Point(110, 140)
         Me.txtAsiento.Name = "txtAsiento"
         Me.txtAsiento.ReadOnly = True
         Me.txtAsiento.Size = New System.Drawing.Size(127, 20)
@@ -152,16 +154,36 @@ Partial Class frmDepreciaCabDetail
         '
         'txtValor
         '
-        Me.txtValor.Location = New System.Drawing.Point(398, 140)
+        Me.txtValor.Location = New System.Drawing.Point(377, 140)
         Me.txtValor.Name = "txtValor"
         Me.txtValor.ReadOnly = True
         Me.txtValor.Size = New System.Drawing.Size(127, 20)
         Me.txtValor.TabIndex = 39
         '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(332, 70)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(28, 13)
+        Me.Label6.TabIndex = 40
+        Me.Label6.Text = "Tipo"
+        '
+        'cmbTipo
+        '
+        Me.cmbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbTipo.FormattingEnabled = True
+        Me.cmbTipo.Location = New System.Drawing.Point(377, 66)
+        Me.cmbTipo.Name = "cmbTipo"
+        Me.cmbTipo.Size = New System.Drawing.Size(127, 21)
+        Me.cmbTipo.TabIndex = 41
+        '
         'frmDepreciaCabDetail
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.ClientSize = New System.Drawing.Size(608, 432)
+        Me.Controls.Add(Me.cmbTipo)
+        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.txtValor)
         Me.Controls.Add(Me.txtAsiento)
         Me.Controls.Add(Me.txtPeriodo)
@@ -197,4 +219,6 @@ Partial Class frmDepreciaCabDetail
     Friend WithEvents txtPeriodo As Windows.Forms.TextBox
     Friend WithEvents txtAsiento As Windows.Forms.TextBox
     Friend WithEvents txtValor As Windows.Forms.TextBox
+    Friend WithEvents Label6 As Windows.Forms.Label
+    Friend WithEvents cmbTipo As Windows.Forms.ComboBox
 End Class
