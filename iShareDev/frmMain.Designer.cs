@@ -91,6 +91,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.anticiposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adelantosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -107,7 +109,8 @@
             this.helpMenu,
             this.pruebaToolStripMenuItem,
             this.matriculaEagleWingsToolStripMenuItem,
-            this.webToolStripMenuItem});
+            this.webToolStripMenuItem,
+            this.anticiposToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
@@ -454,28 +457,28 @@
             // tipoActivoToolStripMenuItem
             // 
             this.tipoActivoToolStripMenuItem.Name = "tipoActivoToolStripMenuItem";
-            this.tipoActivoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tipoActivoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.tipoActivoToolStripMenuItem.Text = "Tipo Activo";
             this.tipoActivoToolStripMenuItem.Click += new System.EventHandler(this.tipoActivoToolStripMenuItem_Click);
             // 
             // centroCostoToolStripMenuItem
             // 
             this.centroCostoToolStripMenuItem.Name = "centroCostoToolStripMenuItem";
-            this.centroCostoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.centroCostoToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.centroCostoToolStripMenuItem.Text = "Centro Costo";
             this.centroCostoToolStripMenuItem.Click += new System.EventHandler(this.centroCostoToolStripMenuItem_Click);
             // 
             // activosToolStripMenuItem
             // 
             this.activosToolStripMenuItem.Name = "activosToolStripMenuItem";
-            this.activosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.activosToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.activosToolStripMenuItem.Text = "Activos";
             this.activosToolStripMenuItem.Click += new System.EventHandler(this.activosToolStripMenuItem_Click);
             // 
             // depreciaciónToolStripMenuItem
             // 
             this.depreciaciónToolStripMenuItem.Name = "depreciaciónToolStripMenuItem";
-            this.depreciaciónToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.depreciaciónToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.depreciaciónToolStripMenuItem.Text = "Depreciación";
             this.depreciaciónToolStripMenuItem.Click += new System.EventHandler(this.depreciaciónToolStripMenuItem_Click);
             // 
@@ -608,6 +611,21 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // anticiposToolStripMenuItem
+            // 
+            this.anticiposToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.adelantosToolStripMenuItem});
+            this.anticiposToolStripMenuItem.Name = "anticiposToolStripMenuItem";
+            this.anticiposToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.anticiposToolStripMenuItem.Text = "Anticipos";
+            // 
+            // adelantosToolStripMenuItem
+            // 
+            this.adelantosToolStripMenuItem.Name = "adelantosToolStripMenuItem";
+            this.adelantosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.adelantosToolStripMenuItem.Text = "Adelantos";
+            this.adelantosToolStripMenuItem.Click += new System.EventHandler(this.adelantosToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -696,6 +714,8 @@
         private System.Windows.Forms.ToolStripMenuItem alumnosEndpointPruebaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem webToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paymentQueryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem anticiposToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adelantosToolStripMenuItem;
     }
 }
 

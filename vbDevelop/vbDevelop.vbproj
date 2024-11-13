@@ -103,6 +103,12 @@
     <Compile Include="Forms\frmActivoDetail.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\frmAdelantoList.Designer.vb">
+      <DependentUpon>frmAdelantoList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmAdelantoList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmCentroCosto.Designer.vb">
       <DependentUpon>frmCentroCosto.vb</DependentUpon>
     </Compile>
@@ -182,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmActivoDetail.resx">
       <DependentUpon>frmActivoDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmAdelantoList.resx">
+      <DependentUpon>frmAdelantoList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmCentroCosto.resx">
       <DependentUpon>frmCentroCosto.vb</DependentUpon>

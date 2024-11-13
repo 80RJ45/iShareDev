@@ -188,5 +188,11 @@ namespace iShareDev
                 MessageBox.Show($"No se pudo abrir la URL: {ex.Message}");
             }
         }
+
+        private void adelantosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            dcGral.ShowList(new vbDevelop.frmAdelantoList(), this, Connect);
+        }
     }
 }

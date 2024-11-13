@@ -70,6 +70,12 @@ Public Class frmDepreciaCabDetail
             If dsGral.Tables("DepreciaCab").Rows(0).Item("codEstado").ToString.ToLower().Equals("p") Then
                 btnSalvar.Enabled = False
             End If
+
+            Dim dt As New DataTable()
+            dt = dcGral.getDataTable("spDepreciaCabSelect " + id, Connect)
+            If dt.Rows.Count > 0 Then
+                btnSalvar.Enabled = False
+            End If
         End If
 
     End Sub
