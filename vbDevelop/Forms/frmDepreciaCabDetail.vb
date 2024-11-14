@@ -71,8 +71,8 @@ Public Class frmDepreciaCabDetail
                 btnSalvar.Enabled = False
             End If
 
-            Dim dt As New DataTable()
-            dt = dcGral.getDataTable("spDepreciaCabSelect " + id, Connect)
+            Dim dt = New DataTable()
+            dt = dcGral.getDataTable("spDepreciaCabSelect " + id.ToString(), Connect)
             If dt.Rows.Count > 0 Then
                 btnSalvar.Enabled = False
             End If
