@@ -68,6 +68,12 @@
     <Compile Include="Controllers\AlumnosController.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Cosecha\Forms\frmPrueba.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cosecha\Forms\frmPrueba.Designer.cs">
+      <DependentUpon>frmPrueba.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmCargarAlumnos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     <Folder Include="Source\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Cosecha\Forms\frmPrueba.resx">
+      <DependentUpon>frmPrueba.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmCargarAlumnos.resx">
       <DependentUpon>frmCargarAlumnos.cs</DependentUpon>
     </EmbeddedResource>
