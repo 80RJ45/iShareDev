@@ -194,5 +194,15 @@ namespace iShareDev
 
             dcGral.ShowList(new vbDevelop.frmAdelantoList(), this, Connect);
         }
+
+        private void sueloToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new cDevelop.Forms.Cosecha.frmSueloList(), this, Connect);
+        }
+
+        private void cobrosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new vbDevelop.frmCobroBancoCabList(), this, Connect);
+        }
     }
 }

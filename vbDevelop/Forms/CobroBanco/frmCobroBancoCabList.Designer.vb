@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmActivoDepList
+Partial Class frmCobroBancoCabList
     Inherits dcLibrary.dcParentList
 
     'Form invalida a Dispose para limpiar la lista de componentes.
@@ -21,12 +21,11 @@ Partial Class frmActivoDepList
     Private Sub InitializeComponent()
         Me.SuspendLayout()
         '
-        'frmActivoDepList
+        'frmCobroBancoCabList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.ClientSize = New System.Drawing.Size(586, 322)
-        Me.Name = "frmActivoDepList"
-        Me.Text = "Mantenimiento Cobro Bancos"
+        Me.Name = "frmCobroBancoCabList"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

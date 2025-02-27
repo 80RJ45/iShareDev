@@ -79,6 +79,10 @@
             this.alumnosEndpointPruebaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.webToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.paymentQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.anticiposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adelantosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cosechasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sueloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -91,8 +95,8 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.anticiposToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.adelantosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cobroBancoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cobrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -110,7 +114,9 @@
             this.pruebaToolStripMenuItem,
             this.matriculaEagleWingsToolStripMenuItem,
             this.webToolStripMenuItem,
-            this.anticiposToolStripMenuItem});
+            this.anticiposToolStripMenuItem,
+            this.cosechasToolStripMenuItem,
+            this.cobroBancoToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
@@ -512,6 +518,36 @@
             this.paymentQueryToolStripMenuItem.Text = "Payment Query";
             this.paymentQueryToolStripMenuItem.Click += new System.EventHandler(this.paymentQueryToolStripMenuItem_Click);
             // 
+            // anticiposToolStripMenuItem
+            // 
+            this.anticiposToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.adelantosToolStripMenuItem});
+            this.anticiposToolStripMenuItem.Name = "anticiposToolStripMenuItem";
+            this.anticiposToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.anticiposToolStripMenuItem.Text = "Anticipos";
+            // 
+            // adelantosToolStripMenuItem
+            // 
+            this.adelantosToolStripMenuItem.Name = "adelantosToolStripMenuItem";
+            this.adelantosToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.adelantosToolStripMenuItem.Text = "Adelantos";
+            this.adelantosToolStripMenuItem.Click += new System.EventHandler(this.adelantosToolStripMenuItem_Click);
+            // 
+            // cosechasToolStripMenuItem
+            // 
+            this.cosechasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sueloToolStripMenuItem});
+            this.cosechasToolStripMenuItem.Name = "cosechasToolStripMenuItem";
+            this.cosechasToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.cosechasToolStripMenuItem.Text = "Cosechas";
+            // 
+            // sueloToolStripMenuItem
+            // 
+            this.sueloToolStripMenuItem.Name = "sueloToolStripMenuItem";
+            this.sueloToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.sueloToolStripMenuItem.Text = "Suelo";
+            this.sueloToolStripMenuItem.Click += new System.EventHandler(this.sueloToolStripMenuItem_Click);
+            // 
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -611,20 +647,20 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // anticiposToolStripMenuItem
+            // cobroBancoToolStripMenuItem
             // 
-            this.anticiposToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.adelantosToolStripMenuItem});
-            this.anticiposToolStripMenuItem.Name = "anticiposToolStripMenuItem";
-            this.anticiposToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
-            this.anticiposToolStripMenuItem.Text = "Anticipos";
+            this.cobroBancoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cobrosToolStripMenuItem});
+            this.cobroBancoToolStripMenuItem.Name = "cobroBancoToolStripMenuItem";
+            this.cobroBancoToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
+            this.cobroBancoToolStripMenuItem.Text = "Cobro Banco";
             // 
-            // adelantosToolStripMenuItem
+            // cobrosToolStripMenuItem
             // 
-            this.adelantosToolStripMenuItem.Name = "adelantosToolStripMenuItem";
-            this.adelantosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.adelantosToolStripMenuItem.Text = "Adelantos";
-            this.adelantosToolStripMenuItem.Click += new System.EventHandler(this.adelantosToolStripMenuItem_Click);
+            this.cobrosToolStripMenuItem.Name = "cobrosToolStripMenuItem";
+            this.cobrosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cobrosToolStripMenuItem.Text = "Cobros";
+            this.cobrosToolStripMenuItem.Click += new System.EventHandler(this.cobrosToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -716,6 +752,10 @@
         private System.Windows.Forms.ToolStripMenuItem paymentQueryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem anticiposToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adelantosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cosechasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sueloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cobroBancoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cobrosToolStripMenuItem;
     }
 }
 
