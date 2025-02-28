@@ -26,7 +26,6 @@ Partial Class frmActivoCabList
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.ClientSize = New System.Drawing.Size(586, 322)
         Me.Name = "frmActivoCabList"
-        Me.Text = "Activos Fijos"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

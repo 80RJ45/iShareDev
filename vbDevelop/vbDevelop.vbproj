@@ -85,6 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.vb" />
+    <Compile Include="Forms\Activos\frmActivoCabList.Designer.vb">
+      <DependentUpon>frmActivoCabList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Activos\frmActivoCabList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\CobroBanco\frmCobroBancoCabList.Designer.vb">
       <DependentUpon>frmCobroBancoCabList.vb</DependentUpon>
     </Compile>
@@ -95,12 +101,6 @@
       <DependentUpon>frmCobroBancoDetail.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\CobroBanco\frmCobroBancoDetail.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\frmActivoCabList.Designer.vb">
-      <DependentUpon>frmActivoCabList.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Activos\frmActivoCabList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Activos\frmActivoDepList.Designer.vb">
@@ -192,7 +192,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\frmActivoCabList.resx">
+    <EmbeddedResource Include="Forms\Activos\frmActivoCabList.resx">
       <DependentUpon>frmActivoCabList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Activos\frmActivoDepList.resx">

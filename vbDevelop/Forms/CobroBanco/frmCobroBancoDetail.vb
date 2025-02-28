@@ -47,7 +47,6 @@ Public Class frmCobroBancoDetail
 
         If dsGral.Tables(0).Rows.Count = 0 Then
             dsGral.Tables(0).Rows.Add()
-            refrescarDet()
             lblEstado.Text = "Grabado"
         Else
             Try
@@ -63,6 +62,7 @@ Public Class frmCobroBancoDetail
                 cmbUbicacion.SelectedValue = row("CodSitio")
                 lblEstado.Text = row("Estado")
                 lblEstado.Tag = row("CodEstado")
+                refrescarDet("cobroBancoCabID", id)
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.DefaultButton1)
             End Try
@@ -77,13 +77,6 @@ Public Class frmCobroBancoDetail
     Private Sub frmCobroBancoDetail_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
-
-    'Salvar
-    '    Validaciones
-
-    '    El Detalle solo guarda los que están seleccionados
-
-
     Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Me.Dispose()
     End Sub
@@ -137,7 +130,6 @@ Public Class frmCobroBancoDetail
             Next
 
             UpdateTables(0)
-
             If Adding Then newRecord(0)
             Close()
 
@@ -147,6 +139,7 @@ Public Class frmCobroBancoDetail
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+
         ' Dim frm As New CuentasCobrar.frmClienteList(Connect)
         'frm.Display = True
         'If frm.isOK Then
@@ -154,11 +147,11 @@ Public Class frmCobroBancoDetail
         '    txtCliente.Tag = frm.RowSelected.Item("ClienteID")
         'End If
 
-        refrescarDet()
+        'refrescarDet("ClienteID",frm.RowSelected.Item("ClienteID")
     End Sub
-    Private Sub refrescarDet(parm As Int16)
+    Private Sub refrescarDet(parm As String, value As Int16)
         Dim tab As New DataTable
-        tab = dcGral.getDataTable("spCobroBancoDetSelect " + parm.ToString(), Connect)
+        tab = dcGral.getDataTable("spCobroBancoDetSelect @" + parm + "=" + value.ToString(), Connect)
 
         replaceTable("CobroBancoDet", tab)
     End Sub
