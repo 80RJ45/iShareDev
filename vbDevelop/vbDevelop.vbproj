@@ -100,19 +100,19 @@
     <Compile Include="Forms\frmActivoCabList.Designer.vb">
       <DependentUpon>frmActivoCabList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmActivoCabList.vb">
+    <Compile Include="Forms\Activos\frmActivoCabList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmActivoDepList.Designer.vb">
+    <Compile Include="Forms\Activos\frmActivoDepList.Designer.vb">
       <DependentUpon>frmActivoDepList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmActivoDepList.vb">
+    <Compile Include="Forms\Activos\frmActivoDepList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmActivoDetail.Designer.vb">
+    <Compile Include="Forms\Activos\frmActivoDetail.Designer.vb">
       <DependentUpon>frmActivoDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmActivoDetail.vb">
+    <Compile Include="Forms\Activos\frmActivoDetail.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmAdelantoList.Designer.vb">
@@ -121,16 +121,16 @@
     <Compile Include="Forms\frmAdelantoList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmCentroCosto.Designer.vb">
+    <Compile Include="Forms\Activos\frmCentroCosto.Designer.vb">
       <DependentUpon>frmCentroCosto.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmCentroCosto.vb">
+    <Compile Include="Forms\Activos\frmCentroCosto.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmDepreciaCabList.Designer.vb">
+    <Compile Include="Forms\Activos\frmDepreciaCabList.Designer.vb">
       <DependentUpon>frmDepreciaCabList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmDepreciaCabList.vb">
+    <Compile Include="Forms\Activos\frmDepreciaCabList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmFincaDet.Designer.vb">
@@ -157,22 +157,22 @@
     <Compile Include="Forms\frmProductoList2.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmTipoActivoCabList.Designer.vb">
+    <Compile Include="Forms\Activos\frmTipoActivoCabList.Designer.vb">
       <DependentUpon>frmTipoActivoCabList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmTipoActivoCabList.vb">
+    <Compile Include="Forms\Activos\frmTipoActivoCabList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmTipoActivoDet.Designer.vb">
+    <Compile Include="Forms\Activos\frmTipoActivoDet.Designer.vb">
       <DependentUpon>frmTipoActivoDet.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmTipoActivoDet.vb">
+    <Compile Include="Forms\Activos\frmTipoActivoDet.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmDepreciaCabDetail.Designer.vb">
+    <Compile Include="Forms\Activos\frmDepreciaCabDetail.Designer.vb">
       <DependentUpon>frmDepreciaCabDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmDepreciaCabDetail.vb">
+    <Compile Include="Forms\Activos\frmDepreciaCabDetail.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -192,28 +192,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\CobroBanco\frmCobroBancoCabList.resx">
-      <DependentUpon>frmCobroBancoCabList.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CobroBanco\frmCobroBancoDetail.resx">
-      <DependentUpon>frmCobroBancoDetail.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmActivoCabList.resx">
       <DependentUpon>frmActivoCabList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmActivoDepList.resx">
+    <EmbeddedResource Include="Forms\Activos\frmActivoDepList.resx">
       <DependentUpon>frmActivoDepList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmActivoDetail.resx">
+    <EmbeddedResource Include="Forms\Activos\frmActivoDetail.resx">
       <DependentUpon>frmActivoDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmAdelantoList.resx">
       <DependentUpon>frmAdelantoList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmCentroCosto.resx">
+    <EmbeddedResource Include="Forms\Activos\frmCentroCosto.resx">
       <DependentUpon>frmCentroCosto.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmDepreciaCabList.resx">
+    <EmbeddedResource Include="Forms\Activos\frmDepreciaCabList.resx">
       <DependentUpon>frmDepreciaCabList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmFincaDet.resx">
@@ -228,13 +222,13 @@
     <EmbeddedResource Include="Forms\frmProductoList2.resx">
       <DependentUpon>frmProductoList2.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmTipoActivoCabList.resx">
+    <EmbeddedResource Include="Forms\Activos\frmTipoActivoCabList.resx">
       <DependentUpon>frmTipoActivoCabList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmTipoActivoDet.resx">
+    <EmbeddedResource Include="Forms\Activos\frmTipoActivoDet.resx">
       <DependentUpon>frmTipoActivoDet.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmDepreciaCabDetail.resx">
+    <EmbeddedResource Include="Forms\Activos\frmDepreciaCabDetail.resx">
       <DependentUpon>frmDepreciaCabDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
