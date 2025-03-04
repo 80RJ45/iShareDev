@@ -44,11 +44,17 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="C0001">
+      <HintPath>..\Lib\C0001.dll</HintPath>
+    </Reference>
     <Reference Include="C0002">
       <HintPath>..\Lib\C0002.dll</HintPath>
     </Reference>
     <Reference Include="C0003">
       <HintPath>..\Lib\C0003.dll</HintPath>
+    </Reference>
+    <Reference Include="C0005">
+      <HintPath>..\Lib\C0005.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
@@ -200,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Activos\frmActivoDetail.resx">
       <DependentUpon>frmActivoDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CobroBanco\frmCobroBancoDetail.resx">
+      <DependentUpon>frmCobroBancoDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmAdelantoList.resx">
       <DependentUpon>frmAdelantoList.vb</DependentUpon>

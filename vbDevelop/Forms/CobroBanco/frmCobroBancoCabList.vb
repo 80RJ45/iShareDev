@@ -15,6 +15,7 @@ Public Class frmCobroBancoCabList
     End Sub
 
     Public Overrides Sub Adicionar()
+        '"spTipoSelect 'CobroBancoCab'", "Tipo"
         Dim frm = New frmCobroBancoDetail(Connect, Me, -1)
         frm.ShowDialog()
         MyBase.Adicionar()
