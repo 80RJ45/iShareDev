@@ -146,7 +146,7 @@ namespace pagoenLinea.Data
 
             DataRow fila = tabAvisos.Rows[0];
 
-                saldo = int.Parse(fila["Saldo"].ToString());
+                saldo = float.Parse(fila["Saldo"].ToString());
                 
                 
                 if (!(codAviso == fila["Codigo"].ToString()))
