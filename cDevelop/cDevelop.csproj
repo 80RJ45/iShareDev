@@ -86,6 +86,12 @@
     <Compile Include="Forms\frmCargarAlumnos.Designer.cs">
       <DependentUpon>frmCargarAlumnos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmImportarInventario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmImportarInventario.Designer.cs">
+      <DependentUpon>frmImportarInventario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmInformacionFaltante.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmCargarAlumnos.resx">
       <DependentUpon>frmCargarAlumnos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmImportarInventario.resx">
+      <DependentUpon>frmImportarInventario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmInformacionFaltante.resx">
       <DependentUpon>frmInformacionFaltante.cs</DependentUpon>

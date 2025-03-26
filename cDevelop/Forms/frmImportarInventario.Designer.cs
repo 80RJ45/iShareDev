@@ -70,6 +70,7 @@
             this.btnCargar.TabIndex = 3;
             this.btnCargar.Text = "Cargar";
             this.btnCargar.UseVisualStyleBackColor = true;
+            this.btnCargar.Click += new System.EventHandler(this.btnCargar_Click);
             // 
             // btnSalvar
             // 
@@ -79,6 +80,7 @@
             this.btnSalvar.TabIndex = 4;
             this.btnSalvar.Text = "Salvar";
             this.btnSalvar.UseVisualStyleBackColor = true;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
             // frmImportarInventario
             // 
@@ -91,6 +93,7 @@
             this.Controls.Add(this.lblCargados);
             this.Name = "frmImportarInventario";
             this.Text = "Importar Inventario";
+            this.Load += new System.EventHandler(this.frmImportarInventario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

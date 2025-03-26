@@ -72,12 +72,12 @@ namespace iShareDev
 
         private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            toolStrip.Visible = toolBarToolStripMenuItem.Checked;
+            //toolStrip.Visible = toolBarToolStripMenuItem.Checked;
         }
 
         private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            statusStrip.Visible = statusBarToolStripMenuItem.Checked;
+            //statusStrip.Visible = statusBarToolStripMenuItem.Checked;
         }
 
         private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -203,6 +203,18 @@ namespace iShareDev
         private void cobrosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dcGral.ShowList(new vbDevelop.frmCobroBancoCabList(), this, Connect);
+        }
+
+        private void menuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void importarInventarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmImportarInventario frm = new frmImportarInventario(Connect);
+            frm.MdiParent = this;
+            frm.Show();
         }
     }
 }
