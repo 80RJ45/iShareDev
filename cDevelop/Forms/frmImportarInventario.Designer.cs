@@ -33,7 +33,12 @@
             this.lblRechazados = new System.Windows.Forms.Label();
             this.btnCargar = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblArt = new System.Windows.Forms.Label();
+            this.lblPorc = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblCargados
@@ -52,6 +57,7 @@
             this.dgvArticulos.Name = "dgvArticulos";
             this.dgvArticulos.Size = new System.Drawing.Size(785, 418);
             this.dgvArticulos.TabIndex = 1;
+            this.dgvArticulos.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvArticulos_RowsRemoved);
             // 
             // lblRechazados
             // 
@@ -82,10 +88,48 @@
             this.btnSalvar.UseVisualStyleBackColor = true;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(30, 35);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(334, 29);
+            this.progressBar1.TabIndex = 5;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblPorc);
+            this.panel1.Controls.Add(this.lblArt);
+            this.panel1.Controls.Add(this.progressBar1);
+            this.panel1.Location = new System.Drawing.Point(206, 234);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(400, 80);
+            this.panel1.TabIndex = 6;
+            // 
+            // lblArt
+            // 
+            this.lblArt.AutoSize = true;
+            this.lblArt.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblArt.Location = new System.Drawing.Point(30, 16);
+            this.lblArt.Name = "lblArt";
+            this.lblArt.Size = new System.Drawing.Size(29, 12);
+            this.lblArt.TabIndex = 6;
+            this.lblArt.Text = "label1";
+            // 
+            // lblPorc
+            // 
+            this.lblPorc.AutoSize = true;
+            this.lblPorc.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPorc.Location = new System.Drawing.Point(329, 16);
+            this.lblPorc.Name = "lblPorc";
+            this.lblPorc.Size = new System.Drawing.Size(29, 12);
+            this.lblPorc.TabIndex = 7;
+            this.lblPorc.Text = "label2";
+            // 
             // frmImportarInventario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(809, 511);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.btnCargar);
             this.Controls.Add(this.lblRechazados);
@@ -95,6 +139,8 @@
             this.Text = "Importar Inventario";
             this.Load += new System.EventHandler(this.frmImportarInventario_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,5 +153,9 @@
         private System.Windows.Forms.Label lblRechazados;
         private System.Windows.Forms.Button btnCargar;
         private System.Windows.Forms.Button btnSalvar;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblPorc;
+        private System.Windows.Forms.Label lblArt;
     }
 }
