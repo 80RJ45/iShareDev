@@ -35,8 +35,9 @@
             this.btnSalvar = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lblArt = new System.Windows.Forms.Label();
             this.lblPorc = new System.Windows.Forms.Label();
+            this.lblArt = new System.Windows.Forms.Label();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticulos)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -53,16 +54,17 @@
             // dgvArticulos
             // 
             this.dgvArticulos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvArticulos.Location = new System.Drawing.Point(12, 81);
+            this.dgvArticulos.Location = new System.Drawing.Point(12, 103);
             this.dgvArticulos.Name = "dgvArticulos";
-            this.dgvArticulos.Size = new System.Drawing.Size(785, 418);
+            this.dgvArticulos.Size = new System.Drawing.Size(824, 433);
             this.dgvArticulos.TabIndex = 1;
+            this.dgvArticulos.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvArticulos_ColumnHeaderMouseClick);
             this.dgvArticulos.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvArticulos_RowsRemoved);
             // 
             // lblRechazados
             // 
             this.lblRechazados.AutoSize = true;
-            this.lblRechazados.Location = new System.Drawing.Point(576, 40);
+            this.lblRechazados.Location = new System.Drawing.Point(615, 40);
             this.lblRechazados.Name = "lblRechazados";
             this.lblRechazados.Size = new System.Drawing.Size(110, 13);
             this.lblRechazados.TabIndex = 2;
@@ -80,7 +82,7 @@
             // 
             // btnSalvar
             // 
-            this.btnSalvar.Location = new System.Drawing.Point(722, 35);
+            this.btnSalvar.Location = new System.Drawing.Point(761, 35);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(75, 23);
             this.btnSalvar.TabIndex = 4;
@@ -92,7 +94,7 @@
             // 
             this.progressBar1.Location = new System.Drawing.Point(30, 35);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(334, 29);
+            this.progressBar1.Size = new System.Drawing.Size(343, 29);
             this.progressBar1.TabIndex = 5;
             // 
             // panel1
@@ -100,10 +102,21 @@
             this.panel1.Controls.Add(this.lblPorc);
             this.panel1.Controls.Add(this.lblArt);
             this.panel1.Controls.Add(this.progressBar1);
-            this.panel1.Location = new System.Drawing.Point(206, 234);
+            this.panel1.Location = new System.Drawing.Point(220, 265);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(400, 80);
             this.panel1.TabIndex = 6;
+            // 
+            // lblPorc
+            // 
+            this.lblPorc.AutoSize = true;
+            this.lblPorc.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPorc.Location = new System.Drawing.Point(257, 16);
+            this.lblPorc.Name = "lblPorc";
+            this.lblPorc.Size = new System.Drawing.Size(116, 12);
+            this.lblPorc.TabIndex = 7;
+            this.lblPorc.Text = "Validando información: 0% ";
+            this.lblPorc.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // lblArt
             // 
@@ -115,20 +128,19 @@
             this.lblArt.TabIndex = 6;
             this.lblArt.Text = "label1";
             // 
-            // lblPorc
+            // txtBuscar
             // 
-            this.lblPorc.AutoSize = true;
-            this.lblPorc.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPorc.Location = new System.Drawing.Point(329, 16);
-            this.lblPorc.Name = "lblPorc";
-            this.lblPorc.Size = new System.Drawing.Size(29, 12);
-            this.lblPorc.TabIndex = 7;
-            this.lblPorc.Text = "label2";
+            this.txtBuscar.Location = new System.Drawing.Point(12, 77);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(274, 20);
+            this.txtBuscar.TabIndex = 7;
+            this.txtBuscar.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // frmImportarInventario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(809, 511);
+            this.ClientSize = new System.Drawing.Size(848, 548);
+            this.Controls.Add(this.txtBuscar);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnSalvar);
             this.Controls.Add(this.btnCargar);
@@ -157,5 +169,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblPorc;
         private System.Windows.Forms.Label lblArt;
+        private System.Windows.Forms.TextBox txtBuscar;
     }
 }
