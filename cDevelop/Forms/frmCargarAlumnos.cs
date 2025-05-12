@@ -102,8 +102,9 @@ namespace cDevelop.Forms
                     lblPorcentaje.Refresh(); lblNombre.Refresh();lblIniciar.Refresh();
                     progressBar1.PerformStep();
                     
-                    if (alumno.status == "Enrolled")
+                    if (alumno.nextStatus == "Enrolled")
                     {
+                        //Verificar que el alumno no ha sido importado este año
                         tabClienteImport = dcGral.getDataTable("exec spClienteImportSelect '" + alumno.ssn + "' ,'" + alumno.fechaModificacion.Year + "'", Connect);
 
                         if (tabClienteImport.Rows.Count == 0 || (tabClienteImport.Rows[0]["Transporte"].ToString().ToLower() == "false" && alumno.planTransporte.ToString().Length>1 && alumno.transporteColonia.ToString().Length > 2) )
@@ -118,7 +119,9 @@ namespace cDevelop.Forms
                             else
                                 row["Transporte"] = 0;
                             //row["Grado"] = alumno.gradeLevel[0] == '0' ? alumno.gradeLevel.Substring(1) : alumno.gradeLevel;
-                            row["Grado"] = alumno.gradeLevel;
+                            //row["Grado"] = alumno.gradeLevel;
+                            //tomar el grado Siguiente
+                            row["Grado"] = alumno.nextGradeLevel;
                             row["Ano"] = alumno.fechaModificacion.Year;
                             row["cantMeses"] = alumno.plandePagos.Split('M')[0].Length > 0 ? alumno.plandePagos.Split('M')[0] : "10";
                             float descuento = alumno.descuento.ToString() == "" || alumno.descuento.ToString() == " " ? 0 : float.Parse(alumno.descuento.ToString());
@@ -141,7 +144,7 @@ namespace cDevelop.Forms
                                 continue;
                             }
                             //verificar que la colonia existe
-                            if (int.Parse(row["Transporte"].ToString()) == 1 || row["Transporte"] == "1")
+                            if (int.Parse(row["Transporte"].ToString()) == 1 || row["Transporte"].ToString() == "1")
                             {
                                 tabZona = dcGral.getDataTable("exec spvZonaPrecioSelect '" + alumno.transporteColonia + "'", Connect);
                                 if (tabZona.Rows.Count == 0)

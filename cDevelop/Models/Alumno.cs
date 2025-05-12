@@ -21,6 +21,8 @@ namespace cDevelop.Models
         public string address1 { get; set; }
         public string address2 { get; set; }
         public string gradeLevel { get; set; }
+        public string nextGradeLevel { get; set; }
+        public string nextStatus { get; set; }
         public string placement { get; set; }
         public string ssn { get; set; }
         public string status { get; set; }
