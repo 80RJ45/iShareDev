@@ -15,9 +15,11 @@ namespace cDevelop.Forms
         private string parametros;
         private AlumnosController controller;
         private List<Alumno> alumnos;
-        private DataTable tabAlumnos,tabClienteImport,tabZona,tabFaltante;   
+        private DataTable tabAlumnos,tabClienteImport,tabPerAcad,tabZona,tabFaltante;   
         public int importados { get; set; }
-        int extrangero;
+        int extrangero,iniPerActual,finPerActual;
+        string codPerActual;
+
         dcLibrary.dcConnect Connect;
         
         public frmCargarAlumnos(dcLibrary.dcConnect cnx)
@@ -37,13 +39,13 @@ namespace cDevelop.Forms
             dsGral.Tables["TabAlumnos"].Columns.Add("Grado");
             dsGral.Tables["TabAlumnos"].Columns.Add("Ano");
             dsGral.Tables["TabAlumnos"].Columns.Add("cantMeses");
+            dsGral.Tables["TabAlumnos"].Columns.Add("planPagos");
             dsGral.Tables["TabAlumnos"].Columns.Add("porcentajeBeca");
             dsGral.Tables["TabAlumnos"].Columns.Add("SitioID");
             dsGral.Tables["TabAlumnos"].Columns.Add("FechaModificacion");
             dsGral.Tables["TabAlumnos"].Columns.Add("HorarioTransporte");
             dsGral.Tables["TabAlumnos"].Columns.Add("Direccion");
-            dsGral.Tables["TabAlumnos"].Columns.Add("TransporteColonia");
-            
+            dsGral.Tables["TabAlumnos"].Columns.Add("TransporteColonia");            
 
             //responsables
             dsGral.Tables["TabAlumnos"].Columns.Add("nombreMadre");
@@ -61,8 +63,19 @@ namespace cDevelop.Forms
             tabFaltante = new DataTable();
             tabFaltante.Columns.Add("Alumno");
             tabFaltante.Columns.Add("Identidad");
-            tabFaltante.Columns.Add("Observacion");            
+            tabFaltante.Columns.Add("Observacion");
+
+
+            tabPerAcad = new DataTable();
+            tabPerAcad = dcGral.getDataTable("exec spPeriodoAcademicoSelect 0,'A'", Connect);
+            if(tabPerAcad.Rows.Count > 0)
+            {
+                codPerActual = tabPerAcad.Rows[0]["fmtdCodigo"].ToString();                
+                iniPerActual = int.Parse(tabPerAcad.Rows[0]["iniPer"].ToString());                
+                finPerActual = int.Parse(tabPerAcad.Rows[0]["finPer"].ToString());                              
+            }
         }
+        //2025 - 2026
         
         private void frmCargarAlumnos_Load(object sender, EventArgs e)
         {            
@@ -82,6 +95,7 @@ namespace cDevelop.Forms
 
             if (alumnos != null)
             {
+                //inicializaciones
                 importados = 0;
                 lblIniciar.Text = "Importando: "; lblIniciar.Refresh();
                 lblNombre.Visible = true;
@@ -93,16 +107,19 @@ namespace cDevelop.Forms
 
                 foreach (var alumno in alumnos)
                 {
-                    //if (alumno.ssn == "0801201310194")                    
-                    //    MessageBox.Show("ok","OK");
                     
+                    //mostrando proceso en la ventana
                     lblIniciar.Text = "Importando: " + importados.ToString();
                     lblNombre.Text = alumno.firstName;
                     lblPorcentaje.Text = ((100 * progressBar1.Value) / max).ToString() + "%";
                     lblPorcentaje.Refresh(); lblNombre.Refresh();lblIniciar.Refresh();
                     progressBar1.PerformStep();
-                    
-                    if (alumno.nextStatus == "Enrolled")
+
+                    if (alumno.ssn == "0801202010190")
+                        MessageBox.Show(alumno.firstName);
+
+                    int iniDefault = int.Parse(alumno.defaultYear.Substring(0, 4));
+                    if (((iniDefault < iniPerActual) && alumno.nextStatus == "Enrolled") || ((alumno.defaultYear.Equals(codPerActual)) && alumno.status == "Enrolled"))
                     {
                         //Verificar que el alumno no ha sido importado este año
                         tabClienteImport = dcGral.getDataTable("exec spClienteImportSelect '" + alumno.ssn + "' ,'" + alumno.fechaModificacion.Year + "'", Connect);
@@ -118,12 +135,24 @@ namespace cDevelop.Forms
                                 row["Transporte"] = 1;
                             else
                                 row["Transporte"] = 0;
-                            //row["Grado"] = alumno.gradeLevel[0] == '0' ? alumno.gradeLevel.Substring(1) : alumno.gradeLevel;
-                            //row["Grado"] = alumno.gradeLevel;
-                            //tomar el grado Siguiente
-                            row["Grado"] = alumno.nextGradeLevel;
+
+
+                            //Definir que grado se va a usar
+                            if (alumno.defaultYear.Equals(codPerActual)){
+                                //usar gradeLevel
+                                row["Grado"] = alumno.gradeLevel[0] == '0' ? alumno.gradeLevel.Substring(1) : alumno.gradeLevel;
+                            }
+                            else
+                            {
+                                //tomar el grado Siguiente
+                                row["Grado"] = alumno.nextGradeLevel[0] == '0' ? alumno.nextGradeLevel.Substring(1) : alumno.nextGradeLevel;
+                            }
+                            //row["Grado"] = alumno.nextGradeLevel;
+
+
                             row["Ano"] = alumno.fechaModificacion.Year;
-                            row["cantMeses"] = alumno.plandePagos.Split('M')[0].Length > 0 ? alumno.plandePagos.Split('M')[0] : "10";
+                            row["cantMeses"] = 11;
+                            row["planPagos"] = alumno.plandePagos.Split('M')[0].Length > 0 ? alumno.plandePagos.Split('M')[0] : "10";
                             float descuento = alumno.descuento.ToString() == "" || alumno.descuento.ToString() == " " ? 0 : float.Parse(alumno.descuento.ToString());
                             row["porcentajeBeca"] = descuento / 100;
                             row["FechaModificacion"] = alumno.fechaModificacion.Year + "-" + alumno.fechaModificacion.Month + "-" + alumno.fechaModificacion.Day;
@@ -174,12 +203,31 @@ namespace cDevelop.Forms
                                 continue;
                             dsGral.Tables["TabAlumnos"].Rows.Add(row);
 
-                            parametros = string.Concat("'", alumno.ssn, "','", row["Nombre"], "','",row["Sexo"],"','", row["Ciudadania"] ,"',",row["Transporte"], ",'",
-                                row["TransporteColonia"], "','",
-                                row["Grado"], "',", row["Ano"], ",", row["cantMeses"],10, ",", row["porcentajeBeca"], ",", 0, ",", 4, ",",  //Dia de corte constante =4
-                                row["SitioID"], ",'", row["fechaModificacion"], "','",
-                                row["HorarioTransporte"], "','", row["NombreMadre"], "','", row["identidadMadre"], "','", row["celularMadre"], "','", row["emailMadre"], "','",
-                                row["NombrePadre"], "','", row["identidadPadre"], "','", row["celularPadre"], "','", row["emailPadre"], "'");
+                            parametros = string.Concat(
+                                "'", alumno.ssn,
+                                "','",row["Nombre"], 
+                                "','",row["Sexo"],
+                                "','",row["Ciudadania"] ,
+                                "',",row["Transporte"],
+                                ",'",row["TransporteColonia"],
+                                "','",row["Grado"], "',",
+                                      row["Ano"], ",", 
+                                      row["cantMeses"], ","
+                                , row["planPagos"], //cantidadPagos REVISAR
+                                ",",row["porcentajeBeca"],
+                                ",",0, //mora
+                                ",",4, //Dia de corte constante =4
+                                ",",row["SitioID"], 
+                                ",'",row["fechaModificacion"],
+                                "','",row["HorarioTransporte"], 
+                                "','",row["NombreMadre"], 
+                                "','",row["identidadMadre"], 
+                                "','",row["celularMadre"], 
+                                "','",row["emailMadre"], 
+                                "','",row["NombrePadre"], 
+                                "','",row["identidadPadre"], 
+                                "','",row["celularPadre"], 
+                                "','",row["emailPadre"], "'");
                             dcGral.executeProcedure("exec spRegistroAlumno " + parametros, Connect);
                             importados++;
                         }
@@ -287,7 +335,7 @@ namespace cDevelop.Forms
 
             return valida;
         }
-        private bool validarGrado(String codigo)
+        private bool validarGrado(string codigo)
         {
             String codAlt,cadena;
             codAlt = codigo[0] == '0' ? codigo.Substring(1) : codigo; //si viene codigo como 09, lo va a encontrar, si viene K1,K2,...no
