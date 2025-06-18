@@ -107,7 +107,7 @@ namespace cDevelop.Forms
 
                 foreach (var alumno in alumnos)
                 {
-                    
+                
                     //mostrando proceso en la ventana
                     lblIniciar.Text = "Importando: " + importados.ToString();
                     lblNombre.Text = alumno.firstName;
@@ -115,8 +115,6 @@ namespace cDevelop.Forms
                     lblPorcentaje.Refresh(); lblNombre.Refresh();lblIniciar.Refresh();
                     progressBar1.PerformStep();
 
-                    //if (alumno.ssn == "0801202010190")
-                    //    MessageBox.Show(alumno.firstName);
 
                     int iniDefault = int.Parse(alumno.defaultYear.Substring(0, 4));
                     if (((iniDefault < iniPerActual) && alumno.nextStatus == "Enrolled") || ((alumno.defaultYear.Equals(codPerActual)) && alumno.status == "Enrolled"))
