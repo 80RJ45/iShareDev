@@ -70,6 +70,7 @@ namespace cDevelop.Forms
             tabPerAcad = dcGral.getDataTable("exec spPeriodoAcademicoSelect 0,'A'", Connect);
             if(tabPerAcad.Rows.Count > 0)
             {
+                iniPerActual = 0; //para pruebas
                 codPerActual = tabPerAcad.Rows[0]["fmtdCodigo"].ToString();                
                 iniPerActual = int.Parse(tabPerAcad.Rows[0]["iniPer"].ToString());                
                 finPerActual = int.Parse(tabPerAcad.Rows[0]["finPer"].ToString());                              
