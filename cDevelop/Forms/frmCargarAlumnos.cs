@@ -210,8 +210,8 @@ namespace cDevelop.Forms
                                 ",'",row["TransporteColonia"],
                                 "','",row["Grado"], "',",
                                       row["Ano"], ",", 
-                                      row["cantMeses"], ","
-                                , row["planPagos"], //cantidadPagos REVISAR
+                                      row["cantMeses"], "," //para cantidad de avisos
+                                , row["planPagos"], //cantidadPagos
                                 ",",row["porcentajeBeca"],
                                 ",",0, //mora
                                 ",",4, //Dia de corte constante =4
