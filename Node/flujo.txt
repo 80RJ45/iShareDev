@@ -1,0 +1,146 @@
+flujo de Node-RED exportable que se prepara para conectarse a un lector ZKTeco K20 utilizando el paquete node-zklib y ejecuta la lógica que mencionaste en un nodo function. Este flujo está listo para pruebas, asumiendo que el lector esté en red local (192.168.1.201) y con el puerto estándar 4370:
+
+1. 📦 Módulos necesarios:
+node-zklib: Instálalo con:
+	npm install node-zklib
+
+2. 📦 Nodo MSSQL en Node-RED:
+Instálalo desde la interfaz de Node-RED:
+	Menu > Manage palette > Install > node-red-contrib-mssql
+
+🔁 Flujo exportable (JSON)
+json
+
+[
+    {
+        "id": "zk-fn",
+        "type": "function",
+        "z": "zk-flow",
+        "name": "Leer datos ZKTeco",
+        "func": "const ZKLib = global.get('ZKLib') || require('node-zklib');\n\n(async () => {\n    const device = new ZKLib('192.168.1.201', 4370, 10000, 4000);\n    try {\n        await device.createSocket();\n        const logs = await device.getAttendances();\n        await device.disconnect();\n\n        msg.payload = logs.data;\n        node.send(msg);\n    } catch (err) {\n        node.error('Error al obtener logs', err);\n    }\n})();\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "ZKLib",
+                "module": "node-zklib"
+            }
+        ],
+        "x": 320,
+        "y": 140,
+        "wires": [
+            ["split-logs"]
+        ]
+    },
+    {
+        "id": "inject-zk",
+        "type": "inject",
+        "z": "zk-flow",
+        "name": "Obtener Logs",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 120,
+        "y": 140,
+        "wires": [
+            ["zk-fn"]
+        ]
+    },
+    {
+        "id": "split-logs",
+        "type": "split",
+        "z": "zk-flow",
+        "name": "Separar logs",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "stream": false,
+        "addname": "",
+        "x": 520,
+        "y": 140,
+        "wires": [
+            ["sql-format"]
+        ]
+    },
+    {
+        "id": "sql-format",
+        "type": "function",
+        "z": "zk-flow",
+        "name": "Formatear SQL",
+        "func": "const log = msg.payload;\nmsg.payload = {\n    query: `INSERT INTO BiometricLogs (uid, user_id, timestamp, type, state) VALUES (@uid, @user_id, @timestamp, @type, @state)`,\n    params: {\n        uid: log.uid,\n        user_id: log.user_id,\n        timestamp: new Date(log.timestamp),\n        type: log.type,\n        state: log.state\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 740,
+        "y": 140,
+        "wires": [
+            ["mssql"]
+        ]
+    },
+    {
+        "id": "mssql",
+        "type": "MSSQL",
+        "z": "zk-flow",
+        "mssqlCN": "sql-conn",
+        "name": "Guardar en SQL Server",
+        "query": "",
+        "outField": "payload",
+        "returnType": "0",
+        "throwErrors": "0",
+        "x": 980,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "sql-conn",
+        "type": "MSSQL-CN",
+        "name": "ConexionSQL",
+        "server": "3.136.143.117",
+        "encyption": false,
+        "database": "EagleTest",
+        "useUTC": true,
+        "connectTimeout": "",
+        "port": "1433",
+        "username": "daniel.sanchez",
+        "password": "ds2024",
+        "trustServerCertificate": true
+    }
+]
+
+
+
+
+
+📌 Instrucciones para usarlo
+Abre tu instancia de Node-RED.
+
+Haz clic en el botón de menú (≡) > Import > Clipboard.
+
+Pega el JSON de arriba y haz clic en Import.
+
+Asegúrate de tener el módulo node-zklib instalado en el sistema:
+
+
+           npm install node-zklib
+
+Verifica que tu lector esté en la IP 192.168.1.201 y que el puerto 4370 esté accesible.
+
+Haz clic en el botón del nodo inject para ejecutar la prueba.
+
+Revisa el resultado en el debug panel (lado derecho).
+
+
+✅ ¿Qué puedes modificar?
+Cambia la IP (192.168.1.201) si tu lector está en otra dirección.
+
+Puedes guardar los logs en base de datos, archivo, o enviar a otra API agregando más nodos después del function.
+
+¿Quieres que también exporte los logs a un archivo .csv, a una base de datos o a un panel de dashboard?

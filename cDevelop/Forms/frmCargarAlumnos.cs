@@ -125,6 +125,7 @@ namespace cDevelop.Forms
 
                         if (tabClienteImport.Rows.Count == 0 || (tabClienteImport.Rows[0]["Transporte"].ToString().ToLower() == "false" && alumno.planTransporte.ToString().Length>1 && alumno.transporteColonia.ToString().Length > 2) )
                         {
+
                             DataRow row = dsGral.Tables["TabAlumnos"].NewRow();
                             row["Identidad"] = alumno.ssn;
                             row["Nombre"] = alumno.firstName + " " + alumno.lastName;
@@ -145,9 +146,9 @@ namespace cDevelop.Forms
                             {
                                 //tomar el grado Siguiente
                                 row["Grado"] = alumno.nextGradeLevel[0] == '0' ? alumno.nextGradeLevel.Substring(1) : alumno.nextGradeLevel;
-                            }
-                            //row["Grado"] = alumno.nextGradeLevel;
+                            }                            
 
+                            
 
                             row["Ano"] = alumno.fechaModificacion.Year;
                             row["cantMeses"] = 11;

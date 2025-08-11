@@ -1,0 +1,11 @@
+--use eagleTest
+
+--CREATE TABLE BiometricLog (
+--    BiometricLogID int,
+--    uid INT,
+--    user_id INT,
+--    timestamp DATETIME,
+--    type INT,
+--    state INT,
+--	constraint pkBiometricLog primary key (biometriclogID)
+--);
