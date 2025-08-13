@@ -216,5 +216,20 @@ namespace iShareDev
             frm.MdiParent = this;
             frm.Show();
         }
+
+        private void capacitaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tipoCapacitaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tipoCapacitacionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList( new vbDevelop.frmTipoCapacitaCabList() , this, Connect);
+        }
     }
 }

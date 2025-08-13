@@ -115,6 +115,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Forms\Capacitacion\" />
     <Folder Include="Source\" />
   </ItemGroup>
   <ItemGroup>
