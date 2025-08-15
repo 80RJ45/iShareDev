@@ -231,5 +231,11 @@ namespace iShareDev
         {
             dcGral.ShowList( new vbDevelop.frmTipoCapacitaCabList() , this, Connect);
         }
+
+        private void capacitacionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new vbDevelop.frmCapacitaCabList(), this, Connect);
+
+        }
     }
 }

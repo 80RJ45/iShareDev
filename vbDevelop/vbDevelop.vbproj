@@ -97,6 +97,18 @@
     <Compile Include="Forms\Activos\frmActivoCabList.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Capacitacion\frmCapacitaCabDetail.Designer.vb">
+      <DependentUpon>frmCapacitaCabDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Capacitacion\frmCapacitaCabDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Capacitacion\frmCapacitaCabList.Designer.vb">
+      <DependentUpon>frmCapacitaCabList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Capacitacion\frmCapacitaCabList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Capacitacion\frmTipoCapacitaCabList.Designer.vb">
       <DependentUpon>frmTipoCapacitaCabList.vb</DependentUpon>
     </Compile>
@@ -218,6 +230,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Activos\frmActivoDetail.resx">
       <DependentUpon>frmActivoDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Capacitacion\frmCapacitaCabDetail.resx">
+      <DependentUpon>frmCapacitaCabDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Capacitacion\frmCapacitaCabList.resx">
+      <DependentUpon>frmCapacitaCabList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Capacitacion\frmTipoCapacitaCabList.resx">
       <DependentUpon>frmTipoCapacitaCabList.vb</DependentUpon>

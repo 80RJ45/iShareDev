@@ -151,7 +151,7 @@ Public Class frmTipoCapacitaDetail
             Next
             dsGral.Tables(1).Rows.RemoveAt(0)
             UpdateTables(0)
-            If Adding Then newRecord(0)
+            If Adding And Me.Parent IsNot Nothing Then newRecord(0)
             Close()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
