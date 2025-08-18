@@ -33,6 +33,15 @@ Public Class frmCapacitaCabDetail
         dcGral.FormatColumn(dgvEmpleados, "Identidad", "Identidad", 100, 1, "", True)
         dcGral.FormatColumn(dgvEmpleados, "Puesto", "Puesto", 120, 1, "", True)
         dcGral.FormatColumn(dgvEmpleados, "Horario", "Horario", 120, 1, "", True)
+
+        dgvEmpleados.MultiSelect = False
+        'dgvEmpleados.SelectionMode = DataGridViewSelectionMode.CellSelect
+        dgvEmpleados.AllowUserToResizeRows = False
+        dgvEmpleados.EnableHeadersVisualStyles = False
+        For Each col As DataGridViewColumn In dgvEmpleados.Columns
+            col.SortMode = DataGridViewColumnSortMode.NotSortable
+        Next
+
     End Sub
     Public Overrides Sub DetailRow()
         MyBase.DetailRow()
@@ -89,7 +98,6 @@ Public Class frmCapacitaCabDetail
         Dim rowIndex As Integer = dgvEmpleados.CurrentCell.RowIndex
         Dim columnIndex As Integer = dgvEmpleados.CurrentCell.ColumnIndex
         Dim valor As String = e.FormattedValue.ToString()
-
         Dim col As String = dgvEmpleados.Columns(columnIndex).Name.ToLower
 
         If col.Equals("codempleado") Then
@@ -107,38 +115,45 @@ Public Class frmCapacitaCabDetail
                         inner join Puesto p on p.PuestoID = l.PuestoID
                         left join HorarioCab h on h.HorarioCabID = l.HorarioCabID"
 
+                    'Dim sql As String =
+                    '    "exec spEmpleadoCapacitaSelect 0,0,0,0,0,'" & valor & "'"
+
                     Dim tabEmpleado As DataTable = dcGral.getDataTable(sql, Connect)
                     If tabEmpleado.Rows.Count > 0 Then
                         'El empleado existe, cargar información                        
                         'Validar que no se haya agregado
 
                         'comprobar que si se enccontró uno que ya estaba en la tabla no sea el de la misma fila
-                        Dim f() As DataRow = dsGral.Tables(1).Select("codempleado = '" & valor & "'")
+                        Dim filasVisibles As DataRow() = dsGral.Tables(1).Select("", "", DataViewRowState.CurrentRows)
+                        If filasVisibles.Length > 0 Then
 
-                        If f.Length > 0 Then
-                            Dim antIndexRow As Integer = dsGral.Tables(1).Rows.IndexOf(f(0))
-                            If antIndexRow = rowIndex Then
+                            Dim filaActual As DataRowView = CType(dgvEmpleados.Rows(rowIndex).DataBoundItem, DataRowView)
+                            Dim idFilaActual As String = filaActual("codempleado").ToString()
+
+                            ' Buscar duplicados excepto la fila actual
+                            Dim duplicado As Boolean = filasVisibles.Any(Function(r) r("codempleado").ToString() = valor.ToString() AndAlso r("codempleado").ToString() <> idFilaActual)
+
+                            If duplicado Then
+                                Err.AddError("El empleado ya fue agregado", 0)
+                                Err.ShowDialog()
+                                Err.Clean()
+                                e.Cancel = True
+
+
+
+                                If Not dgvEmpleados.Rows(dgvEmpleados.Rows.Count - 1).IsNewRow Then dsGral.Tables(1).Rows.Add()
+                                dsGral.Tables(1).DefaultView.Item(rowIndex).Delete()
+                                Try
+                                    'dgvEmpleados.Item(columnIndex, dgvEmpleados.Rows.Count - 1).Selected = True
+                                    dgvEmpleados.CurrentCell = dgvEmpleados.Item(columnIndex, dgvEmpleados.Rows.Count - 1)
+                                    'dgvEmpleados.BeginEdit(True)
+
+                                Catch ex As Exception
+                                End Try
+
+                                dgvEmpleados.Refresh()
                                 Exit Sub
                             End If
-
-                            Err.AddError("El empleado ya fue agregado", 0)
-                            Err.ShowDialog()
-                            Err.Clean()
-                            e.Cancel = True
-
-
-                            If Not dgvEmpleados.Rows(dgvEmpleados.Rows.Count - 1).IsNewRow Then dsGral.Tables(1).Rows.Add()
-                            dsGral.Tables(1).DefaultView.Item(rowIndex).Delete()
-                            Try
-                                'dgvEmpleados.Item(columnIndex, dgvEmpleados.Rows.Count - 1).Selected = True
-                                dgvEmpleados.CurrentCell = dgvEmpleados.Item(columnIndex, dgvEmpleados.Rows.Count - 1)
-                                'dgvEmpleados.BeginEdit(True)
-
-                            Catch ex As Exception
-                            End Try
-
-                            dgvEmpleados.Refresh()
-                            Exit Sub
                         End If
 
                         dsGral.Tables(1).DefaultView.Item(rowIndex).Item("EmpleadoID") = tabEmpleado.Rows(0)("EmpleadoID")
@@ -254,6 +269,20 @@ Public Class frmCapacitaCabDetail
     End Sub
 
     Private Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
+        Dim frm = New frmEmpleadoFilter(Connect, ParentList, -1, dsGral.Tables(1))
+        frm.ShowDialog()
 
+        If frm.isOK Then
+            frm.resTab = frm.existentes
+            dgvEmpleados.Refresh()
+        Else
+            MsgBox("Se canceló la operación", MsgBoxStyle.Exclamation, "Información")
+        End If
+    End Sub
+    Private Sub dgvEmpleados_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvEmpleados.ColumnHeaderMouseClick
+        'e.Handled = True
+    End Sub
+
+    Private Sub dgvEmpleados_MouseDown(sender As Object, e As MouseEventArgs) Handles dgvEmpleados.MouseDown
     End Sub
 End Class
