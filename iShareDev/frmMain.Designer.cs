@@ -63,6 +63,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tipoEvaluaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -220,7 +221,8 @@
             // 
             this.recursosHumanosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tipoCapacitacionToolStripMenuItem,
-            this.capacitacionToolStripMenuItem});
+            this.capacitacionToolStripMenuItem,
+            this.tipoEvaluaciónToolStripMenuItem});
             this.recursosHumanosToolStripMenuItem.Name = "recursosHumanosToolStripMenuItem";
             this.recursosHumanosToolStripMenuItem.Size = new System.Drawing.Size(121, 20);
             this.recursosHumanosToolStripMenuItem.Text = "Recursos Humanos";
@@ -338,6 +340,13 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // tipoEvaluaciónToolStripMenuItem
+            // 
+            this.tipoEvaluaciónToolStripMenuItem.Name = "tipoEvaluaciónToolStripMenuItem";
+            this.tipoEvaluaciónToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tipoEvaluaciónToolStripMenuItem.Text = "Tipo Evaluación";
+            this.tipoEvaluaciónToolStripMenuItem.Click += new System.EventHandler(this.tipoEvaluaciónToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -398,6 +407,7 @@
         private System.Windows.Forms.ToolStripMenuItem recursosHumanosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tipoCapacitacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem capacitacionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tipoEvaluaciónToolStripMenuItem;
     }
 }
 

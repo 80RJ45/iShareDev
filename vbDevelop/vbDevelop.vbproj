@@ -151,6 +151,18 @@
     <Compile Include="Forms\Activos\frmActivoDetail.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Evaluacion\frmTipoEvaluaDetList.Designer.vb">
+      <DependentUpon>frmTipoEvaluaDetList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Evaluacion\frmTipoEvaluaDetList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Evaluacion\frmTipoEvaluaList.Designer.vb">
+      <DependentUpon>frmTipoEvaluaList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Evaluacion\frmTipoEvaluaList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmAdelantoList.Designer.vb">
       <DependentUpon>frmAdelantoList.vb</DependentUpon>
     </Compile>
@@ -254,6 +266,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CobroBanco\frmCobroBancoDetail.resx">
       <DependentUpon>frmCobroBancoDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Evaluacion\frmTipoEvaluaDetList.resx">
+      <DependentUpon>frmTipoEvaluaDetList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Evaluacion\frmTipoEvaluaList.resx">
+      <DependentUpon>frmTipoEvaluaList.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmAdelantoList.resx">
       <DependentUpon>frmAdelantoList.vb</DependentUpon>

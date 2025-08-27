@@ -58,9 +58,9 @@ Public Class frmCapacitaCabDetail
             dtpInicio.Value = DateTime.Parse(fila(5).ToString())
             dtpFinal.Value = DateTime.Parse(fila(6).ToString())
             txtTiempo.Text = fila(9).ToString()
-            cmbTipo.SelectedValue = fila(10)
-            txtPrecio.Text = fila(11).ToString()
-            cmbTipoCapacitacion.SelectedValue = fila(12)
+            cmbTipo.SelectedValue = fila(11)
+            txtPrecio.Text = fila(12).ToString()
+            cmbTipoCapacitacion.SelectedValue = fila(13)
         End If
     End Sub
     Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
