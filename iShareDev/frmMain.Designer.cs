@@ -51,6 +51,7 @@
             this.recursosHumanosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tipoCapacitacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.capacitacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tipoEvaluaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -63,7 +64,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.tipoEvaluaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aspectosEvaluaciónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -222,7 +223,8 @@
             this.recursosHumanosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tipoCapacitacionToolStripMenuItem,
             this.capacitacionToolStripMenuItem,
-            this.tipoEvaluaciónToolStripMenuItem});
+            this.tipoEvaluaciónToolStripMenuItem,
+            this.aspectosEvaluaciónToolStripMenuItem});
             this.recursosHumanosToolStripMenuItem.Name = "recursosHumanosToolStripMenuItem";
             this.recursosHumanosToolStripMenuItem.Size = new System.Drawing.Size(121, 20);
             this.recursosHumanosToolStripMenuItem.Text = "Recursos Humanos";
@@ -230,16 +232,23 @@
             // tipoCapacitacionToolStripMenuItem
             // 
             this.tipoCapacitacionToolStripMenuItem.Name = "tipoCapacitacionToolStripMenuItem";
-            this.tipoCapacitacionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tipoCapacitacionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.tipoCapacitacionToolStripMenuItem.Text = "Tipo Capacitacion";
             this.tipoCapacitacionToolStripMenuItem.Click += new System.EventHandler(this.tipoCapacitacionToolStripMenuItem_Click);
             // 
             // capacitacionToolStripMenuItem
             // 
             this.capacitacionToolStripMenuItem.Name = "capacitacionToolStripMenuItem";
-            this.capacitacionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.capacitacionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.capacitacionToolStripMenuItem.Text = "Capacitacion";
             this.capacitacionToolStripMenuItem.Click += new System.EventHandler(this.capacitacionToolStripMenuItem_Click);
+            // 
+            // tipoEvaluaciónToolStripMenuItem
+            // 
+            this.tipoEvaluaciónToolStripMenuItem.Name = "tipoEvaluaciónToolStripMenuItem";
+            this.tipoEvaluaciónToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.tipoEvaluaciónToolStripMenuItem.Text = "Tipos Evaluación";
+            this.tipoEvaluaciónToolStripMenuItem.Click += new System.EventHandler(this.tipoEvaluaciónToolStripMenuItem_Click);
             // 
             // toolStrip
             // 
@@ -340,12 +349,12 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // tipoEvaluaciónToolStripMenuItem
+            // aspectosEvaluaciónToolStripMenuItem
             // 
-            this.tipoEvaluaciónToolStripMenuItem.Name = "tipoEvaluaciónToolStripMenuItem";
-            this.tipoEvaluaciónToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.tipoEvaluaciónToolStripMenuItem.Text = "Tipo Evaluación";
-            this.tipoEvaluaciónToolStripMenuItem.Click += new System.EventHandler(this.tipoEvaluaciónToolStripMenuItem_Click);
+            this.aspectosEvaluaciónToolStripMenuItem.Name = "aspectosEvaluaciónToolStripMenuItem";
+            this.aspectosEvaluaciónToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.aspectosEvaluaciónToolStripMenuItem.Text = "Aspectos Evaluación";
+            this.aspectosEvaluaciónToolStripMenuItem.Click += new System.EventHandler(this.aspectosEvaluaciónToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -408,6 +417,7 @@
         private System.Windows.Forms.ToolStripMenuItem tipoCapacitacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem capacitacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tipoEvaluaciónToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aspectosEvaluaciónToolStripMenuItem;
     }
 }
 

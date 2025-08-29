@@ -2,9 +2,10 @@
 Public Class frmTipoEvaluaList
     Public Overrides Sub Init()
         MyBase.Init()
-
         Dim adp = New SqlDataAdapter
         Dim SQLGridParm = New SqlParameter("@TipoEvaluaCabID", 0)
+
+        
 
         adp.SelectCommand = dcGral.getSQLCommand(Connect, "spTipoEvaluaCabSelect", SQLGridParm)
         adp.DeleteCommand = dcGral.getSQLCommand(Connect, "spTipoEvaluaCabDelete")

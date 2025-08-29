@@ -242,5 +242,10 @@ namespace iShareDev
         {
             dcGral.ShowList(new vbDevelop.frmTipoEvaluaList(), this, Connect);
         }
+
+        private void aspectosEvaluaciónToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dcGral.ShowList(new vbDevelop.frmTipoEvaluaDetList(), this, Connect);
+        }
     }
 }

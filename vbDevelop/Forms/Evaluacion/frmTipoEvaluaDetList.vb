@@ -9,6 +9,19 @@ Public Class frmTipoEvaluaDetList
         adp.SelectCommand = dcGral.getSQLCommand(Connect, "spTipoEvaluaDetSelect", SQLGridParm)
 
         Adaptador = adp
+
+        Detalle = True
+    End Sub
+    Public Overrides Sub Adicionar()
+        Dim frm = New frmTipoEvaluaDetDetail(Connect, Me, -1)
+        frm.ShowDialog()
+
+        Reload()
+    End Sub
+    Public Overrides Sub Modificar()
+        MyBase.Modificar()
+        Dim frm = New frmTipoEvaluaDetDetail(Connect, Me, getID("TipoEvaluaDetID"))
+        frm.ShowDialog()
     End Sub
     Private Sub frmTipoEvaluaDetList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

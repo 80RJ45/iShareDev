@@ -204,6 +204,7 @@ Public Class frmCapacitaCabDetail
 
             dsGral.Tables(0).Columns.Item("nomCapacita").ColumnName = "Nombre"
             dsGral.Tables(0).Columns.Item("codCapacita").ColumnName = "Codigo"
+            dsGral.Tables(0).Columns.Item("Tipo").ColumnName = "nomTipo"
             dsGral.Tables(0).Columns.Item("codTipo").ColumnName = "Tipo"
             UpdateTables(0)
 
